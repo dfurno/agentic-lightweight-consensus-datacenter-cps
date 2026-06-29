@@ -1,0 +1,62 @@
+[
+  {
+    "accessed_at": "2026-06-10T11:03:28.367783+00:00",
+    "downloaded": false,
+    "id": "enact",
+    "name": "ENACT",
+    "reason": "Dataset source/version/license must be supplied before automated use.",
+    "source_url": null,
+    "state": "manual_required",
+    "target_dir": "data/raw/enact"
+  },
+  {
+    "accessed_at": "2026-06-10T11:03:28.367905+00:00",
+    "downloaded": false,
+    "id": "kaggle_hot_corridor",
+    "name": "Kaggle Hot Corridor",
+    "reason": "Dataset source/version/license must be supplied before automated use.",
+    "source_url": null,
+    "state": "manual_required",
+    "target_dir": "data/raw/kaggle_hot_corridor"
+  },
+  {
+    "accessed_at": "2026-06-10T11:03:28.367910+00:00",
+    "downloaded": false,
+    "id": "cucd_id",
+    "name": "CuCD-ID",
+    "reason": "Dataset source/version/license must be supplied before automated use.",
+    "source_url": null,
+    "state": "manual_required",
+    "target_dir": "data/raw/cucd_id"
+  },
+  {
+    "accessed_at": "2026-06-10T11:03:28.367915+00:00",
+    "downloaded": false,
+    "id": "google_cluster_data",
+    "name": "Google Cluster Data",
+    "reason": "Set ALLOW_DATASET_DOWNLOADS=true to permit network downloads.",
+    "source_url": "https://github.com/google/cluster-data",
+    "state": "download_disabled",
+    "target_dir": "data/raw/enact/google_cluster_data"
+  },
+  {
+    "accessed_at": "2026-06-10T11:03:28.367919+00:00",
+    "downloaded": false,
+    "id": "building_data_genome_2",
+    "name": "Building Data Genome Project 2 / ASHRAE GEPIII",
+    "reason": "Set ALLOW_DATASET_DOWNLOADS=true to permit network downloads.",
+    "source_url": "https://github.com/buds-lab/building-data-genome-project-2",
+    "state": "download_disabled",
+    "target_dir": "data/raw/kaggle_hot_corridor/building_data_genome_2"
+  },
+  {
+    "accessed_at": "2026-06-10T11:03:28.367923+00:00",
+    "downloaded": false,
+    "id": "ciciot2023",
+    "name": "CICIoT2023",
+    "reason": "Set ALLOW_DATASET_DOWNLOADS=true to permit network downloads.",
+    "source_url": "https://www.unb.ca/cic/datasets/iotdataset-2023.html",
+    "state": "download_disabled",
+    "target_dir": "data/raw/optional_iot_anomaly/ciciot2023"
+  }
+]

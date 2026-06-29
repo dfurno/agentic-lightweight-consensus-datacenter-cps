@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="950" viewBox="0 0 1600 950">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .title { font-family: Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; fill: #111827; }
+      .subtitle { font-family: Arial, Helvetica, sans-serif; font-size: 14px; fill: #374151; }
+      .layer-title { font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 700; fill: #111827; }
+      .box-title { font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 700; fill: #111827; }
+      .label { font-family: Arial, Helvetica, sans-serif; font-size: 13px; fill: #111827; }
+      .small { font-family: Arial, Helvetica, sans-serif; font-size: 11px; fill: #374151; }
+      .tiny { font-family: Arial, Helvetica, sans-serif; font-size: 10px; fill: #374151; }
+      .blue { stroke: #0f4fb8; }
+      .blue-fill { fill: #eef5ff; }
+      .orange { stroke: #f97316; }
+      .orange-fill { fill: #fff7ed; }
+      .green { stroke: #1f7a34; }
+      .green-fill { fill: #f1fbf2; }
+      .purple { stroke: #7c3aed; }
+      .purple-fill { fill: #f7f1ff; }
+      .gold { stroke: #b7791f; }
+      .gold-fill { fill: #fffbeb; }
+      .gray-fill { fill: #f8fafc; }
+      .box { stroke-width: 2; rx: 10; ry: 10; }
+      .soft { stroke-width: 1.5; rx: 8; ry: 8; }
+      .fast { stroke: #0f4fb8; stroke-width: 4; fill: none; marker-end: url(#arrow-blue); }
+      .slow { stroke: #f97316; stroke-width: 3; fill: none; stroke-dasharray: 9 7; marker-end: url(#arrow-orange); }
+      .act { stroke: #1f7a34; stroke-width: 4; fill: none; marker-end: url(#arrow-green); }
+      .thin-blue { stroke: #0f4fb8; stroke-width: 2.5; fill: none; marker-end: url(#arrow-blue); }
+      .thin-orange { stroke: #f97316; stroke-width: 2.2; fill: none; stroke-dasharray: 8 6; marker-end: url(#arrow-orange); }
+      .thin-green { stroke: #1f7a34; stroke-width: 2.5; fill: none; marker-end: url(#arrow-green); }
+    </style>
+    <marker id="arrow-blue" markerWidth="5" markerHeight="5" refX="4.5" refY="2.5" orient="auto">
+      <path d="M 0 0 L 5 2.5 L 0 5 z" fill="#0f4fb8"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="5" markerHeight="5" refX="4.5" refY="2.5" orient="auto">
+      <path d="M 0 0 L 5 2.5 L 0 5 z" fill="#f97316"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="5" markerHeight="5" refX="4.5" refY="2.5" orient="auto">
+      <path d="M 0 0 L 5 2.5 L 0 5 z" fill="#1f7a34"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="950"/>
+  <text class="title" x="40" y="40">Real-Time Agentic Lightweight Fuzzy Consensus Architecture</text>
+  <text class="subtitle" x="40" y="64">Fast path runs at every control tick; LangGraph/Gemma supervision is event-triggered and always verified before actuation.</text>
+
+  <line x1="720" y1="34" x2="800" y2="34" class="fast"/>
+  <text class="label" x="815" y="39">FAST PATH: deterministic per-tick fuzzy consensus</text>
+  <line x1="720" y1="58" x2="800" y2="58" class="slow"/>
+  <text class="label" x="815" y="63">SLOW PATH: sparse event-triggered LLM supervision</text>
+  <line x1="1170" y1="34" x2="1250" y2="34" class="act"/>
+  <text class="label" x="1265" y="39">PHYSICAL ACTUATION LOOP</text>
+
+  <!-- Layer backgrounds -->
+  <rect x="30" y="90" width="1260" height="145" class="box blue blue-fill"/>
+  <rect x="30" y="255" width="1260" height="165" class="box purple purple-fill"/>
+  <rect x="30" y="440" width="1260" height="205" class="box blue blue-fill"/>
+  <rect x="30" y="665" width="1260" height="210" class="box green green-fill"/>
+  <rect x="1320" y="90" width="240" height="785" class="box gold gold-fill"/>
+
+  <!-- Layer labels -->
+  <circle cx="58" cy="122" r="18" fill="#0f4fb8"/><text x="53" y="128" font-family="Arial" font-size="16" font-weight="700" fill="#fff">4</text>
+  <text class="layer-title" x="88" y="118">Facility Operation Layer</text>
+  <text class="small" x="88" y="140">Cross-zone decisions, human oversight, and escalation.</text>
+
+  <circle cx="58" cy="287" r="18" fill="#7c3aed"/><text x="53" y="293" font-family="Arial" font-size="16" font-weight="700" fill="#fff">3</text>
+  <text class="layer-title" x="88" y="283">Verification and Agentic Supervision Layer</text>
+  <text class="small" x="88" y="305">Safety gate, event triggers, LangGraph planner, and fallback logic.</text>
+
+  <circle cx="58" cy="472" r="18" fill="#0f4fb8"/><text x="53" y="478" font-family="Arial" font-size="16" font-weight="700" fill="#fff">2</text>
+  <text class="layer-title" x="88" y="468">Edge Lightweight Consensus Layer</text>
+  <text class="small" x="88" y="490">Per-zone sensor reports are aggregated into robust consensus snapshots.</text>
+
+  <circle cx="58" cy="697" r="18" fill="#1f7a34"/><text x="53" y="703" font-family="Arial" font-size="16" font-weight="700" fill="#fff">1</text>
+  <text class="layer-title" x="88" y="693">Physical and Sensing Layer</text>
+  <text class="small" x="88" y="715">Thermal, workload, power, and cyber-anomaly observations from audited datasets.</text>
+
+  <!-- Facility boxes -->
+  <rect x="300" y="118" width="340" height="88" class="box blue gray-fill"/>
+  <text class="box-title" x="325" y="146">Facility Arbiter</text>
+  <text class="small" x="325" y="169">Resolves cross-zone trade-offs:</text>
+  <text class="small" x="345" y="188">thermal risk, energy cost, workload placement</text>
+  <circle cx="600" cy="162" r="22" fill="#eef5ff" stroke="#0f4fb8" stroke-width="2"/>
+  <text class="small" x="587" y="167">ARB</text>
+
+  <rect x="780" y="118" width="360" height="88" class="box blue gray-fill"/>
+  <text class="box-title" x="805" y="146">Dashboards and Escalation</text>
+  <text class="small" x="805" y="169">Human oversight for blocked or high-risk actions.</text>
+  <rect x="1085" y="143" width="42" height="32" fill="#eef5ff" stroke="#0f4fb8" stroke-width="2" rx="3"/>
+  <line x1="1092" y1="168" x2="1120" y2="168" stroke="#0f4fb8" stroke-width="2"/>
+  <line x1="1096" y1="160" x2="1096" y2="168" stroke="#0f4fb8" stroke-width="4"/>
+  <line x1="1106" y1="153" x2="1106" y2="168" stroke="#0f4fb8" stroke-width="4"/>
+  <line x1="1116" y1="157" x2="1116" y2="168" stroke="#0f4fb8" stroke-width="4"/>
+
+  <!-- Zone verifier agents -->
+  <rect x="185" y="325" width="430" height="70" class="soft purple gray-fill"/>
+  <text class="box-title" x="210" y="349">Zone Verifier Agents</text>
+  <text class="small" x="210" y="371">Monitor consensus degree, temporal consistency, per-agent proximity, and persistent anomaly flags.</text>
+  <text class="small" x="210" y="389">Adaptive feedback: resampling, delayed inclusion, down-weighting.</text>
+
+  <!-- Event trigger -->
+  <rect x="875" y="285" width="335" height="105" class="soft orange orange-fill" stroke-dasharray="8 6"/>
+  <text class="box-title" x="905" y="310" fill="#ea580c">Event Trigger Policy</text>
+  <text class="small" x="905" y="333">LLM invoked only when needed:</text>
+  <text class="small" x="925" y="352">low confidence, anomaly burst, SLA margin, cooldown elapsed</text>
+  <text class="tiny" x="905" y="374">Final realtime policy: LLM calls about 3.96% of ticks.</text>
+
+  <!-- LangGraph supervisor -->
+  <rect x="870" y="430" width="350" height="118" class="box orange orange-fill"/>
+  <text class="box-title" x="900" y="458" fill="#c2410c">LangGraph/Gemma Planner Agent</text>
+  <text class="small" x="900" y="482">ReAct-style supervisory reasoning over consensus snapshots.</text>
+  <text class="small" x="900" y="503">Outputs machine-readable control proposals.</text>
+  <text class="tiny" x="900" y="526">Not on the hard real-time path; failures fall back deterministically.</text>
+
+  <!-- Consensus and snapshots -->
+  <rect x="170" y="515" width="360" height="100" class="box blue gray-fill"/>
+  <text class="box-title" x="198" y="544">FPR-OWA Consensus Operator</text>
+  <text class="small" x="198" y="567">Lightweight robust aggregation per zone.</text>
+  <text class="small" x="198" y="588">Produces estimate, confidence, reliability vector, anomaly flags.</text>
+  <path d="M 455 545 L 500 565 L 455 585 Z" fill="#e0ecff" stroke="#0f4fb8" stroke-width="2"/>
+  <text class="small" x="468" y="568">FPR</text>
+  <text class="small" x="468" y="584">OWA</text>
+
+  <rect x="585" y="515" width="245" height="100" class="box blue gray-fill"/>
+  <text class="box-title" x="612" y="544">Consensus Snapshot</text>
+  <text class="small" x="612" y="566">Only artifact exposed upward:</text>
+  <text class="small" x="632" y="586">temperature estimate, confidence, anomaly counts</text>
+
+  <!-- Verifier and actions -->
+  <rect x="650" y="665" width="180" height="130" class="box blue gray-fill"/>
+  <text class="box-title" x="681" y="692">Shared Verifier</text>
+  <text class="small" x="677" y="715">Non-bypassable gate</text>
+  <text class="small" x="677" y="735">SLA, policy, actuator limits</text>
+  <circle cx="740" cy="760" r="22" fill="#eef5ff" stroke="#0f4fb8" stroke-width="2"/>
+  <text class="box-title" x="729" y="767">OK</text>
+
+  <rect x="890" y="665" width="145" height="80" class="soft blue gray-fill"/>
+  <text class="box-title" x="915" y="692">Verified</text>
+  <text class="small" x="917" y="714">safe action</text>
+  <text class="box-title" x="944" y="735">OK</text>
+
+  <rect x="1060" y="665" width="145" height="80" class="soft blue gray-fill"/>
+  <text class="box-title" x="1080" y="692">Fallback</text>
+  <text class="small" x="1084" y="714">conservative</text>
+  <text class="box-title" x="1118" y="735">FB</text>
+
+  <!-- Physical zones -->
+  <rect x="145" y="735" width="260" height="105" class="soft green gray-fill"/>
+  <text class="box-title" x="247" y="760" fill="#166534">Zone A</text>
+  <text class="small" x="170" y="785">Racks/hosts, thermal sensors, power interfaces</text>
+  <text class="small" x="170" y="808">Actuators: fan speed and cooling setpoints</text>
+
+  <rect x="435" y="735" width="260" height="105" class="soft green gray-fill"/>
+  <text class="box-title" x="537" y="760" fill="#166534">Zone B</text>
+  <text class="small" x="460" y="785">Racks/hosts, thermal sensors, power interfaces</text>
+  <text class="small" x="460" y="808">Actuators: fan speed and cooling setpoints</text>
+
+  <rect x="725" y="735" width="260" height="105" class="soft green gray-fill"/>
+  <text class="box-title" x="827" y="760" fill="#166534">Zone C</text>
+  <text class="small" x="750" y="785">Racks/hosts, thermal sensors, power interfaces</text>
+  <text class="small" x="750" y="808">Actuators: fan speed and cooling setpoints</text>
+
+  <!-- Empirical callouts -->
+  <rect x="1035" y="770" width="210" height="74" class="soft green green-fill"/>
+  <text class="box-title" x="1057" y="795" fill="#166534">Realtime Result</text>
+  <text class="small" x="1057" y="817">mean loop latency 285 ms</text>
+  <text class="small" x="1057" y="835">thermal SLA violations 0.0</text>
+
+  <rect x="875" y="570" width="345" height="62" class="soft orange orange-fill"/>
+  <text class="box-title" x="900" y="594" fill="#c2410c">Safety Result</text>
+  <text class="small" x="900" y="616">Verifier variants executed 0 unsafe LLM actions.</text>
+
+  <!-- Audit plane -->
+  <text class="layer-title" x="1350" y="122">Trustworthiness</text>
+  <text class="layer-title" x="1350" y="145">and Traceability Plane</text>
+  <line x1="1345" y1="165" x2="1535" y2="165" stroke="#b7791f" stroke-width="1.5"/>
+  <text class="box-title" x="1350" y="205">Recorded artifacts</text>
+  <text class="label" x="1350" y="250">- Dataset provenance</text>
+  <text class="small" x="1372" y="272">Kaggle thermal; ENACT workload/power;</text>
+  <text class="small" x="1372" y="291">CuCD-ID anomaly timing only.</text>
+  <text class="label" x="1350" y="340">- Consensus snapshots</text>
+  <text class="label" x="1350" y="390">- Reliability vectors</text>
+  <text class="label" x="1350" y="440">- Planner prompts/outputs</text>
+  <text class="label" x="1350" y="490">- Verifier decisions</text>
+  <text class="label" x="1350" y="540">- Token and latency logs</text>
+  <text class="label" x="1350" y="590">- Reproducible CSV metrics</text>
+  <line x1="1345" y1="635" x2="1535" y2="635" stroke="#b7791f" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <text class="box-title" x="1350" y="680">Paper constraints</text>
+  <text class="small" x="1350" y="705">Quantitative claims only from results CSVs.</text>
+  <text class="small" x="1350" y="728">Cyber dataset is not treated as thermal data.</text>
+  <text class="small" x="1350" y="751">LLM is supervisory, not a hard real-time controller.</text>
+
+  <!-- Flow arrows -->
+  <path d="M 275 735 L 275 628" class="fast"/>
+  <path d="M 565 735 L 565 628" class="fast"/>
+  <path d="M 855 735 L 855 628" class="fast"/>
+  <path d="M 530 565 L 585 565" class="fast"/>
+  <path d="M 830 565 L 650 690" class="fast"/>
+  <path d="M 740 615 L 740 665" class="fast"/>
+  <path d="M 830 730 L 890 705" class="fast"/>
+  <path d="M 830 745 L 1060 705" class="fast"/>
+  <path d="M 962 745 L 962 860 L 275 860 L 275 845" class="act"/>
+  <path d="M 1132 745 L 1132 878 L 565 878 L 565 845" class="act"/>
+  <path d="M 1205 725 L 1230 725 L 1230 895 L 855 895 L 855 845" class="act"/>
+
+  <path d="M 708 515 L 708 398 L 615 360" class="thin-blue"/>
+  <path d="M 740 515 L 740 410 L 875 335" class="thin-orange"/>
+  <path d="M 1042 390 L 1042 430" class="slow"/>
+  <path d="M 1042 548 L 830 710" class="slow"/>
+  <path d="M 740 665 L 740 420" class="thin-blue"/>
+  <path d="M 740 420 L 740 235" class="thin-blue"/>
+  <path d="M 740 235 L 470 206" class="thin-blue"/>
+  <path d="M 963 665 L 963 235" class="thin-blue"/>
+  <path d="M 963 235 L 963 206" class="thin-blue"/>
+
+  <!-- Footer -->
+  <text class="tiny" x="40" y="925">Design intent: preserve lightweight consensus in the per-tick loop; use LangGraph/Gemma only as sparse, auditable supervision behind the same verifier.</text>
+</svg>

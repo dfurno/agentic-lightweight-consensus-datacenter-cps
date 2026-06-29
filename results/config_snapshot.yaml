@@ -1,0 +1,98 @@
+simulation:
+  seed: 42
+  time_steps: 240
+  sample_period_seconds: 60
+  num_sensors: 9
+  sensor_noise_std: 0.25
+  ambient_temperature_c: 22.0
+  thermal:
+    rho: 0.82
+    eta: 0.018
+    lag: 2
+    disturbance_std: 0.08
+  attacks:
+    enabled: true
+    attack_type: mixed
+    attack_ratio: 0.2
+    bias_magnitude: 4.0
+    drift_rate: 0.03
+    spike_magnitude: 8.0
+    scaling_factor: 1.15
+    start_fraction: 0.35
+    end_fraction: 0.75
+experiments:
+  small:
+    seeds:
+    - 42
+    attack_ratios:
+    - 0.0
+    - 0.2
+    - 0.4
+    attack_types:
+    - bias
+    - drift
+    - freeze
+    - spike
+    - scaling
+    - mixed
+    sensor_noise_levels:
+    - 0.25
+    sensors_per_group:
+    - 9
+    owa_parameters:
+    - alpha: 0.3
+      beta: 0.8
+    max_refinement_cycles:
+    - 0
+    - 1
+    - 2
+  full:
+    seeds:
+    - 11
+    - 42
+    - 101
+    attack_ratios:
+    - 0.0
+    - 0.1
+    - 0.2
+    - 0.3
+    - 0.4
+    attack_types:
+    - bias
+    - drift
+    - replay
+    - freeze
+    - spike
+    - scaling
+    - mixed
+    sensor_noise_levels:
+    - 0.1
+    - 0.25
+    - 0.5
+    sensors_per_group:
+    - 5
+    - 9
+    - 13
+    owa_parameters:
+    - alpha: 0.3
+      beta: 0.8
+    - alpha: 0.2
+      beta: 0.7
+    max_refinement_cycles:
+    - 0
+    - 1
+    - 2
+    - 3
+  methods:
+  - mean
+  - median
+  - trimmed_mean
+  - hampel_filter_then_mean
+  - direct_owa
+  - fpr_owa
+  agent_variants:
+  - deterministic_policy_only
+  - react_without_verifier
+  - react_with_verifier
+  - react_with_verifier_and_self_refinement
+data_mode: real

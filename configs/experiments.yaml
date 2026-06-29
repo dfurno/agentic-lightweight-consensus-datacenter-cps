@@ -1,0 +1,37 @@
+small:
+  seeds: [42]
+  attack_ratios: [0.0, 0.2, 0.4]
+  attack_types: ["bias", "drift", "freeze", "spike", "scaling", "mixed"]
+  sensor_noise_levels: [0.25]
+  sensors_per_group: [9]
+  owa_parameters:
+    - {alpha: 0.3, beta: 0.8}
+  max_refinement_cycles: [0, 1, 2]
+full:
+  seeds: [11, 42, 101]
+  attack_ratios: [0.0, 0.1, 0.2, 0.3, 0.4]
+  attack_types: ["bias", "drift", "replay", "freeze", "spike", "scaling", "mixed"]
+  sensor_noise_levels: [0.1, 0.25, 0.5]
+  sensors_per_group: [5, 9, 13]
+  owa_parameters:
+    - {alpha: 0.3, beta: 0.8}
+    - {alpha: 0.2, beta: 0.7}
+  max_refinement_cycles: [0, 1, 2, 3]
+realtime:
+  seeds: [42]
+  attack_ratios: [0.0, 0.2, 0.4]
+  attack_types: ["bias", "spike", "mixed"]
+  sensor_noise_levels: [0.25]
+  sensors_per_group: [9, 13]
+  owa_parameters:
+    - {alpha: 0.3, beta: 0.8}
+  max_refinement_cycles: [0]
+  deadlines_ms: [100, 250, 500, 1000, 5000]
+  llm_policy:
+    mode: event_triggered
+    confidence_threshold: 0.35
+    anomaly_threshold: 3
+    temperature_margin: 0.02
+    min_llm_interval_ticks: 20
+methods: ["mean", "median", "trimmed_mean", "hampel_filter_then_mean", "direct_owa", "fpr_owa"]
+agent_variants: ["deterministic_policy_only", "react_without_verifier", "react_with_verifier", "react_with_verifier_and_self_refinement"]

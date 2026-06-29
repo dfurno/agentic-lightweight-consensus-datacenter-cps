@@ -1,0 +1,21 @@
+seed: 42
+time_steps: 240
+sample_period_seconds: 60
+num_sensors: 9
+sensor_noise_std: 0.25
+ambient_temperature_c: 22.0
+thermal:
+  rho: 0.82
+  eta: 0.018
+  lag: 2
+  disturbance_std: 0.08
+attacks:
+  enabled: true
+  attack_type: mixed
+  attack_ratio: 0.2
+  bias_magnitude: 4.0
+  drift_rate: 0.03
+  spike_magnitude: 8.0
+  scaling_factor: 1.15
+  start_fraction: 0.35
+  end_fraction: 0.75

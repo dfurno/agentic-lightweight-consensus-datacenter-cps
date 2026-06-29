@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "Agentic Lightweight Consensus for Resilient Data-Centre Cyber-Physical Control"
+message: "If you use this software or the accompanying reproducibility artifacts, please cite the associated manuscript."
+type: software
+authors:
+  - family-names: Furno
+    given-names: Domenico
+  - family-names: Loia
+    given-names: Vincenzo
+repository-code: "https://github.com/<OWNER>/<REPOSITORY>"
+license: MIT
+version: "asoc-2026-reproducibility"
+date-released: 2026-06-29
+keywords:
+  - multi-agent systems
+  - fuzzy consensus
+  - data-centre control
+  - cyber-physical systems
+  - LLM supervision
+  - reproducibility

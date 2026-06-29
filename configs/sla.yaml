@@ -1,0 +1,16 @@
+temperature_sla_c: 32.0
+emergency_temperature_c: 38.0
+min_confidence: 0.35
+max_consensus_age_seconds: 180
+actuators:
+  fan_speed:
+    min: 0.0
+    max: 1.0
+    max_slew_rate: 0.2
+  setpoint_c:
+    min: 18.0
+    max: 28.0
+    max_slew_rate: 2.0
+prediction:
+  cooling_gain_per_fan_unit: 3.0
+  setpoint_gain: 0.5

@@ -1,0 +1,19 @@
+\begin{table*}[!tbp]
+\centering
+\caption{MAE by attack type. ``Best method'' is the minimum-MAE method over all six aggregators for that attack; the three numeric columns report Mean, Direct OWA and FPR--OWA for direct comparison. FPR--OWA is the single best aggregator only under \emph{bias}, but it is the only method that simultaneously emits anomaly diagnostics (Table~\ref{tab:consensus_perf}).}
+\label{tab:per_attack}
+\footnotesize
+\begin{tabular}{llccc>{\raggedright\arraybackslash}p{0.30\textwidth}}
+\toprule
+\textbf{Attack} & \textbf{Best method} & \textbf{MAE Mean} & \textbf{MAE Dir.\ OWA} & \textbf{MAE FPR--OWA} & \textbf{Interpretation} \\
+\midrule
+Bias & FPR--OWA & 1.7763 & 1.7187 & 1.6468 & Offset sharpens the reliability ranking. \\
+Drift & Mean & 1.5626 & 1.6042 & 1.6533 & Slow ramp stays near the robust centre. \\
+Freeze & Mean & 1.4406 & 1.5108 & 1.6036 & Honest majority dominates the average. \\
+Mixed & Hampel$+$mean & 1.5478 & 1.5729 & 1.6180 & Spike-like parts favour filtering. \\
+Replay & Mean & 1.4417 & 1.5135 & 1.6044 & Desynchronised values average out. \\
+Scaling & Mean & 1.4666 & 1.5375 & 1.6294 & Mild multiplicative distortion on average. \\
+Spike & Hampel$+$mean & 1.5207 & 1.5101 & 1.5645 & Outlier rejection is decisive. \\
+\bottomrule
+\end{tabular}
+\end{table*}

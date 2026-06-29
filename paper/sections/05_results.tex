@@ -1,0 +1,28 @@
+\section{Results}
+Measured results were read from \texttt{results/metrics.csv}. The lowest mean MAE in the generated run was obtained by \texttt{mean} with MAE 1.6502. These values are generated from local experiment traces, not projected or fabricated estimates. The experiment trace metadata reports source \texttt{kaggle_hot_corridor_enact_cucd}. Limitations: Kaggle hot-corridor values appear standardized; metrics are reported in dataset units unless inverse scaling metadata is provided. CuCD-ID is spacecraft cybersecurity telemetry and is used only for attack timing labels, not thermal measurements.
+
+\paragraph{Robustness ranking.}
+\texttt{mean}: MAE=1.6502, RMSE=1.7399, P95AE=2.6253\\
+\texttt{trimmed_mean}: MAE=1.6502, RMSE=1.7399, P95AE=2.6253\\
+\texttt{median}: MAE=1.7016, RMSE=1.7738, P95AE=2.4709\\
+\texttt{hampel_filter_then_mean}: MAE=1.7225, RMSE=1.8086, P95AE=2.6554\\
+\texttt{fpr_owa}: MAE=1.7530, RMSE=1.8371, P95AE=2.6133\\
+\texttt{direct_owa}: MAE=1.8383, RMSE=1.9291, P95AE=2.8162
+
+\paragraph{Agentic safety variants.}
+\texttt{deterministic_policy_only}: unsafe proposed=0.00, blocked=0.00, unsafe executed=0.00, safe accepted=1.00, refinement cycles=0.00\\
+\texttt{react_with_verifier}: unsafe proposed=1.00, blocked=1.00, unsafe executed=0.00, safe accepted=0.00, refinement cycles=0.00\\
+\texttt{react_with_verifier_and_self_refinement}: unsafe proposed=1.00, blocked=1.00, unsafe executed=0.00, safe accepted=0.67, refinement cycles=0.67\\
+\texttt{react_without_verifier}: unsafe proposed=1.00, blocked=0.00, unsafe executed=1.00, safe accepted=0.00, refinement cycles=0.00
+
+\paragraph{Latency summary.}
+\texttt{agent_react_with_verifier}: consensus latency=0.000000s, agent/simulation latency=0.000005s\\
+\texttt{agent_deterministic_policy_only}: consensus latency=0.000000s, agent/simulation latency=0.000006s\\
+\texttt{agent_react_without_verifier}: consensus latency=0.000000s, agent/simulation latency=0.000010s\\
+\texttt{agent_react_with_verifier_and_self_refinement}: consensus latency=0.000000s, agent/simulation latency=0.000011s\\
+\texttt{trimmed_mean}: consensus latency=0.025975s, agent/simulation latency=0.000000s\\
+\texttt{mean}: consensus latency=0.026807s, agent/simulation latency=0.000000s\\
+\texttt{direct_owa}: consensus latency=0.027052s, agent/simulation latency=0.000000s\\
+\texttt{median}: consensus latency=0.027927s, agent/simulation latency=0.000000s\\
+\texttt{hampel_filter_then_mean}: consensus latency=0.032631s, agent/simulation latency=0.000000s\\
+\texttt{fpr_owa}: consensus latency=0.045447s, agent/simulation latency=0.000000s

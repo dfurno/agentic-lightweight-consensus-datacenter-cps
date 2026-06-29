@@ -1,0 +1,37 @@
+{
+  "source":"kaggle_hot_corridor_enact_cucd",
+  "thermal_source_url":"https:\/\/www.kaggle.com\/datasets\/mbjunior\/data-centre-hot-corridor-temperature-prediction",
+  "enact_reference_url":"https:\/\/pmc.ncbi.nlm.nih.gov\/articles\/PMC13091772\/",
+  "cucd_source_url":"https:\/\/data.mendeley.com\/datasets\/7n2d42pm3n\/3",
+  "role":"real hot-corridor thermal data with ENACT power proxy and CuCD-ID pattern-level attacks",
+  "limitations":"Kaggle hot-corridor values appear standardized; metrics are reported in dataset units unless inverse scaling metadata is provided. CuCD-ID is spacecraft cybersecurity telemetry and is used only for attack timing labels, not thermal measurements.",
+  "rows_loaded":240,
+  "sensor_columns":[
+    "T_MEAS-0",
+    "T_MEAS-1",
+    "T_MEAS-2",
+    "T_MEAS-3",
+    "T_MEAS-4",
+    "T_MEAS-5",
+    "T_MEAS-6",
+    "T_MEAS-7"
+  ],
+  "power_columns":[
+    "P_cu-0",
+    "P_cu-1",
+    "P_cu-2",
+    "P_cu-3",
+    "P_cu-4",
+    "P_cu-5",
+    "P_cu-6",
+    "P_cu-7"
+  ],
+  "enact_file":"data\/raw\/enact\/node_telemetry_pods_on.csv",
+  "enact_rows_used":240,
+  "cucd_file":"data\/raw\/cucd_id\/CubeSat Cybersecurity Dataset for Intrusion Detect\/Data\/Raw\/consolidated_dataset_raw.csv",
+  "cucd_label_policy":"Label != 3 mapped to attack timing only",
+  "num_sensors":9,
+  "time_steps":240,
+  "dataset_driven":true,
+  "temperature_model":"fallback thermal model driven by real BDG2 electricity\/weather substitute inputs"
+}

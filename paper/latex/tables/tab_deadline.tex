@@ -1,0 +1,17 @@
+\begin{table}[!tbp]
+\centering
+\caption{Deadline-miss rate by deadline budget. Because a miss occurs whenever the (\(\sim\)7\,s) LLM call lands on a tick, the miss rate equals the invocation rate and is therefore flat across deadlines; event triggering reduces it by the same factor at every budget.}
+\label{tab:deadline}
+\footnotesize
+\begin{tabular}{lccc}
+\toprule
+\textbf{Deadline (ms)} & \textbf{Intensive} & \textbf{Event-triggered} & \textbf{Reduction} \\
+\midrule
+100 & 0.7461 & 0.0396 & 94.7\% \\
+250 & 0.7461 & 0.0396 & 94.7\% \\
+500 & 0.7461 & 0.0396 & 94.7\% \\
+1000 & 0.7461 & 0.0396 & 94.7\% \\
+5000 & 0.7461 & 0.0396 & 94.7\% \\
+\bottomrule
+\end{tabular}
+\end{table}

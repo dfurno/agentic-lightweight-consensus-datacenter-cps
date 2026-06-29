@@ -1,0 +1,9 @@
+raw_root: data/raw
+interim_root: data/interim
+processed_root: data/processed
+results_root: results
+dataset_manifest: configs/datasets.yaml
+timestamp_column_candidates: ["timestamp", "time", "datetime", "date"]
+power_column_candidates: ["power", "energy", "cpu", "utilization", "memory", "meter_reading"]
+temperature_column_candidates: ["temperature", "temp", "rack_temp", "hot_corridor", "hot_aisle", "tlhc", "t_meas"]
+attack_label_column_candidates: ["label", "attack", "attack_type", "class", "category"]

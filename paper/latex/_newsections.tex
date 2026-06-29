@@ -1,0 +1,423 @@
+%% ===================================================================
+\section{Experimental Setup}
+\label{sec:setup}
+
+The architecture is evaluated on a real-data cyber--physical simulation:
+a hierarchical IoT/MAS data-centre testbed in which sensing agents,
+edge moderating agents, and the verifier-gated orchestrator operate over
+telemetry drawn from audited public datasets. The study is a
+simulation, not a physical deployment; this scoping is intentional and
+its consequences are discussed in Section~\ref{sec:limitations}.
+
+\subsection{Data and Their Audited Roles}
+\label{sec:setup_data}
+
+Dataset names were treated as hypotheses and validated by an automated
+audit before use; each dataset is admitted only for the role its schema
+supports (Table~\ref{tab:datasets}). Thermal calibration---the
+hot-corridor temperature signal that the consensus layer
+estimates---comes from the Kaggle \emph{Data Centre Warm/Hot Corridor
+Temperature Prediction} dataset (fields \texttt{TLHC},
+\texttt{T\_MEAS-*}, \texttt{P\_cu-*}). Workload and power context comes
+from the ENACT edge--cloud continuum telemetry (Zenodo record
+18920397; \texttt{CPU\%}, \texttt{MEM}, \texttt{Energy\,W}); the audit
+marks ENACT usable for power but \emph{not} for temperature, and it is
+never used as a thermal signal. Anomaly and deception \emph{timing} is
+taken from CuCD-ID, a CubeSat cybersecurity intrusion-detection dataset
+(Mendeley Data, CC~BY~4.0); per the audit's mapping rule, this
+cyber dataset contributes only the temporal placement of
+anomaly/attack episodes and is never interpreted as a thermal
+measurement. Google Cluster Data, Building Data Genome Project~2, and
+CICIoT2023 were considered as candidates/substitutes but were not the
+datasets used in the final run. The Kaggle thermal values appear
+standardised; all error metrics are therefore reported in dataset units
+unless inverse-scaling metadata is available.
+
+\input{tables/tab_datasets}
+
+\subsection{Scenario Design}
+\label{sec:setup_scenarios}
+
+The full campaign comprises $1{,}890$ scenarios producing $11{,}340$
+per-method metric rows, $30{,}240$ agentic-safety rows, and $41{,}580$
+latency rows. Scenarios vary seven deception/anomaly attack types
+(Table~\ref{tab:attacks}: bias, drift, freeze, mixed, replay, scaling,
+spike), the attacked-sensor fraction $\beta_a\in\{0.0,0.1,0.2,0.3,0.4\}$,
+sensor noise levels $\{0.1,0.25,0.5\}$, zone sizes
+$n_z\in\{5,9,13\}$, OWA parameters $(\alpha,\beta)\in\{(0.2,0.7),(0.3,0.8)\}$,
+and three random seeds $\{11,42,101\}$. The thermal response follows a
+first-order model with disturbance, and attacks are activated over a
+bounded fraction of each episode rather than for its entire duration.
+
+\subsection{Consensus Methods and Agentic Variants}
+\label{sec:setup_methods}
+
+Six aggregators are compared under identical conditions: arithmetic
+\emph{mean}, \emph{trimmed mean}, \emph{Hampel-filter-then-mean},
+\emph{median}, \emph{direct OWA} (value-ordered, same quantifier), and
+the proposed \emph{FPR--OWA} (dominance-ordered, with reliability
+diagnostics). Four agentic-control variants instantiate the safety
+ablation: \emph{deterministic policy only}, \emph{ReAct without
+verifier}, \emph{ReAct with verifier}, and \emph{ReAct with verifier and
+self-refinement}. Two real-time supervision regimes are studied
+separately (Section~\ref{sec:results_rq4}): an \emph{intensive} regime
+that invokes the LLM aggressively, and an \emph{event-triggered} regime
+with a restrictive policy (confidence threshold $0.35$, anomaly
+threshold $3$, temperature margin $0.02$, minimum inter-invocation
+interval $20$ ticks, no real-time refinement), each evaluated against
+deadline budgets of $\{100,250,500,1000,5000\}$\,ms.
+
+\subsection{Metrics}
+\label{sec:setup_metrics}
+
+Estimation quality is measured by mean absolute error (MAE), root mean
+square error (RMSE), median absolute error, the 95th-percentile absolute
+error (P95~AE), and maximum absolute error, all in dataset units, plus
+the mean number of anomaly flags and the mean confidence emitted per
+method. Safety is measured by the counts of unsafe actions
+\emph{proposed}, \emph{blocked} by the verifier, and---decisively---%
+\emph{executed}, together with accepted safe actions and LLM/verifier
+call counts. Latency is reported per decision for the consensus
+operators and per planner$+$verifier invocation for the agentic
+variants; the real-time study additionally reports loop-latency
+percentiles, LLM invocation and failure rates, deadline-miss rates, and
+thermal-SLA violation rates.
+
+\subsection{Implementation}
+\label{sec:setup_impl}
+
+The fast path is implemented in Python with vectorised NumPy operators.
+The orchestrator is built on LangGraph with a Gemma planner served behind
+an OpenAI-compatible endpoint; the verifier is a dependency-free rule
+engine driven by a declarative SLA policy ($T_{\mathrm{SLA}}$,
+$T_{\mathrm{emerg}}$, $\tau_{\mathrm{age}}$, $\tau_{\gamma}$, actuator
+bounds and slew limits, refinement budget $K$). All runs are seeded and
+every scenario emits a full execution trace, supporting exact replay and
+the post-hoc derivation of all reported metrics from measured files
+only.
+
+%% ===================================================================
+\section{Results}
+\label{sec:results}
+
+We report measured results only. Throughout, ``best'' denotes the
+minimum-error method for the stated slice; no aggregate is projected or
+smoothed.
+
+\subsection{RQ1: How the Consensus Operators Compare}
+\label{sec:results_rq1}
+
+Averaged over all $1{,}890$ scenarios, the six aggregators are close and
+\emph{no method dominates} (Table~\ref{tab:consensus_perf},
+Fig.~\ref{fig:mae_method}). Plain \emph{mean} attains the best global MAE
+($1.5366$) and RMSE ($1.6210$), with trimmed mean and Hampel-mean within
+$0.01$. FPR--OWA has the highest global MAE ($1.6171$). This ordering is
+stable and we report it plainly: for unstructured global error, simple
+robust averaging is hard to beat on this data.
+
+Two qualifications make the picture more interesting. First, the tail
+tells a different story from the mean: on P95~AE the ranking reorders,
+with \emph{direct OWA} ($2.3906$) and \emph{median} ($2.3952$) ahead of
+mean ($2.4419$), and on maximum absolute error median and direct OWA are
+again strongest (Fig.~\ref{fig:p95_method}). Quantifier-guided
+aggregation thus helps precisely where it is designed to---in the
+worst-case tail---even when it trails on the average. Second, the
+per-attack breakdown (Table~\ref{tab:per_attack},
+Fig.~\ref{fig:heatmap}) shows method advantage is attack-dependent:
+FPR--OWA is the single best aggregator under \emph{bias}
+($1.6468$ vs.\ mean $1.7763$), where a systematic offset sharpens the
+reliability ranking; Hampel-mean leads under \emph{spike} ($1.4716$) and
+\emph{mixed}; and mean leads under drift, freeze, replay, and scaling.
+As the attacked fraction grows to $\beta_a=0.4$, the \emph{median}
+becomes the most competitive aggregator ($1.6133$), as expected when a
+larger minority is compromised.
+
+The dominant driver of accuracy, however, is not the operator but sensor
+redundancy (Table~\ref{tab:sensors}, Fig.~\ref{fig:sensors}). Moving from
+$5$ to $13$ sensors per zone lowers MAE for every method---for mean, from
+$1.8268$ to $1.1522$, a $37\%$ reduction---a far larger effect than any
+between-method gap. The actionable answer to RQ1 is therefore that
+estimation quality is governed first by redundancy and attack regime,
+and only secondarily by the choice of aggregator; the fast path should
+select the aggregator to the threat (e.g.\ Hampel under spikes, median
+under heavy compromise) rather than commit to a single ``winner''.
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=0.92\columnwidth]{figures/fig_mae_by_method.pdf}
+\caption{Global MAE by consensus method over all $1{,}890$ scenarios.
+Differences are small and favour simple robust averaging; FPR--OWA does
+not minimise global MAE.}
+\label{fig:mae_method}
+\end{figure}
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=0.92\columnwidth]{figures/fig_p95_by_method.pdf}
+\caption{Tail error (P95~AE) by method. The ranking differs from MAE:
+quantifier-guided and order-statistic methods (direct OWA, median) lead
+on the tail.}
+\label{fig:p95_method}
+\end{figure}
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_heatmap_attack_method.pdf}
+\caption{MAE by attack type and method (bold cell $=$ best method per
+attack). Method advantage is attack-dependent; FPR--OWA wins under bias,
+Hampel under spike/mixed, mean elsewhere.}
+\label{fig:heatmap}
+\end{figure}
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=0.92\columnwidth]{figures/fig_mae_vs_sensors.pdf}
+\caption{MAE versus sensors per zone. Redundancy improves accuracy for
+every method far more than any between-method difference.}
+\label{fig:sensors}
+\end{figure}
+
+\input{tables/tab_consensus_perf}
+\input{tables/tab_per_attack}
+\input{tables/tab_sensors}
+
+\subsection{RQ2: The Diagnostic Value of FPR--OWA}
+\label{sec:results_rq2}
+
+If FPR--OWA does not minimise MAE, why retain it? Because it is the only
+method in the comparison that produces a usable trust signal. The robust
+baselines emit a degenerate confidence of $1.000$ and zero anomaly flags
+by construction (Table~\ref{tab:consensus_perf}): they return a number
+with no statement about how much to believe it. FPR--OWA instead reports
+a mean confidence of $0.532$ and an average of $1.109$ anomaly flags per
+scenario, both derived from the reliability scores and the fuzzy
+preference relation. These are exactly the inputs the verifier consumes
+in its process checks (Section~\ref{sec:verifier}) and the event-trigger
+policy uses to decide when to escalate to the LLM
+(Section~\ref{sec:planner}). The contribution of FPR--OWA is thus
+\emph{diagnostic and architectural} rather than accuracy-maximising: it
+makes the consensus layer self-aware enough to gate verification and
+supervision. A safety architecture that must decide \emph{when it does
+not trust its own estimate} cannot be built on an aggregator that always
+claims full confidence.
+
+\subsection{RQ3: Safety Enforcement by the Deterministic Verifier}
+\label{sec:results_rq3}
+
+The safety ablation is unambiguous (Table~\ref{tab:safety},
+Fig.~\ref{fig:safety}). With the verifier removed, the ReAct planner
+proposes $4{,}409$ unsafe actions and \emph{all $4{,}409$ are executed}.
+Inserting the deterministic verifier blocks every one of the $4{,}358$
+unsafe proposals it sees, driving unsafe executions to \emph{zero} while
+still accepting $3{,}202$ safe actions. The deterministic-policy-only
+variant likewise executes no unsafe action (it proposes none), but it
+forgoes agentic flexibility entirely. Adding self-refinement raises
+accepted safe actions from $3{,}202$ to $4{,}341$---the planner repairs
+many initially rejected proposals from verifier feedback---while keeping
+unsafe executions at zero; the cost is more LLM and verifier calls
+($13{,}468$ each vs.\ $7{,}560$) and roughly $1.8\times$ the per-decision
+latency ($12.95$\,s vs.\ $7.15$\,s). The answer to RQ3 is therefore
+clear: the verifier is necessary and sufficient to eliminate unsafe
+execution in our campaign, and self-refinement is a worthwhile but
+strictly supervisory add-on whose latency makes it unsuitable for the
+hard-real-time path.
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=0.96\columnwidth]{figures/fig_safety_variants.pdf}
+\caption{Unsafe actions executed versus blocked, by agentic variant. The
+verifier eliminates unsafe execution; without it, every unsafe proposal
+runs.}
+\label{fig:safety}
+\end{figure}
+
+\input{tables/tab_safety}
+
+\subsection{RQ4: Real-Time Feasibility of LLM Supervision}
+\label{sec:results_rq4}
+
+Latency makes the case for keeping the LLM off the critical path. The
+fuzzy-consensus operators are lightweight---mean consensus costs
+$\approx 0.044$\,s and FPR--OWA $\approx 0.085$\,s per
+decision---whereas a single planner$+$verifier decision costs
+$7.0$--$7.2$\,s, and $12.9$\,s with refinement
+(Fig.~\ref{fig:latency}). The bottleneck is unambiguously the LLM, and
+no consensus method approaches it.
+
+The two real-time regimes quantify the consequence
+(Table~\ref{tab:realtime}, Fig.~\ref{fig:realtime}). Under
+\emph{intensive} supervision the LLM is invoked on $74.6\%$ of ticks; the
+mean loop latency is $5{,}194.7$\,ms and the deadline-miss rate is
+$0.746$---equal to the invocation rate, because a $\sim$7\,s call
+overruns every tested budget whenever it fires. Under the
+\emph{event-triggered} policy the invocation rate falls to $3.96\%$, the
+mean loop latency to $285.4$\,ms, and the deadline-miss rate to $0.0396$,
+a $94.7\%$ reduction at every deadline from $100$ to $5{,}000$\,ms
+(Table~\ref{tab:deadline}). Critically, estimation quality is
+\emph{unchanged} between the regimes (MAE $1.5090$, RMSE $1.6128$ in
+both) and the thermal-SLA violation rate is $0.0$ throughout: the
+thermal estimate is produced by the fuzzy-consensus fast path, so
+calling the LLM more often buys no accuracy. The event-triggered loop
+latency is sharply bimodal---a P95 of $0.459$\,ms (fast-path ticks)
+against a P99 of $7{,}313$\,ms (the rare LLM-triggered ticks),
+Fig.~\ref{fig:rtdist}. The system becomes near-real-time not because the
+LLM is fast---its mean call latency remains $\approx 7.2$\,s---but
+because it is called rarely. A small fraction of LLM outputs are
+JSON-invalid (failure rate $\approx 0.011$); these are absorbed by the
+fallback and recorded as handled events, which is evidence for the
+necessity of the verifier-plus-fallback design rather than a failure of
+the method.
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=0.96\columnwidth]{figures/fig_latency.pdf}
+\caption{Per-decision latency (log scale). Fuzzy consensus is two orders
+of magnitude faster than a single LLM decision; the LLM is the
+bottleneck.}
+\label{fig:latency}
+\end{figure}
+
+\begin{figure*}[!tbp]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/fig_realtime_comparison.pdf}
+\caption{Intensive vs.\ event-triggered LLM supervision. Event
+triggering collapses invocation rate, loop latency, and deadline misses
+while leaving MAE essentially unchanged.}
+\label{fig:realtime}
+\end{figure*}
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=0.92\columnwidth]{figures/fig_realtime_latency_dist.pdf}
+\caption{Event-triggered loop latency is bimodal: most ticks are
+sub-millisecond (fast path), while rare LLM-triggered ticks dominate the
+tail.}
+\label{fig:rtdist}
+\end{figure}
+
+\input{tables/tab_realtime}
+\input{tables/tab_deadline}
+
+%% ===================================================================
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{Why a non-dominant operator is still the right one}
+The result that simple averaging wins on global MAE while FPR--OWA does
+not is, we argue, the most honest and the most useful finding of the
+study. It separates two questions that are easy to conflate: \emph{which
+operator estimates best} and \emph{which operator supports safe
+orchestration}. On this data the answers differ. Averaging is an
+excellent estimator but a poor sentinel---it cannot tell the verifier or
+the trigger policy when to doubt it. FPR--OWA trades a small amount of
+average accuracy for a confidence and anomaly signal that the rest of the
+architecture is built on. In a system whose defining requirement is
+knowing when \emph{not} to act autonomously, that trade is the right one;
+and because the fast path is free to pick the per-attack best aggregator,
+the architecture need not sacrifice accuracy to obtain the diagnostics.
+
+\paragraph{Three concerns, three mechanisms}
+The campaign supports a clean division of labour. Estimation accuracy is
+won by robust aggregation and, above all, by sensor redundancy; safety is
+won by the deterministic verifier, which reduces executed unsafe actions
+to zero independently of how the LLM behaves; responsiveness is won by
+event-triggered supervision, which preserves accuracy and SLA compliance
+while restoring real-time margins. Placing a single powerful LLM
+``in the loop'' would have coupled these concerns and degraded the third
+without improving the first. The two-path design keeps them decoupled.
+
+\paragraph{The role of agentic reasoning}
+Our evidence does not support the strongest framing of LLM-in-the-loop
+control, and we do not advance it. Frequent LLM supervision did not
+improve estimation and made the loop miss deadlines; the LLM's value is
+as a sparse supervisory layer that can reason over consensus snapshots
+when the fast path signals low confidence or anomalies, and whose
+proposals are always subordinate to the verifier. Self-refinement fits
+this role well: it recovers more safe actions from verifier feedback, but
+its added latency confirms that it belongs in supervision, not on the
+critical path.
+
+\paragraph{Positioning with respect to blockchain--IoT coordination}
+The measured latencies reinforce the qualitative positioning of
+Section~\ref{sec:positioning}. The fast path agrees on operational state
+in tens of milliseconds without any replicated ledger; blockchain
+mechanisms remain complementary instruments for notarising validated
+snapshots or settling cross-organisational records, not competitors for
+the per-tick estimation problem. We did not, and on this evidence should
+not, run a blockchain method as an estimation baseline.
+
+\section{Limitations}
+\label{sec:limitations}
+
+Several limitations bound the claims above. The thermal signal comes from
+a single Kaggle hot-corridor dataset whose values appear standardised;
+absent inverse-scaling metadata, errors are in dataset units and absolute
+magnitudes should not be read as degrees Celsius. CuCD-ID is spacecraft
+cybersecurity telemetry and is used \emph{only} for pattern-level
+anomaly/deception timing, never as a thermal measurement; ENACT supplies
+workload/power context only. The study is a CPS/MAS \emph{simulation},
+not a physical deployment, so claims concern state validation and
+decision support rather than closed-loop actuation on real hardware. LLM
+latency ($\approx 7$\,s per call) is incompatible with hard-real-time
+operation if the planner is invoked frequently; our event-triggered
+policy mitigates but does not remove this constraint, and the system is
+near-real-time only because the LLM is called rarely. A non-negligible
+fraction of LLM outputs are JSON-invalid, which the fallback handles but
+which underscores the dependence on the verifier-plus-fallback layer.
+FPR--OWA does not dominate the baselines in global MAE, and the
+verifier's guarantee is an \emph{operational} one over the tested
+scenarios, not a formal proof of Byzantine resilience. Finally, the
+results are obtained on specific datasets and a particular thermal model;
+generalisation to other facilities, richer workloads, and live control
+requires further validation. The architecture should not be read as
+production-ready.
+
+\section{Conclusions and Future Work}
+\label{sec:conclusions}
+
+We presented an agentic lightweight fuzzy-consensus architecture for
+resilient monitoring and control of data-centre cyber--physical systems
+under deception and anomaly attacks, and evaluated it on a real-data
+simulation spanning $1{,}890$ scenarios and two real-time supervision
+regimes. The evidence supports a deliberately measured set of claims. No
+consensus operator dominates: simple robust averaging minimises global
+MAE, FPR--OWA wins under systematic bias and, uniquely, supplies the
+confidence and anomaly diagnostics on which safe orchestration depends,
+and sensor redundancy outweighs the choice of operator. The deterministic
+verifier is essential---it reduces executed unsafe actions to zero, where
+removing it lets every unsafe proposal run---and self-refinement raises
+accepted safe actions at a latency cost that confines it to supervision.
+Intensive LLM-in-the-loop supervision does not improve estimation and
+breaks real-time deadlines, whereas event-triggered supervision preserves
+accuracy and zero SLA violations while cutting deadline misses by roughly
+$95\%$. Taken together, these results argue for an architecture in which
+the safety-critical path stays lightweight, deterministic,
+fuzzy-consensus driven, and verifier-guarded, while LLM-based agentic
+reasoning serves as sparse supervisory intelligence.
+
+Future work should validate the architecture on physical data-centre
+testbeds and richer, less standardised workloads; develop facility-level
+arbitration policies across zones; extend the consistency model and study
+trust dynamics over longer horizons; calibrate the event-trigger policy
+and verifier thresholds against operational SLAs; and treat disagreement
+patterns and persistent anomaly flags as first-class signals for
+anomaly detection and predictive maintenance.
+
+%% ===================================================================
+\section*{CRediT Authorship Contribution Statement}
+\todo{Complete according to the final author list and roles (e.g.,
+Conceptualization, Methodology, Software, Validation, Writing).}
+
+\section*{Declaration of Competing Interest}
+The authors declare that they have no known competing financial
+interests or personal relationships that could have appeared to
+influence the work reported in this paper.
+
+\section*{Data Availability}
+The experiments use publicly available datasets (Kaggle Data Centre
+Warm/Hot Corridor Temperature Prediction; ENACT, Zenodo record 18920397;
+CuCD-ID, Mendeley Data, CC~BY~4.0). \todo{Add the code/configuration
+repository link and the archived results bundle DOI on acceptance.}
+
+\section*{Acknowledgements}
+\todo{Add funding and acknowledgements if applicable.}

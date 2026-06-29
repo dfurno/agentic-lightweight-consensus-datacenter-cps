@@ -1,0 +1,61 @@
+datasets:
+  - id: enact
+    name: ENACT
+    role: workload_power
+    status: primary
+    source_url: https://zenodo.org/records/18920397
+    license: record_specific
+    download_method: local_zip_or_zenodo
+    target_dir: data/raw/enact
+    checksum: null
+    notes: "ENACT Edge-Cloud Continuum Telemetry; node/pod telemetry includes CPU, memory, and Energy (watts)."
+  - id: kaggle_hot_corridor
+    name: Data Centre Warm Channel Temperature Prediction
+    role: thermal_calibration
+    status: primary
+    source_url: https://www.kaggle.com/datasets/mbjunior/data-centre-hot-corridor-temperature-prediction
+    license: kaggle_dataset_specific
+    download_method: local_zip_or_kaggle_api
+    target_dir: data/raw/kaggle_hot_corridor
+    checksum: null
+    notes: "Primary thermal dataset. final_dataset_std.csv contains P_cu-*, T_MEAS-* and TLHC columns."
+  - id: cucd_id
+    name: CuCD-ID
+    role: anomaly_timing
+    status: primary
+    source_url: https://data.mendeley.com/datasets/7n2d42pm3n/3
+    license: CC BY 4.0
+    download_method: local_zip_or_mendeley
+    target_dir: data/raw/cucd_id
+    checksum: null
+    notes: "CubeSat intrusion dataset. Use labels only for attack timing/pattern injection, not as thermal telemetry."
+  - id: google_cluster_data
+    name: Google Cluster Data
+    role: workload_power
+    status: substitute
+    source_url: https://github.com/google/cluster-data
+    license: CC-BY
+    download_method: git_or_manual
+    target_dir: data/raw/enact/google_cluster_data
+    checksum: null
+    notes: "Official repository documents Borg workload traces and May 2019 power traces."
+  - id: building_data_genome_2
+    name: Building Data Genome Project 2 / ASHRAE GEPIII
+    role: thermal_calibration
+    status: substitute
+    source_url: https://github.com/buds-lab/building-data-genome-project-2
+    license: repository_license
+    download_method: git_lfs
+    target_dir: data/raw/kaggle_hot_corridor/building_data_genome_2
+    checksum: null
+    notes: "Open building energy/weather/cooling-meter dataset; not a direct data-center hot-corridor source."
+  - id: ciciot2023
+    name: CICIoT2023
+    role: anomaly_timing
+    status: substitute
+    source_url: https://www.unb.ca/cic/datasets/iotdataset-2023.html
+    license: dataset_terms
+    download_method: manual_or_web
+    target_dir: data/raw/optional_iot_anomaly/ciciot2023
+    checksum: null
+    notes: "IoT network attack dataset. It must not be treated as thermal telemetry."

@@ -1,0 +1,104 @@
+[
+  {
+    "accessed_at": "2026-06-10T11:01:04.213339+00:00",
+    "download_method": "manual",
+    "id": "enact",
+    "license": "unknown",
+    "name": "ENACT",
+    "notes": "Primary requested dataset name is ambiguous; requires user-provided URL/version/license before use.",
+    "remote": null,
+    "role": "workload_power",
+    "source_url": null,
+    "status": "manual_required",
+    "target_dir": "data/raw/enact",
+    "validation_state": "manual_required"
+  },
+  {
+    "accessed_at": "2026-06-10T11:01:04.213453+00:00",
+    "download_method": "kaggle_api",
+    "id": "kaggle_hot_corridor",
+    "license": "kaggle_dataset_specific",
+    "name": "Kaggle Hot Corridor",
+    "notes": "Requires an exact Kaggle dataset slug and credentials; do not assume any hot-corridor dataset by name.",
+    "remote": null,
+    "role": "thermal_calibration",
+    "source_url": null,
+    "status": "manual_required",
+    "target_dir": "data/raw/kaggle_hot_corridor",
+    "validation_state": "manual_required"
+  },
+  {
+    "accessed_at": "2026-06-10T11:01:04.213458+00:00",
+    "download_method": "manual",
+    "id": "cucd_id",
+    "license": "unknown",
+    "name": "CuCD-ID",
+    "notes": "Primary requested dataset name is ambiguous; cyber datasets may only provide pattern-level attack timing.",
+    "remote": null,
+    "role": "anomaly_timing",
+    "source_url": null,
+    "status": "manual_required",
+    "target_dir": "data/raw/cucd_id",
+    "validation_state": "manual_required"
+  },
+  {
+    "accessed_at": "2026-06-10T11:01:04.219541+00:00",
+    "download_method": "git_or_manual",
+    "id": "google_cluster_data",
+    "license": "CC-BY",
+    "name": "Google Cluster Data",
+    "notes": "Official repository documents Borg workload traces and May 2019 power traces.",
+    "remote": {
+      "content_type": null,
+      "error": "HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /google/cluster-data (Caused by NameResolutionError(\"HTTPSConnection(host='github.com', port=443): Failed to resolve 'github.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+      "final_url": "https://github.com/google/cluster-data",
+      "reachable": false,
+      "status_code": null
+    },
+    "role": "workload_power",
+    "source_url": "https://github.com/google/cluster-data",
+    "status": "substitute",
+    "target_dir": "data/raw/enact/google_cluster_data",
+    "validation_state": "unreachable"
+  },
+  {
+    "accessed_at": "2026-06-10T11:01:04.220270+00:00",
+    "download_method": "git_or_manual",
+    "id": "building_data_genome_2",
+    "license": "repository_license",
+    "name": "Building Data Genome Project 2 / ASHRAE GEPIII",
+    "notes": "Open building energy/weather/cooling-meter dataset; not a direct data-center hot-corridor source.",
+    "remote": {
+      "content_type": null,
+      "error": "HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /buds-lab/building-data-genome-project-2 (Caused by NameResolutionError(\"HTTPSConnection(host='github.com', port=443): Failed to resolve 'github.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+      "final_url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "reachable": false,
+      "status_code": null
+    },
+    "role": "thermal_calibration",
+    "source_url": "https://github.com/buds-lab/building-data-genome-project-2",
+    "status": "substitute",
+    "target_dir": "data/raw/kaggle_hot_corridor/building_data_genome_2",
+    "validation_state": "unreachable"
+  },
+  {
+    "accessed_at": "2026-06-10T11:01:04.220835+00:00",
+    "download_method": "manual_or_web",
+    "id": "ciciot2023",
+    "license": "dataset_terms",
+    "name": "CICIoT2023",
+    "notes": "IoT network attack dataset. It must not be treated as thermal telemetry.",
+    "remote": {
+      "content_type": null,
+      "error": "HTTPSConnectionPool(host='www.unb.ca', port=443): Max retries exceeded with url: /cic/datasets/iotdataset-2023.html (Caused by NameResolutionError(\"HTTPSConnection(host='www.unb.ca', port=443): Failed to resolve 'www.unb.ca' ([Errno 8] nodename nor servname provided, or not known)\"))",
+      "final_url": "https://www.unb.ca/cic/datasets/iotdataset-2023.html",
+      "reachable": false,
+      "status_code": null
+    },
+    "role": "anomaly_timing",
+    "source_url": "https://www.unb.ca/cic/datasets/iotdataset-2023.html",
+    "status": "substitute",
+    "target_dir": "data/raw/optional_iot_anomaly/ciciot2023",
+    "validation_state": "unreachable"
+  }
+]

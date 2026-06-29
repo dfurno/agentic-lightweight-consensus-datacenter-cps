@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-lightweight-consensus"
+version = "0.1.0"
+description = "Reproducible CPS/MAS simulation for FPR-informed OWA consensus and verifier-guided data-center control."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Research Engineering Team" }]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "pydantic>=2.6",
+  "pyyaml>=6.0",
+  "requests>=2.31",
+  "matplotlib>=3.8",
+  "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+gpu = ["openai>=1.40", "torch>=2.4", "vllm>=0.6"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

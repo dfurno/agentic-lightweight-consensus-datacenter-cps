@@ -1,0 +1,42 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.venv/
+venv/
+env/
+
+# Local credentials and tokens.
+.env
+*.env
+!/.env.example
+
+# Third-party datasets and locally materialized downloads.
+data/raw/*
+!data/raw/.gitkeep
+
+# Heavy or intermediate archives.
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Runtime logs and temporary files.
+results/logs/
+outputs/logs/
+*.tmp
+
+# LaTeX build by-products.
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.spl
+*.synctex.gz

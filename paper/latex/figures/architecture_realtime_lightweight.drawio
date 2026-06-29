@@ -1,0 +1,155 @@
+<mxfile host="app.diagrams.net" modified="2026-06-17T10:30:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="architecture-realtime-lightweight" name="Architecture">
+    <mxGraphModel dx="1600" dy="950" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Real-Time Agentic Lightweight Fuzzy Consensus Architecture" style="text;html=1;strokeColor=none;fillColor=none;fontSize=22;fontStyle=1;align=left;verticalAlign=middle;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="40" y="18" width="720" height="32" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="Fast path runs at every control tick; LangGraph/Gemma supervision is event-triggered and always verified before actuation." style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;align=left;verticalAlign=middle;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="900" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend-fast-line" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#0F4FB8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="720" y="35" as="sourcePoint"/>
+            <mxPoint x="800" y="35" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-fast-text" value="FAST PATH: deterministic per-tick fuzzy consensus" style="text;html=1;strokeColor=none;fillColor=none;fontSize=13;align=left;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="815" y="25" width="330" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-slow-line" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=3;strokeColor=#F97316;dashed=1;dashPattern=8 6;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="720" y="60" as="sourcePoint"/>
+            <mxPoint x="800" y="60" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-slow-text" value="SLOW PATH: sparse event-triggered LLM supervision" style="text;html=1;strokeColor=none;fillColor=none;fontSize=13;align=left;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="815" y="50" width="350" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-act-line" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#1F7A34;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1170" y="35" as="sourcePoint"/>
+            <mxPoint x="1250" y="35" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-act-text" value="PHYSICAL ACTUATION LOOP" style="text;html=1;strokeColor=none;fillColor=none;fontSize=13;align=left;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="1265" y="25" width="250" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="layer-facility" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#EEF5FF;" vertex="1" parent="1">
+          <mxGeometry x="30" y="90" width="1260" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="layer-supervision" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;strokeWidth=2;strokeColor=#7C3AED;fillColor=#F7F1FF;" vertex="1" parent="1">
+          <mxGeometry x="30" y="255" width="1260" height="165" as="geometry"/>
+        </mxCell>
+        <mxCell id="layer-consensus" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#EEF5FF;" vertex="1" parent="1">
+          <mxGeometry x="30" y="440" width="1260" height="205" as="geometry"/>
+        </mxCell>
+        <mxCell id="layer-physical" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;strokeWidth=2;strokeColor=#1F7A34;fillColor=#F1FBF2;" vertex="1" parent="1">
+          <mxGeometry x="30" y="665" width="1260" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="audit-plane" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;strokeWidth=2;strokeColor=#B7791F;fillColor=#FFFBEB;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="90" width="240" height="785" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="facility-label" value="4  Facility Operation Layer&lt;br&gt;&lt;font style=&quot;font-size: 11px; font-weight: normal;&quot;&gt;Cross-zone decisions, human oversight, and escalation.&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=left;verticalAlign=top;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="55" y="113" width="380" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="supervision-label" value="3  Verification and Agentic Supervision Layer&lt;br&gt;&lt;font style=&quot;font-size: 11px; font-weight: normal;&quot;&gt;Safety gate, event triggers, LangGraph planner, and fallback logic.&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=left;verticalAlign=top;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="55" y="278" width="520" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="consensus-label" value="2  Edge Lightweight Consensus Layer&lt;br&gt;&lt;font style=&quot;font-size: 11px; font-weight: normal;&quot;&gt;Per-zone sensor reports are aggregated into robust consensus snapshots.&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=left;verticalAlign=top;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="55" y="463" width="560" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="physical-label" value="1  Physical and Sensing Layer&lt;br&gt;&lt;font style=&quot;font-size: 11px; font-weight: normal;&quot;&gt;Thermal, workload, power, and cyber-anomaly observations from audited datasets.&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;align=left;verticalAlign=top;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="55" y="688" width="650" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="facility-arbiter" value="&lt;b&gt;Facility Arbiter&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Resolves cross-zone trade-offs:&lt;br&gt;thermal risk, energy cost, workload placement&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#F8FAFC;align=left;spacingLeft=24;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="300" y="118" width="340" height="88" as="geometry"/>
+        </mxCell>
+        <mxCell id="dashboard" value="&lt;b&gt;Dashboards and Escalation&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Human oversight for blocked or high-risk actions.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#F8FAFC;align=left;spacingLeft=24;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="780" y="118" width="360" height="88" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="zone-verifier-agents" value="&lt;b&gt;Zone Verifier Agents&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Monitor consensus degree, temporal consistency, per-agent proximity, and persistent anomaly flags.&lt;br&gt;Adaptive feedback: resampling, delayed inclusion, down-weighting.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#7C3AED;fillColor=#F8FAFC;align=left;spacingLeft=24;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="185" y="325" width="430" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="event-trigger" value="&lt;b&gt;Event Trigger Policy&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;LLM invoked only when needed:&lt;br&gt;low confidence, anomaly burst, SLA margin, cooldown elapsed&lt;br&gt;&lt;i&gt;Final realtime policy: LLM calls about 3.96% of ticks.&lt;/i&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#F97316;fillColor=#FFF7ED;dashed=1;dashPattern=8 6;align=left;spacingLeft=24;fontSize=16;fontColor=#C2410C;" vertex="1" parent="1">
+          <mxGeometry x="875" y="285" width="335" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="planner" value="&lt;b&gt;LangGraph/Gemma Planner Agent&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;ReAct-style supervisory reasoning over consensus snapshots.&lt;br&gt;Outputs machine-readable control proposals.&lt;br&gt;&lt;i&gt;Not on the hard real-time path; failures fall back deterministically.&lt;/i&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#F97316;fillColor=#FFF7ED;align=left;spacingLeft=24;fontSize=16;fontColor=#C2410C;" vertex="1" parent="1">
+          <mxGeometry x="870" y="430" width="350" height="118" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="fpr-owa" value="&lt;b&gt;FPR-OWA Consensus Operator&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Lightweight robust aggregation per zone.&lt;br&gt;Produces estimate, confidence, reliability vector, anomaly flags.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#F8FAFC;align=left;spacingLeft=24;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="170" y="515" width="360" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="snapshot" value="&lt;b&gt;Consensus Snapshot&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Only artifact exposed upward:&lt;br&gt;temperature estimate, confidence, anomaly counts&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#F8FAFC;align=left;spacingLeft=24;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="585" y="515" width="245" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="shared-verifier" value="&lt;b&gt;Shared Verifier&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Non-bypassable gate&lt;br&gt;SLA, policy, actuator limits&lt;br&gt;&lt;b&gt;OK / fallback&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#F8FAFC;align=center;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="650" y="665" width="180" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="verified-action" value="&lt;b&gt;Verified&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;safe action&lt;br&gt;OK&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#F8FAFC;align=center;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="890" y="665" width="145" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="fallback" value="&lt;b&gt;Fallback&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;conservative&lt;br&gt;FB&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#0F4FB8;fillColor=#F8FAFC;align=center;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="665" width="145" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="zone-a" value="&lt;b&gt;Zone A&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Racks/hosts, thermal sensors, power interfaces&lt;br&gt;Actuators: fan speed and cooling setpoints&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#1F7A34;fillColor=#F8FAFC;align=center;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="145" y="735" width="260" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="zone-b" value="&lt;b&gt;Zone B&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Racks/hosts, thermal sensors, power interfaces&lt;br&gt;Actuators: fan speed and cooling setpoints&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#1F7A34;fillColor=#F8FAFC;align=center;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="435" y="735" width="260" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="zone-c" value="&lt;b&gt;Zone C&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Racks/hosts, thermal sensors, power interfaces&lt;br&gt;Actuators: fan speed and cooling setpoints&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#1F7A34;fillColor=#F8FAFC;align=center;fontSize=16;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="725" y="735" width="260" height="105" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="realtime-result" value="&lt;b&gt;Realtime Result&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;mean loop latency 285 ms&lt;br&gt;thermal SLA violations 0.0&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#1F7A34;fillColor=#F1FBF2;align=left;spacingLeft=20;fontSize=16;fontColor=#166534;" vertex="1" parent="1">
+          <mxGeometry x="1035" y="770" width="210" height="74" as="geometry"/>
+        </mxCell>
+        <mxCell id="safety-result" value="&lt;b&gt;Safety Result&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Verifier variants executed 0 unsafe LLM actions.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;strokeWidth=2;strokeColor=#F97316;fillColor=#FFF7ED;align=left;spacingLeft=24;fontSize=16;fontColor=#C2410C;" vertex="1" parent="1">
+          <mxGeometry x="875" y="570" width="345" height="62" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="audit-text" value="&lt;b&gt;Trustworthiness&lt;br&gt;and Traceability Plane&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Recorded artifacts&lt;/b&gt;&lt;br&gt;- Dataset provenance&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Kaggle thermal; ENACT workload/power;&lt;br&gt;CuCD-ID anomaly timing only.&lt;/font&gt;&lt;br&gt;&lt;br&gt;- Consensus snapshots&lt;br&gt;- Reliability vectors&lt;br&gt;- Planner prompts/outputs&lt;br&gt;- Verifier decisions&lt;br&gt;- Token and latency logs&lt;br&gt;- Reproducible CSV metrics&lt;br&gt;&lt;br&gt;&lt;b&gt;Paper constraints&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Quantitative claims only from results CSVs.&lt;br&gt;Cyber dataset is not treated as thermal data.&lt;br&gt;LLM is supervisory, not a hard real-time controller.&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=13;align=left;verticalAlign=top;fontColor=#111827;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="115" width="185" height="680" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="footer" value="Design intent: preserve lightweight consensus in the per-tick loop; use LangGraph/Gemma only as sparse, auditable supervision behind the same verifier." style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;align=left;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="40" y="910" width="1120" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- Fast path -->
+        <mxCell id="edge-zone-a-to-fpr" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=3;strokeColor=#0F4FB8;" edge="1" parent="1" source="zone-a" target="fpr-owa"/>
+        <mxCell id="edge-zone-b-to-fpr" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=3;strokeColor=#0F4FB8;" edge="1" parent="1" source="zone-b" target="fpr-owa"/>
+        <mxCell id="edge-zone-c-to-fpr" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=3;strokeColor=#0F4FB8;" edge="1" parent="1" source="zone-c" target="snapshot"/>
+        <mxCell id="edge-fpr-to-snapshot" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#0F4FB8;" edge="1" parent="1" source="fpr-owa" target="snapshot"/>
+        <mxCell id="edge-snapshot-to-verifier" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#0F4FB8;" edge="1" parent="1" source="snapshot" target="shared-verifier"/>
+        <mxCell id="edge-verifier-to-action" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#0F4FB8;" edge="1" parent="1" source="shared-verifier" target="verified-action"/>
+        <mxCell id="edge-verifier-to-fallback" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#0F4FB8;" edge="1" parent="1" source="shared-verifier" target="fallback"/>
+        <mxCell id="edge-snapshot-to-zone-verifiers" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#0F4FB8;" edge="1" parent="1" source="snapshot" target="zone-verifier-agents"/>
+        <mxCell id="edge-verifier-to-facility" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#0F4FB8;" edge="1" parent="1" source="shared-verifier" target="facility-arbiter"/>
+        <mxCell id="edge-verifier-to-dashboard" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#0F4FB8;" edge="1" parent="1" source="shared-verifier" target="dashboard"/>
+
+        <!-- Slow path -->
+        <mxCell id="edge-snapshot-to-trigger" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#F97316;dashed=1;dashPattern=8 6;" edge="1" parent="1" source="snapshot" target="event-trigger"/>
+        <mxCell id="edge-trigger-to-planner" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=3;strokeColor=#F97316;dashed=1;dashPattern=8 6;" edge="1" parent="1" source="event-trigger" target="planner"/>
+        <mxCell id="edge-planner-to-verifier" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=3;strokeColor=#F97316;dashed=1;dashPattern=8 6;" edge="1" parent="1" source="planner" target="shared-verifier"/>
+        <mxCell id="edge-planner-to-safety-result" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#F97316;dashed=1;dashPattern=8 6;" edge="1" parent="1" source="planner" target="safety-result"/>
+
+        <!-- Physical actuation loop -->
+        <mxCell id="edge-action-to-zone-a" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#1F7A34;" edge="1" parent="1" source="verified-action" target="zone-a"/>
+        <mxCell id="edge-action-to-zone-b" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#1F7A34;" edge="1" parent="1" source="verified-action" target="zone-b"/>
+        <mxCell id="edge-fallback-to-zone-c" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=#1F7A34;" edge="1" parent="1" source="fallback" target="zone-c"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

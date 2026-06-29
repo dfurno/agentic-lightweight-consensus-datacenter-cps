@@ -1,0 +1,15 @@
+\begin{table*}[!tbp]
+\centering
+\caption{Datasets and their audited roles. Each is used only for the role its schema supports; the CubeSat cybersecurity telemetry contributes anomaly \emph{timing} only.}
+\label{tab:datasets}
+\footnotesize
+\begin{tabular}{p{0.20\textwidth}p{0.13\textwidth}p{0.15\textwidth}ccc p{0.12\textwidth}}
+\toprule
+\textbf{Dataset} & \textbf{Source} & \textbf{Role} & \textbf{Temp.} & \textbf{Work./Pow.} & \textbf{Attack timing} & \textbf{License} \\
+\midrule
+Data Centre Warm/Hot Corridor Temperature Prediction & Kaggle & Thermal calibration (\texttt{TLHC}, \texttt{T\_MEAS-*}, \texttt{P\_cu-*}) & \checkmark & --- & --- & Kaggle dataset terms \\
+ENACT Edge--Cloud Continuum Telemetry & Zenodo rec.\ 18920397 & Workload / power context (\texttt{CPU\%}, \texttt{MEM}, \texttt{Energy\,W}) & --- & \checkmark & --- & Record-specific \\
+CuCD-ID (CubeSat Cybersecurity, Intrusion Detection) & Mendeley Data & Anomaly / deception \emph{timing} only & --- & --- & \checkmark & CC BY 4.0 \\
+\bottomrule
+\end{tabular}
+\end{table*}

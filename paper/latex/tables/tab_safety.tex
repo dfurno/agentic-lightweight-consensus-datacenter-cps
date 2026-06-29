@@ -1,0 +1,17 @@
+\begin{table*}[!tbp]
+\centering
+\caption{Agentic safety outcomes (campaign totals). Without the verifier every unsafe proposal executes; with it, none do. Per-decision latencies are in Fig.~\ref{fig:latency}.}
+\label{tab:safety}
+\footnotesize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Agentic variant} & \textbf{Unsafe prop.} & \textbf{Unsafe blocked} & \textbf{Unsafe exec.} & \textbf{Safe acc.} & \textbf{LLM calls} & \textbf{Verifier calls} \\
+\midrule
+Deterministic policy only & 0 & 0 & 0 & 7560 & 0 & 0 \\
+ReAct, no verifier & 4409 & 0 & 4409 & 3151 & 7560 & 7560 \\
+ReAct $+$ verifier & 4358 & 4358 & 0 & 3202 & 7560 & 7560 \\
+ReAct $+$ verifier $+$ refinement & 9127 & 9127 & 0 & 4341 & 13468 & 13468 \\
+\bottomrule
+\end{tabular}}
+\end{table*}

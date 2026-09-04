@@ -1,0 +1,28 @@
+{
+  "run_id": "20260903_bias_selective_replay",
+  "date_utc": "2026-09-03",
+  "replay_code_commit": "4dcae5c93d05ab4e241530cdb896fa92c25ef23b",
+  "final_postprocessing_code_commit": "00f15168d59bbd7860d8bca95a9717db73ba1f1b",
+  "canonical_alias_code_commit": "6db74cf9514e504d09bac5263dae396339e5c5c5",
+  "interpreter": "/root/research/iot-agentic-lightweight-consensus/.venv/bin/python",
+  "python_version": "3.12.3",
+  "counts": {
+    "unique_crp_configurations": 6,
+    "affected_scenarios": 135,
+    "controls_per_configuration": 6,
+    "ticks_per_configuration": 33840,
+    "replaced_estimation_rows_per_configuration": 270,
+    "historical_estimation_rows_per_configuration": 3780,
+    "historical_convergence_rows_per_configuration": 1890,
+    "ablation_scenarios": 1909,
+    "ablation_rows": 7636,
+    "diagnostic_records_reused": 16528320
+  },
+  "llm_calls": 0,
+  "new_traces_generated": 0,
+  "notes": [
+    "Commands and parameters are recorded in the versioned scripts and six manifests.",
+    "The unsuffixed CRP products are exact aliases of alpha_crp=0.5, M_z=4.0.",
+    "Raw diagnostic records remain outside Git and are identified by SHA-256 in dependents/dependent_validation.json."
+  ]
+}

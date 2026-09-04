@@ -1,0 +1,67 @@
+run_id: 20260903_thermal_pilot
+seeds: [11, 42, 101]
+conditions: [oracle, mean, fpr_crp]
+time:
+  dt_seconds: 60
+  horizon_ticks: 240
+plant:
+  initial_temperature_c: 30.0
+  ambient_base_c: 26.0
+  ambient_transition_c: 1.0
+  transition_start_tick: 60
+  transition_end_tick: 120
+  thermal_exchange_per_step: 0.08
+  load_base_c_per_step: 0.70
+  load_transition_c_per_step: 0.15
+  fan_gain_c_per_step: 0.80
+  process_noise_std_c: 0.02
+  fixed_setpoint_c: 24.0
+predictor:
+  thermal_exchange_per_step: 0.08
+  fan_gain_c_per_step: 0.88
+  improvement_tolerance_c: 0.01
+control:
+  target_temperature_c: 30.0
+  sla_temperature_c: 32.0
+  emergency_temperature_c: 38.0
+  hysteresis_c: 0.30
+  recovery_band_c: 0.50
+  recovery_sustain_ticks: 10
+  safe_dwell_ticks: 3
+  fan_initial: 0.5
+  fan_min: 0.0
+  fan_max: 1.0
+  fan_step: 0.1
+  fan_max_slew_per_step: 0.2
+sensors:
+  count: 9
+  noise_std_c: 0.20
+  attack_fraction: 0.3333333333333333
+diagnostics:
+  baseline_deviation_threshold_c: 1.5
+  anomaly_trigger_count: 1
+  confidence_threshold: 0.35
+crp:
+  alpha: 0.3
+  beta: 0.8
+  alpha_crp: 0.5
+  m_z_c: 4.0
+  tau_c: 0.7
+  tau_r: 0.5
+  ewma_lambda: 0.3
+  persistence_l: 3
+  max_rounds: 3
+  min_sensors: 3
+  anomaly_flag: persistent_flags
+  nonconvergence_forwarding: degraded_confidence
+attacks:
+  start_tick: 84
+  end_tick_exclusive: 144
+  definitions:
+    bias: {low: 1.5, high: 3.0, unit: degC_offset}
+    drift: {low: 0.03, high: 0.06, unit: degC_per_tick}
+    replay: {low: 8, high: 20, unit: ticks_delay}
+    freeze: {low: 20, high: 60, unit: ticks_duration}
+    spike: {low: 3.0, high: 6.0, unit: degC_repeated_alternating}
+    scaling: {low: 1.05, high: 1.10, unit: multiplicative_factor}
+    stuck: {low: 28.0, high: 34.0, unit: degC_constant}

@@ -1,0 +1,16 @@
+{
+  "run_id": "20260904_fpr_paper_artifact_audit_final",
+  "source_code_commit": "ad88d3d2b91376b46a5d8a38ae5cf0dcdf62c6fc",
+  "command": "scripts/audit_fpr_paper_artifacts.py --original /root/research/iot-agentic-lightweight-consensus --thermal-pilot runs/round1/20260903_thermal_pilot --hot-start runs/round1/20260903_thermal_hot_start --output runs/round1/20260904_fpr_paper_artifact_audit_final",
+  "runner_sha256": "9105e57754e2f249daefb2ede20599cc69302652b4932e399a7af62f73d933cb",
+  "input_manifest_sha256": "afdeaaf947c3f49e0d22989eedffb0a449fb8bbc9cc1df1df0347fab39e5e4c7",
+  "python": "3.12.3",
+  "interpreter": "/tmp/round1-residual-venv/bin/python",
+  "numpy": "2.5.2",
+  "pandas": "3.0.5",
+  "dependencies": {
+    "scipy": "1.18.1"
+  },
+  "llm_calls": 0,
+  "gpu_calls": 0
+}

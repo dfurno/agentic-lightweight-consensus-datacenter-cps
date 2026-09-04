@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\caption{True persistent-CRP benchmark (500 latency repetitions; 20 separate memory traces). C: convergent one-round input; S: frozen three-round stress input.}
+\label{tab:crp_cost}
+\scriptsize
+\fitTable{\begin{tabular}{rrrrrrrr}
+\toprule
+$n_z$ & \multicolumn{2}{c}{\textbf{Median latency ($\mu$s)}} & \multicolumn{2}{c}{\textbf{P95 latency ($\mu$s)}} & \multicolumn{2}{c}{\textbf{Median peak memory (KiB)}}\\
+& C & S & C & S & C & S\\
+\midrule
+5 & 140.1 & 166.6 & 153.6 & 185.4 & 10.3 & 10.5\\
+9 & 141.1 & 180.2 & 152.4 & 194.0 & 11.2 & 11.2\\
+13 & 147.6 & 180.1 & 169.3 & 199.1 & 12.3 & 11.4\\
+25 & 148.2 & 187.8 & 165.1 & 209.2 & 19.5 & 18.4\\
+50 & 184.2 & 198.2 & 208.5 & 219.8 & 65.4 & 63.7\\
+100 & 271.4 & 215.0 & 297.8 & 238.7 & 244.1 & 241.3\\
+\bottomrule
+\end{tabular}}
+\end{table}

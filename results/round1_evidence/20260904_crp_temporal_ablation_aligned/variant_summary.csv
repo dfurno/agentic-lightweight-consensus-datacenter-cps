@@ -1,0 +1,5 @@
+variant,trajectories,ticks,mean_mae_c,nonconverged_ticks,reporter_exclusions,total_rounds,false_alarm_transition_ticks
+published_blend,45,10800,0.08441663763262884,627,1171,11197,0
+social_dynamic_innovation,45,10800,0.07999642761415346,22,2973,11796,0
+social_only,45,10800,0.07996235092651169,57,2826,11763,0
+temporal_only,45,10800,0.08450659779892458,637,1142,11181,0

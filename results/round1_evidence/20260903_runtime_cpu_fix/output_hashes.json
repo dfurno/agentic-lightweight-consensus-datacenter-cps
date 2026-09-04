@@ -1,0 +1,11 @@
+{
+  "dependencies.txt": "01ddd4135b55dff2ba80e008e4c0beae07d6139d8f99e13209ba759cd6d98ff8",
+  "matrix/events.jsonl": "6031f7756b031038ea9a500d7d6672b0dc5777e08e4fa6622f71a9b04e703a03",
+  "matrix/matrix.json": "ae3facf9e62ded2fbafad0bfba7658fe9c2b1937285a2463645d3aba8eaed870",
+  "matrix/outcomes.csv": "0eac83e23155146c2220492c4a90100f06827931183cfd717ffcd155767d8870",
+  "matrix/provenance.json": "4619289bb5fea76494003da83836a8f3c900922b9e6721fc40376e84f0efe396",
+  "smoke/LLM_COMPARISON_DISABLED.md": "e4a36ecd59775dc7fccf1e9734ed38fb58c100f5c73a28f0a7aaaea9c51d41e1",
+  "smoke/realtime_seed42_bias_0p0_noise0p25_s13_a0p3_b0p8.runtime_events.jsonl": "ce9236fdc9dc6bf31f19ccd49bc1a975f65cfa07f87f770ac89912e4ec01c9a7",
+  "smoke/rule_supervisor_realtime_metrics.csv": "a6818166df47d9f7d54439cc59938dbf419a2bba28f33936a88259c6da9409ce",
+  "smoke/rule_supervisor_safety_metrics.csv": "2a3feab10355a9e4be00fed701d7c38327cf3a874a8c6fa87e7f7fec11880732"
+}

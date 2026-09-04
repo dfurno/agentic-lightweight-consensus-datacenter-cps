@@ -1,0 +1,17 @@
+\begin{table}[H]
+\centering
+\caption{Qualitative comparison with adjacent multi-agent and runtime-assurance systems.}
+\label{tab:comparison}
+\scriptsize
+\begin{tabularx}{\textwidth}{P{0.13\textwidth}P{0.19\textwidth}P{0.19\textwidth}P{0.20\textwidth}Y}
+\toprule
+\textbf{System} & \textbf{Coordination object} & \textbf{AI/LLM role} & \textbf{Execution boundary} & \textbf{Evidence and boundary}\\
+\midrule
+This work & thermal sensor reports; FPR--OWA and persistent CRP & optional reactive or language supervisor & process-local snapshot/action binding, deterministic gate, fallback & public-data replay and illustrative plant; no hardware, PKI/RBAC, or energy claim\\
+AICEBERG~\cite{popescu2026aiceberg} & RF instrument requests via MCP/SCPI & language intent to structured tool request & separate execution and safety/resource servers; allow/deny and bounds checks & physical RF instrument; different domain and evaluation unit\\
+Das et al.~\cite{das2008} & data-center power and workload allocation & none & coordinated utility policies & physical BladeCenter; no deceptive-sensor consensus or LLM gate\\
+Unity~\cite{tesauro2004} & decentralized resource allocation & none & resource arbiter among autonomic elements & Linux-cluster prototype; safety shielding is outside its focus\\
+RADICS~\cite{wheatman2022radics} & intelligent CPS commands & advanced AI/ML controller & runtime-assurance switch to a safety controller & physical water-treatment testbed; its guarantees are not inherited here\\
+\bottomrule
+\end{tabularx}
+\end{table}

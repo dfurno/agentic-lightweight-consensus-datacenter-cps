@@ -1,0 +1,112 @@
+artifact,cell_or_series,source_family,cases,display_precision,before,after,delta,before_display,after_display,changes_at_display_precision
+tab_consensus_perf,FPR--OWA global; global; mae,main_campaign,1890,4,1.617131463152357,1.6173010980662217,0.00016963491386468021,1.6171,1.6173,True
+tab_consensus_perf,FPR--OWA global; global; max_absolute_error,main_campaign,1890,4,2.8345366573489628,2.8346885897849843,0.00015193243602151796,2.8345,2.8347,True
+tab_consensus_perf,FPR--OWA global; global; median_absolute_error,main_campaign,1890,4,1.5437288373124458,1.5438178152149162,8.897790247042181e-05,1.5437,1.5438,True
+tab_consensus_perf,FPR--OWA global; global; p95_absolute_error,main_campaign,1890,4,2.4846694526211976,2.484878895110282,0.00020944248908438823,2.4847,2.4849,True
+tab_consensus_perf,FPR--OWA global; global; rmse,main_campaign,1890,4,1.7070886685561222,1.7072910367974503,0.00020236824132813247,1.7071,1.7073,True
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=bias; mae,main_campaign,270,3,1.646757639924966,1.6467536555453197,-3.9843796462157854e-06,1.647,1.647,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=bias; max_absolute_error,main_campaign,270,3,2.872435457454163,2.8729022981624213,0.0004668407082584203,2.872,2.873,True
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=bias; median_absolute_error,main_campaign,270,3,1.5885628331722907,1.5885628331722907,0.0,1.589,1.589,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=bias; p95_absolute_error,main_campaign,270,3,2.5288978886411817,2.5287457122550014,-0.0001521763861802583,2.529,2.529,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=bias; rmse,main_campaign,270,3,1.734201170863617,1.7341954254767193,-5.745386897570981e-06,1.734,1.734,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=drift; mae,main_campaign,270,3,1.6532651599193728,1.6532715175874242,6.357668051348853e-06,1.653,1.653,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=drift; max_absolute_error,main_campaign,270,3,3.0247126598797496,3.0247126598797496,0.0,3.025,3.025,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=drift; median_absolute_error,main_campaign,270,3,1.5900560777030166,1.5900560777030166,0.0,1.590,1.590,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=drift; p95_absolute_error,main_campaign,270,3,2.530272850773962,2.530272850773962,0.0,2.530,2.530,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=drift; rmse,main_campaign,270,3,1.7384033739642653,1.7384130238396396,9.649875374329042e-06,1.738,1.738,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=freeze; mae,main_campaign,270,3,1.6036175530653294,1.6036175530653294,0.0,1.604,1.604,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=freeze; max_absolute_error,main_campaign,270,3,2.5569591622773546,2.5569591622773546,0.0,2.557,2.557,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=freeze; median_absolute_error,main_campaign,270,3,1.5467820120952007,1.5467820120952007,0.0,1.547,1.547,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=freeze; p95_absolute_error,main_campaign,270,3,2.3376427236330986,2.3376427236330986,0.0,2.338,2.338,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=freeze; rmse,main_campaign,270,3,1.6749290189852568,1.6749290189852568,0.0,1.675,1.675,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=mixed; mae,main_campaign,270,3,1.6179989709737146,1.618488955564912,0.0004899845911974232,1.618,1.618,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=mixed; max_absolute_error,main_campaign,270,3,3.07861412144726,3.080427687414067,0.0018135659668065962,3.079,3.080,True
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=mixed; median_absolute_error,main_campaign,270,3,1.525546333109962,1.5258235864417422,0.00027725333178030276,1.526,1.526,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=mixed; p95_absolute_error,main_campaign,270,3,2.530482518684002,2.531409244388286,0.0009267257042839816,2.530,2.531,True
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=mixed; rmse,main_campaign,270,3,1.7136954633418937,1.7142731797811879,0.0005777164392941625,1.714,1.714,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=replay; mae,main_campaign,270,3,1.6044103811080208,1.6044103811080208,0.0,1.604,1.604,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=replay; max_absolute_error,main_campaign,270,3,2.5644978867297765,2.5644978867297765,0.0,2.564,2.564,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=replay; median_absolute_error,main_campaign,270,3,1.5441548321249634,1.5441548321249634,0.0,1.544,1.544,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=replay; p95_absolute_error,main_campaign,270,3,2.341931790915903,2.341931790915903,0.0,2.342,2.342,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=replay; rmse,main_campaign,270,3,1.678102461111652,1.678102461111652,0.0,1.678,1.678,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=scaling; mae,main_campaign,270,3,1.6293745530384631,1.6293745530384631,0.0,1.629,1.629,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=scaling; max_absolute_error,main_campaign,270,3,2.631922682564101,2.631922682564101,0.0,2.632,2.632,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=scaling; median_absolute_error,main_campaign,270,3,1.5591726542736697,1.5591726542736697,0.0,1.559,1.559,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=scaling; p95_absolute_error,main_campaign,270,3,2.3879397084825693,2.3879397084825693,0.0,2.388,2.388,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=scaling; rmse,main_campaign,270,3,1.7050448691772093,1.7050448691772093,0.0,1.705,1.705,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=spike; mae,main_campaign,270,3,1.5644959840366326,1.5651910705540844,0.0006950865174517595,1.564,1.565,True
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=spike; max_absolute_error,main_campaign,270,3,3.1126146310903358,3.1113977514674205,-0.001216879622915279,3.113,3.111,True
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=spike; median_absolute_error,main_campaign,270,3,1.4518271187080174,1.4521727106935303,0.00034559198551287196,1.452,1.452,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=spike; p95_absolute_error,main_campaign,270,3,2.735518687217668,2.736210235323151,0.0006915481054829975,2.736,2.736,False
+fig_heatmap_attack_method,FPR--OWA by attack; attack_type=spike; rmse,main_campaign,270,3,1.7052443224489602,1.7060792792104882,0.0008349567615280051,1.705,1.706,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.0; mae,main_campaign,378,4,1.606579391609211,1.606579391609211,0.0,1.6066,1.6066,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.0; max_absolute_error,main_campaign,378,4,2.5720216185623537,2.5720216185623537,0.0,2.5720,2.5720,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.0; median_absolute_error,main_campaign,378,4,1.5368600265228802,1.5368600265228802,0.0,1.5369,1.5369,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.0; p95_absolute_error,main_campaign,378,4,2.3405933502544753,2.3405933502544753,0.0,2.3406,2.3406,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.0; rmse,main_campaign,378,4,1.6801997503496158,1.6801997503496158,0.0,1.6802,1.6802,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.1; mae,main_campaign,378,4,1.5931408328490408,1.5931408328490408,0.0,1.5931,1.5931,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.1; max_absolute_error,main_campaign,378,4,2.5674478905516427,2.5674478905516427,0.0,2.5674,2.5674,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.1; median_absolute_error,main_campaign,378,4,1.530887059770151,1.530887059770151,0.0,1.5309,1.5309,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.1; p95_absolute_error,main_campaign,378,4,2.331448993714479,2.331448993714479,0.0,2.3314,2.3314,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.1; rmse,main_campaign,378,4,1.665209645994426,1.665209645994426,0.0,1.6652,1.6652,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.2; mae,main_campaign,378,4,1.5662243313946926,1.5662243313946926,0.0,1.5662,1.5662,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.2; max_absolute_error,main_campaign,378,4,2.6245830786526025,2.6245830786526025,0.0,2.6246,2.6246,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.2; median_absolute_error,main_campaign,378,4,1.500238275939577,1.500238275939577,0.0,1.5002,1.5002,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.2; p95_absolute_error,main_campaign,378,4,2.341329439329018,2.341329439329018,0.0,2.3413,2.3413,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.2; rmse,main_campaign,378,4,1.6424965202118929,1.6424965202118929,0.0,1.6425,1.6425,False
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.3; mae,main_campaign,378,4,1.6254932526086674,1.6259170592611216,0.00042380665245422833,1.6255,1.6259,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.3; max_absolute_error,main_campaign,378,4,3.040879150261096,3.0412587995398614,0.0003796492787655481,3.0409,3.0413,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.3; median_absolute_error,main_campaign,378,4,1.547240819601287,1.5474632643574633,0.00022244475617627657,1.5472,1.5475,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.3; p95_absolute_error,main_campaign,378,4,2.6063145460240764,2.606838152246786,0.0005236062227096383,2.6063,2.6068,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.3; rmse,main_campaign,378,4,1.733233538663007,1.7337389724117211,0.0005054337487142568,1.7332,1.7337,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.4; mae,main_campaign,378,4,1.694219507300173,1.6946438752170432,0.00042436791687028297,1.6942,1.6946,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.4; max_absolute_error,main_campaign,378,4,3.3677515487171195,3.3681315616184606,0.0003800129013411535,3.3678,3.3681,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.4; median_absolute_error,main_campaign,378,4,1.603418004728333,1.6036404494845096,0.00022244475617649861,1.6034,1.6036,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.4; p95_absolute_error,main_campaign,378,4,2.8036609337839407,2.8041845400066503,0.0005236062227096383,2.8037,2.8042,True
+fig_mae_vs_beta,FPR--OWA by attack ratio; attack_ratio=0.4; rmse,main_campaign,378,4,1.8143038875616682,1.8148102950195961,0.0005064074579279598,1.8143,1.8148,True
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=5.0; mae,main_campaign,630,4,1.807883791239858,1.8083930327401023,0.0005092415002443396,1.8079,1.8084,True
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=5.0; max_absolute_error,main_campaign,630,4,3.1509427787429742,3.1513987942245834,0.00045601548160911776,3.1509,3.1514,True
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=5.0; median_absolute_error,main_campaign,630,4,1.719684929969675,1.7199518636770863,0.00026693370741126543,1.7197,1.7200,True
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=5.0; p95_absolute_error,main_campaign,630,4,2.788989885593842,2.7896182130610936,0.0006283274672513883,2.7890,2.7896,True
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=5.0; rmse,main_campaign,630,4,1.9076649696143797,1.9082726585638934,0.000607688949513685,1.9077,1.9083,True
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=9.0; mae,main_campaign,630,4,1.7516551111390697,1.7516547743804205,-3.3675864918869536e-07,1.7517,1.7517,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=9.0; max_absolute_error,main_campaign,630,4,2.9926273371418004,2.9926271189682545,-2.181735458961498e-07,2.9926,2.9926,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=9.0; median_absolute_error,main_campaign,630,4,1.6564747612296749,1.6564747612296749,0.0,1.6565,1.6565,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=9.0; p95_absolute_error,main_campaign,630,4,2.645306797115598,2.645306797115598,0.0,2.6453,2.6453,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=9.0; rmse,main_campaign,630,4,1.8360274938740513,1.836026909648523,-5.842255281773845e-07,1.8360,1.8360,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=13.0; mae,main_campaign,630,4,1.2918554870781427,1.2918554870781427,0.0,1.2919,1.2919,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=13.0; max_absolute_error,main_campaign,630,4,2.360039856162114,2.360039856162114,0.0,2.3600,2.3600,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=13.0; median_absolute_error,main_campaign,630,4,1.2550268207379873,1.2550268207379873,0.0,1.2550,1.2550,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=13.0; p95_absolute_error,main_campaign,630,4,2.0197116751541535,2.0197116751541535,0.0,2.0197,2.0197,False
+tab_sensors,FPR--OWA by sensors/zone; sensors_per_group=13.0; rmse,main_campaign,630,4,1.3775735421799349,1.3775735421799349,0.0,1.3776,1.3776,False
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.2, beta=0.7; mae",main_campaign,945,4,1.6101251792945734,1.6103102156686089,0.00018503637403544104,1.6101,1.6103,True
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.2, beta=0.7; max_absolute_error",main_campaign,945,4,2.869585068868644,2.8698360710160222,0.0002510021473782764,2.8696,2.8698,True
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.2, beta=0.7; median_absolute_error",main_campaign,945,4,1.5362960024722938,1.536353069886293,5.706741399924553e-05,1.5363,1.5364,True
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.2, beta=0.7; p95_absolute_error",main_campaign,945,4,2.479864325646706,2.480136971155396,0.0002726455086898838,2.4799,2.4801,True
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.2, beta=0.7; rmse",main_campaign,945,4,1.6979891221625425,1.6982404161328395,0.0002512939702969952,1.6980,1.6982,True
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.3, beta=0.8; mae",main_campaign,945,4,1.6241377470101404,1.6242919804638352,0.00015423345369480757,1.6241,1.6243,True
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.3, beta=0.8; max_absolute_error",main_campaign,945,4,2.7994882458292816,2.7995411085539454,5.286272466387132e-05,2.7995,2.7995,False
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.3, beta=0.8; median_absolute_error",main_campaign,945,4,1.5511616721525976,1.5512825605435394,0.00012088839094182013,1.5512,1.5513,True
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.3, beta=0.8; p95_absolute_error",main_campaign,945,4,2.4894745795956896,2.4896208190651676,0.00014623946947800448,2.4895,2.4896,True
+OWA configuration audit,"FPR--OWA by alpha,beta; alpha=0.3, beta=0.8; rmse",main_campaign,945,4,1.7161882149497019,1.7163416574620616,0.00015344251235971385,1.7162,1.7163,True
+tab_robust,FPR--OWA ten-seed global; global; mae,robust_extension,6300,3,1.614116622995006,1.6141902835764463,7.366058144042675e-05,1.614,1.614,False
+tab_robust,FPR--OWA ten-seed global; global; max_absolute_error,robust_extension,6300,3,2.822713250020754,2.822156030263099,-0.000557219757655325,2.823,2.822,True
+tab_robust,FPR--OWA ten-seed global; global; median_absolute_error,robust_extension,6300,3,1.5453400490074707,1.545348619850537,8.570843066380007e-06,1.545,1.545,False
+tab_robust,FPR--OWA ten-seed global; global; p95_absolute_error,robust_extension,6300,3,2.47474195107355,2.4747246800966805,-1.7270976869543375e-05,2.475,2.475,False
+tab_robust,FPR--OWA ten-seed global; global; rmse,robust_extension,6300,3,1.7046575490113847,1.7047323645982229,7.4815586838195e-05,1.705,1.705,False
+ablation,full FPR--OWA global; global; mae,historical_fpr_ablation,1909,3,1.616168890668694,1.6163368372308757,0.0001679465621817755,1.616,1.616,False
+ablation,full FPR--OWA global; global; max_absolute_error,historical_fpr_ablation,1909,3,2.8337906034585387,2.8339410237330704,0.00015042027453171514,2.834,2.834,False
+ablation,full FPR--OWA global; global; median_absolute_error,historical_fpr_ablation,1909,3,1.5425220324036883,1.5426101247220065,8.80923183181892e-05,1.543,1.543,False
+ablation,full FPR--OWA global; global; p95_absolute_error,historical_fpr_ablation,1909,3,2.483875791096662,2.484083149035042,0.000207357938380337,2.484,2.484,False
+ablation,full FPR--OWA global; global; rmse,historical_fpr_ablation,1909,3,1.7062448068683527,1.7064451609679394,0.00020035409958674144,1.706,1.706,False
+tab_crp,single-round FPR--OWA; global; mae,corrected_fpr_single,1890,4,1.617131463152357,1.6173010980662217,0.00016963491386468021,1.6171,1.6173,True
+tab_crp,single-round FPR--OWA; global; max_absolute_error,corrected_fpr_single,1890,4,2.8345366573489628,2.8346885897849843,0.00015193243602151796,2.8345,2.8347,True
+tab_crp,single-round FPR--OWA; global; median_absolute_error,corrected_fpr_single,1890,4,1.5437288373124458,1.5438178152149162,8.897790247042181e-05,1.5437,1.5438,True
+tab_crp,single-round FPR--OWA; global; p95_absolute_error,corrected_fpr_single,1890,4,2.4846694526211976,2.484878895110282,0.00020944248908438823,2.4847,2.4849,True
+tab_crp,single-round FPR--OWA; global; rmse,corrected_fpr_single,1890,4,1.7070886685561222,1.7072910367974503,0.00020236824132813247,1.7071,1.7073,True
+tab_crp,FPR--OWA + CRP; global; mae,corrected_crp,1890,4,1.6115707216497899,1.6115605312815393,-1.0190368250562187e-05,1.6116,1.6116,False
+tab_crp,FPR--OWA + CRP; global; max_absolute_error,corrected_crp,1890,4,2.7752608328183643,2.775276148682235,1.5315863870490887e-05,2.7753,2.7753,False
+tab_crp,FPR--OWA + CRP; global; median_absolute_error,corrected_crp,1890,4,1.54567016301252,1.545524009336187,-0.00014615367633297183,1.5457,1.5455,True
+tab_crp,FPR--OWA + CRP; global; p95_absolute_error,corrected_crp,1890,4,2.422969984935609,2.4229328698460733,-3.711508953552212e-05,2.4230,2.4229,True
+tab_crp,FPR--OWA + CRP; global; rmse,corrected_crp,1890,4,1.6940819818750843,1.6940681794627728,-1.3802412311525458e-05,1.6941,1.6941,False
+tab_robust,FPR--OWA MAE between-seed std,robust_extension,6300,3,0.007421297182475115,0.0073370183414742775,-8.427884100083768e-05,0.007,0.007,False

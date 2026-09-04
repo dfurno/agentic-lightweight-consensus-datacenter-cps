@@ -1,0 +1,20 @@
+{
+  "run_id": "20260904_crp_temporal_ablation_aligned",
+  "source_code_commit": "ad88d3d2b91376b46a5d8a38ae5cf0dcdf62c6fc",
+  "command": "scripts/run_crp_temporal_ablation.py --config configs/crp_temporal_ablation.yaml --output runs/round1/20260904_crp_temporal_ablation_aligned_final",
+  "config_sha256": "911e830f17101ed5d33a882f5c622b70fc396196cbeb2f3284f231e62bec7912",
+  "base_config_sha256": "d58932aa2c309fb58f0ebfb13677f4559260184fd8c67b245ad6a947bfa56d7e",
+  "runner_sha256": "751a4f9c3ccf87be1c8914cfef2c953c5f005c7695a6c24e57e25139e43db919",
+  "input_manifest_sha256": "ec04978738ba8c6cd14a9f2b48c29eb0f9aa2e64771d5b72b74092e1dbfdbf57",
+  "python": "3.12.3",
+  "interpreter": "/tmp/round1-residual-venv/bin/python",
+  "numpy": "2.5.2",
+  "pandas": "3.0.5",
+  "llm_calls": 0,
+  "gpu_calls": 0,
+  "limitations": [
+    "offline diagnostic replay on fixed physical trajectories and actions",
+    "not a counterfactual closed-loop comparison",
+    "published raw lacks combined reliability and instantaneous anomaly flags"
+  ]
+}

@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\caption{Global estimation over all $1{,}890$ scenarios (dataset units; lower is better; best per column in bold). Only FPR--OWA emits anomaly flags and a non-degenerate confidence (validated in Table~\ref{tab:diagnostics}).}
+\label{tab:consensus_perf}
+\footnotesize
+\fitTable{%
+\begin{tabular}{lccccccc}
+\toprule
+\textbf{Method} & \textbf{MAE} & \textbf{RMSE} & \textbf{Median AE} & \textbf{P95 AE} & \textbf{Max AE} & \textbf{Anomaly flags} & \textbf{Confidence} \\
+\midrule
+Mean & \textbf{1.5366} & \textbf{1.6210} & \textbf{1.4226} & 2.4419 & 2.8048 & -- & 1.000 \\
+Trimmed mean & 1.5382 & 1.6216 & 1.4255 & 2.4370 & 2.7936 & -- & 1.000 \\
+Hampel$+$mean & 1.5464 & 1.6247 & 1.4330 & 2.4044 & 2.8681 & -- & 1.000 \\
+Direct OWA & 1.5668 & 1.6431 & 1.4619 & \textbf{2.3906} & 2.7126 & -- & 1.000 \\
+Median & 1.5925 & 1.6703 & 1.5063 & 2.3952 & \textbf{2.6942} & -- & 1.000 \\
+FPR--OWA & 1.6173 & 1.7073 & 1.5438 & 2.4849 & 2.8347 & 1.109 & 0.532 \\
+\bottomrule
+\end{tabular}}
+\end{table}

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import math
 import platform
+import re
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
@@ -74,25 +75,26 @@ def metric_schema(frame: pd.DataFrame) -> list[dict[str, str]]:
 
 def scenario_parts(scenario: str) -> dict[str, object]:
     # Handles names like full_seed42_bias_0p2_noise0p25_s9_a0p3_b0p8.
-    parts = scenario.split("_")
-    out: dict[str, object] = {"scenario": scenario}
-    try:
-        seed_token = next(part for part in parts if part.startswith("seed"))
-        out["seed"] = int(seed_token.removeprefix("seed"))
-        idx = parts.index(seed_token)
-        out["attack_type"] = parts[idx + 1]
-        out["attack_ratio"] = float(parts[idx + 2].replace("p", "."))
-        noise_token = next(part for part in parts if part.startswith("noise"))
-        out["sensor_noise_level"] = float(noise_token.removeprefix("noise").replace("p", "."))
-        sensor_token = next(part for part in parts if part.startswith("s") and part[1:].isdigit())
-        out["sensors_per_group"] = int(sensor_token.removeprefix("s"))
-        alpha_token = next(part for part in parts if part.startswith("a") and len(part) > 1)
-        beta_token = next(part for part in parts if part.startswith("b") and len(part) > 1)
-        out["alpha"] = float(alpha_token.removeprefix("a").replace("p", "."))
-        out["beta"] = float(beta_token.removeprefix("b").replace("p", "."))
-    except (StopIteration, ValueError, IndexError):
-        pass
-    return out
+    pattern = re.compile(
+        r"^(?P<suite>[^_]+)_seed(?P<seed>\d+)_(?P<attack_type>[^_]+)_"
+        r"(?P<attack_ratio>\d+(?:p\d+)?)_noise(?P<sensor_noise_level>\d+(?:p\d+)?)_"
+        r"s(?P<sensors_per_group>\d+)_a(?P<alpha>\d+(?:p\d+)?)_b(?P<beta>\d+(?:p\d+)?)$"
+    )
+    match = pattern.fullmatch(scenario)
+    if match is None:
+        raise ValueError(f"Malformed scenario name: {scenario!r}")
+    values = match.groupdict()
+    return {
+        "scenario": scenario,
+        "suite": values["suite"],
+        "seed": int(values["seed"]),
+        "attack_type": values["attack_type"],
+        "attack_ratio": float(values["attack_ratio"].replace("p", ".")),
+        "sensor_noise_level": float(values["sensor_noise_level"].replace("p", ".")),
+        "sensors_per_group": int(values["sensors_per_group"]),
+        "alpha": float(values["alpha"].replace("p", ".")),
+        "beta": float(values["beta"].replace("p", ".")),
+    }
 
 
 def inventory(paths: RevisionPaths = RevisionPaths()) -> None:

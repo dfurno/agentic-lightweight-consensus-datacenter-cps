@@ -1,0 +1,18 @@
+{
+  "run_id": "20260903_runtime_cpu_fix",
+  "source_code_commit": "60c06e277191eda4d3cd78a5503de7e8eb240b22",
+  "commit_verified_against_git": true,
+  "interpreter": "/root/research/iot-agentic-lightweight-consensus/.venv/bin/python",
+  "python": "3.12.3",
+  "test_count": 52,
+  "matrix_case_count": 24,
+  "matrix_event_count": 34,
+  "smoke_scenario": "realtime_seed42_bias_0p0_noise0p25_s13_a0p3_b0p8",
+  "smoke_ticks": 240,
+  "input_trace_sha256": "8def20740657b9a3579ff55af59d18d5aae0a941907d16eb32c585565ce8d801",
+  "experiments_config_sha256": "a9610f58d5e659fb044428d0f03277a78603e48603fb144f6ab921c8590d0ab7",
+  "sla_config_sha256": "bd805b10f12bd6b8b57b0b77ba32593c1928d0dd80be51faa28814a3d05e3e0b",
+  "matrix_sha256": "ae3facf9e62ded2fbafad0bfba7658fe9c2b1937285a2463645d3aba8eaed870",
+  "llm_calls": 0,
+  "thermal_pilot_runs": 0
+}

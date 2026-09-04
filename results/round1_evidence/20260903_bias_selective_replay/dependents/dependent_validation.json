@@ -1,0 +1,33 @@
+{
+  "ablation_rows": 7636,
+  "ablation_scenarios": 1909,
+  "replaced_ablation_rows": 270,
+  "independent_method_max_abs_diff": 0.0,
+  "diagnostic_records_reused": 16528320,
+  "updated_diagnostic_records": 1166400,
+  "replaced_scenario_ticks": 32400,
+  "input_sha256": {
+    "/root/research/iot-agentic-lightweight-consensus/results/metrics.csv": "3e34d3efeb7bd288a132eebbc6de584dceec7d59eaf3bf3e81140df2f8b595f8",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.3_mz2.0.csv": "b88292b02aa0a4d820269364da6634bae8287ebc8f9c7c37d1e72037964afe14",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.3_mz2.0.csv": "94260c4fae017d542ce1e99216dececb7a3cbde3ab12cdbd45529a45135cf5d7",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.3_mz4.0.csv": "2040b91e050e40b34f8f48516bedcba4d7536825af0a5baf8cdcefe8d191703a",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.3_mz4.0.csv": "4357880881d8f72c52edf3c4565c65bca0fc31477d52d8283d8495515ad193af",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.5_mz2.0.csv": "e9a9f2b5ff99b65efaced765619410a7f4e8d4540fbef82bd22252c736764fdb",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.5_mz2.0.csv": "05696d44389d080f81ab70302aa1e632267787f51e572d4e743a51be216533bb",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.5_mz4.0.csv": "08373a94ba1e77f513a04bf6240156ccfb7d0d1f69c78958963bfe51a196083f",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.5_mz4.0.csv": "e867ac3d55c54321df4777138fe7fbe3a6e8fef9ec29f653a9c76fbf37f3b7de",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.7_mz2.0.csv": "96be26bdf0f5de90f27904ca307ef70449a0613da4134cadb733c5802e17efe5",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.7_mz2.0.csv": "0903bc53af678964e2483f532b8ecf7da023b67de11f27ed49642e0a57f271ad",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.7_mz4.0.csv": "4b6656338964502824a0ed9e852cd643ffa0da4e79a55511fce8ea67ae922b25",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.7_mz4.0.csv": "9b1ce5758d239f3caf73b39ca5c1a829f9d872d159d3bdee3d115e3d36c4b608",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/fpr_ablation.csv": "35431af225fc20c7ac3b44c0e898c016db03508407eb95a5ba4468a54f0c6cc3",
+    "/root/research/iot-agentic-lightweight-consensus/outputs/diagnostic_sensor_tick_records.csv.gz": "87472d7e0799ffa761241b4bd39510ba3824bb6df0a616a371323d64f759a9fd"
+  },
+  "output_sha256": {
+    "calibration.csv": "5ceeb77afff082b0c8b439335667d4f1d74df4e098371d7c3ca35cdd01132d08",
+    "fig_calibration_reliability.pdf": "86442159f2f117455a3d320b7751548da22d0fc9a9caf81525f31f6a11640649",
+    "fig_confidence_vs_error.pdf": "21cbf6eed9040fb7f4ec0df1c230b98da8c6693985740ad12c62d39001d7d9b4",
+    "fig_fpr_ablation.pdf": "bea48baf3c23445c5f72249b63451cf91f033a5c06996c768b41928d7c6a6cf3",
+    "fpr_ablation.csv": "8b819e82ab4468860df2d9c46d7f8bcdc9384d3b672e7502228d0197cc4054a2"
+  }
+}

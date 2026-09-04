@@ -1,0 +1,1918 @@
+%% ===================================================================
+%% Agentic Lightweight Consensus for Resilient Monitoring and Control
+%% of Modern Data Centers
+%%
+%% Template: MDPI Smart Cities (mdpi.cls, ACS numbered references).
+%%
+%% Build:  pdflatex main && pdflatex main   (bibliography is embedded)
+%% ===================================================================
+\documentclass[smartcities,article,submit,moreauthors]{Definitions/mdpi}
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+\datereceived{ }
+\daterevised{ }
+\dateaccepted{ }
+\datepublished{ }
+
+%=================================================================
+% Additional packages and commands (the MDPI class already loads
+% amsmath, amssymb, graphicx, tabularx, booktabs, natbib, hyperref,
+% microtype, url, float, xcolor, and others).
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Q}[1]{>{\centering\arraybackslash}p{#1}}
+\setlength{\emergencystretch}{2em}
+
+%% Table sizing: every table stays inside the text column. Tables at
+%% natural size are centered; a table wider than \textwidth is shrunk
+%% to \textwidth. No upscaling, no margin excursions.
+\newsavebox{\fitTableBox}
+\newcommand{\fitTable}[1]{%
+  \sbox{\fitTableBox}{#1}%
+  \centering
+  \ifdim\wd\fitTableBox>\textwidth
+    \resizebox{\textwidth}{!}{\usebox{\fitTableBox}}%
+  \else
+    \usebox{\fitTableBox}%
+  \fi}
+
+\graphicspath{{figures/}}
+
+%% Notation shortcuts -------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\rel}{\rho}
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Agentic Lightweight Consensus for Resilient Monitoring and Control of Modern Data Centers in Smart Cities}
+
+% Author Orchid ID: enter ID or remove command
+%\newcommand{\orcidauthorA}{0000-0000-0000-000X} % Add \orcidA{} behind the author's name
+%\newcommand{\orcidauthorB}{0000-0000-0000-000X} % Add \orcidB{} behind the author's name
+
+% Authors, for the paper (add full first names)
+\Author{Domenico Furno $^{1,}$* and Vincenzo Loia $^{1}$}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Domenico Furno and Vincenzo Loia}
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
+\address[1]{%
+$^{1}$ \quad Department of Business Sciences -- Management \& Innovation Systems, University of Salerno, 84084 Fisciano, Italy; loia@unisa.it (V.L.)}
+
+% Contact information of the corresponding author
+\corres{Correspondence: dfurno@unisa.it}
+
+% Abstract (Do not insert blank lines, i.e. \)
+\abstract{Data-center monitoring for smart-city services must fuse conflicting sensor reports and keep AI-proposed commands outside the safety-critical path. We present a two-path architecture in which a deterministic fast path combines reliability-based fuzzy-preference OWA (FPR--OWA), a persistent consensus-reaching process (CRP), and an actuation verifier; an optional reactive or language-model supervisor can only propose typed actions. Across $1{,}890$ replay scenarios and seven attack families, no estimator dominates: averaging has the lowest global error and sensor redundancy explains most accuracy variation, while FPR--OWA+CRP provides the strongest diagnostic signal. A separate action-dependent simulation adds standard control metrics and exposes an adverse common-mode-bias boundary: the measurement-dependent controllers recover much later than the oracle. The verifier blocks every unsafe or process-invalid command observed in the historical safety set and deterministic fault-injection matrix, an empirical result rather than a formal system guarantee. A true-CRP benchmark remains below $0.30$ ms median latency at $n_z=100$ in the tested environment. Historical reactive and LLM results are retained only as descriptive, non-paired evidence; no causal LLM advantage, physical-hardware validation, production authentication, or energy saving is claimed.}
+
+% Keywords
+\keyword{smart cities; urban critical infrastructure; agentic AI; multi-agent systems; data-center cyber--physical systems; soft consensus; fuzzy preference relations; runtime verification}
+
+% Highlights: obligatory section in Smart Cities.
+\addhighlights{yes}
+\renewcommand{\addhighlights}{%
+\rule{0pt}{14pt}\noindent\textbf{What are the main findings?}
+\begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+\item Across $1{,}890$ replay scenarios, no estimator dominates globally; persistent FPR--OWA+CRP provides the strongest anomaly diagnostic, while an aligned zone-dynamic variant reduces non-convergence but slightly worsens MAE relative to social-only reliability.
+\item The tested command gate blocks every observed unsafe or process-invalid proposal. An illustrative periodic closed-loop pilot reports tracking, SLA-exposure, recovery, and actuator-effort metrics and reveals delayed recovery under common-mode sensor bias.
+\end{itemize}\vspace{3pt}
+\textbf{What are the implications of the main findings?}
+\begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+\item Sensing consensus, persistent diagnostics, supervisory proposal, and actuation admission should remain separate, traceable roles.
+\item The evidence supports software-level runtime validation and bounded simulation claims; physical safety, production authentication, energy consumption, and a causal LLM advantage remain unvalidated.
+\end{itemize}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%% ===================================================================
+\section{Introduction}
+\label{sec:introduction}
+
+Data centers sustain smart-city services across cloud and edge infrastructure, but their control loops depend on thermal, power, and workload telemetry that may be noisy, missing, stale, or deliberately deceptive~\cite{khan2020smartcities,vitello2022,ilager2023}. The concrete problem addressed here is therefore twofold: at every control tick, a zone must infer a trustworthy state from conflicting reporters; before actuation, it must prevent an autonomous supervisor from turning uncertain evidence or malformed output into an unsafe command.
+
+Existing methods solve only parts of this problem. Hierarchical data-center monitoring and multi-agent management distribute collection and resource decisions but do not model graded trust under deceptive sensing~\cite{jiang2019,yan2021,das2008,tesauro2004}. Robust estimation and resilient agreement tolerate outliers yet usually do not emit the persistent, auditable consensus diagnostics needed by a supervisory control path~\cite{pasqualetti2013,fawzi2014,leblanc2013}. Soft-consensus models provide graded agreement and feedback but were developed for human group decision making rather than per-tick cyber--physical telemetry~\cite{herreraviedma2002,herreraviedma2014}. LLM agent frameworks add flexible tool use, while runtime-assurance and policy-enforcement systems separate proposal from execution; neither removes the need to validate the state on which a command is based~\cite{yao2023react,popescu2026aiceberg,wheatman2022radics}.
+
+The resulting gap is a tested composition of (i) trust-graded sensor fusion, (ii) persistent consensus diagnostics, and (iii) deterministic proposal-to-actuator admission under one traceable runtime contract. We address this gap with a zone-level architecture for data-center thermal monitoring. The contribution is the integration and evaluation of these mechanisms; it is not a claim of a universally superior estimator, a production security boundary, or a hardware-validated controller.
+
+The paper addresses five questions:
+\begin{itemize}
+\item \textbf{RQ1, estimation:} how do candidate aggregators behave under seven deception families, and which factors drive error?
+\item \textbf{RQ2, diagnostics:} what diagnostic value is added by persistent CRP monitoring, including self-history and zone-dynamic alternatives?
+\item \textbf{RQ3, command admission:} which unsafe or process-invalid commands are blocked in the tested safety episodes and fault-injection matrix?
+\item \textbf{RQ4, supervisory role:} what can be concluded from the available reactive and LLM records, given that their historical execution paths are not a paired experiment?
+\item \textbf{RQ5, operational cost and control:} what latency, memory, tracking, SLA-exposure, recovery, and actuator-effort behavior is observed in the bounded software evaluation?
+\end{itemize}
+
+The contributions are:
+\begin{enumerate}
+\item a two-path architecture with non-overlapping sensing, consensus, CRP-monitoring, supervisory-proposal, command-admission, fallback, and audit roles;
+\item an FPR--OWA operator with persistent CRP feedback, together with a formal proof that logistic dominance preserves the reliability order and a frozen-trajectory temporal ablation;
+\item a runtime contract that binds immutable snapshots to typed proposals and admits actuation only through a deterministic, one-shot authorization, with explicit fallback and traceability; and
+\item a reproducible evidence package comprising $1{,}890$ replay scenarios, deterministic fault injection, an illustrative action-dependent thermal pilot and hot-start boundary, and a true-CRP latency/memory benchmark.
+\end{enumerate}
+
+The evaluation deliberately separates historical replay, historical non-paired supervisor records, deterministic runtime tests, and the new periodic closed-loop pilot. This separation prevents causal claims from crossing incompatible execution paths. Section~\ref{sec:related} critically positions the work; Sections~\ref{sec:architecture}--\ref{sec:agentic} specify the architecture and algorithms; Sections~\ref{sec:setup}--\ref{sec:results} report the evidence; and Sections~\ref{sec:discussion}--\ref{sec:conclusions} state its implications and limits.
+
+%% ===================================================================
+\section{Related Work}
+\label{sec:related}
+
+This work intersects four research lines: consensus for blockchain-IoT
+integration, hierarchical monitoring and multi-agent management of data
+centers, soft consensus in fuzzy group decision making, and LLM-based
+agentic systems. Although these areas have largely developed in parallel,
+this selective review focuses on the elements needed to clarify the
+research gap addressed in this paper.
+
+\subsection{Consensus in Blockchain--IoT Integration}
+\label{sec:related_blockchain}
+
+Blockchain-IoT integration has produced a range of consensus mechanisms
+for constrained devices, including authority-based validation,
+edge-hosted ledgers, hybrid on-chain/off-chain patterns, and
+energy-recycling schemes~\cite{khan2018,reyna2018,novo2018,
+pan2019edgechain,tuli2019fogbus,qu2021pofl,haque2024}. Architecturally
+similar, Ramachandran's three-tier hierarchical framework maps device
+classes to specific consensus roles, using district
+PBFT~\cite{castro1999} under city-wide proof of
+authority~\cite{ramachandran2026}. Across these methods, the common object
+of agreement is the ledger, and the purpose is to guarantee transaction
+ordering, immutability, and quorum bounds. The target problem considered
+here differs: it concerns estimation of the physical state from graded,
+partially deceptive reports at each control round. Ledger consensus is
+therefore treated as a complement rather than a baseline
+(Section~\ref{sec:positioning}). Outside the ledger domain, Zhang et al.\
+design approximate consensus for small devices in lossy
+networks~\cite{zhang2021approx}. We follow a similarly lightweight
+direction while explicitly modeling reporter trust, which that framework
+does not provide.
+
+\subsection{Data-center Monitoring, Multi-Agent Management, and Safe
+Control}
+\label{sec:related_dc}
+
+Hierarchical sensing is well established in data centers. Jiang et
+al.\ partition an internet data center into logical grids, with edge
+nodes preprocessing environmental and host telemetry before
+escalation~\cite{jiang2019}; Yan et al.\ combine edge computing,
+wireless sensing, and IPMI-derived measurements for environmental
+monitoring~\cite{yan2021}. For infrastructure management, the Unity
+system decomposes power and performance management into interacting
+agents~\cite{das2008}, consistent with the broader autonomic-computing
+paradigm of decentralized, self-managing elements~\cite{tesauro2004}.
+Multi-layer IoT/edge coordination based on compact summaries rather than
+raw-state collection is likewise well documented~\cite{ogino2018,nezami2021}.
+Production-trace characterization confirms the coupled workload, energy,
+and temperature dynamics that these hierarchies must
+track~\cite{ilager2023}.
+
+For actuation, deep reinforcement learning has substantially reduced
+cooling energy, but unconstrained exploration can violate thermal safety.
+Physics-guided safe RL mitigates this risk by rectifying recommended
+actions against a learned thermal model~\cite{wang2024tcps}, whereas
+event-driven formulations reduce unnecessary control
+operations~\cite{ran2023event}. These findings motivate two design
+commitments in our architecture: proposed actions must be validated
+against explicit safety constraints before actuation, and the state
+supplied to the controller must itself be validated against noise and
+deception~\cite{padhan2022}.
+
+Beyond the facility, data centers are increasingly studied as urban
+infrastructure. Edge data centers are deployed across cities according to
+mobility and demand patterns~\cite{vitello2022}; smart-city service stacks
+rely on the resulting edge--cloud continuum~\cite{khan2020smartcities};
+facility thermal behavior couples with urban energy systems through
+waste-heat reuse in district heating~\cite{huang2020prosumer}; and urban
+governance research frames data centers as the material backbone of smart
+cities, whose footprint cities now actively regulate~\cite{monstadt2025}.
+The monitoring and control layer examined in this paper operates within
+the facility but provides a reliability foundation for these urban
+integrations: district-energy coupling, urban edge offloading, and
+city-level orchestration all presuppose trustworthy reporting of the
+facility state.
+
+Two additional bodies of work inform this framing. The first concerns
+resilient estimation and aggregation. Secure state estimation under
+false-data injection~\cite{pasqualetti2013,fawzi2014}, robust
+distributed agreement such as the W-MSR mean-subsequence-reduced
+rule~\cite{leblanc2013}, and classical robust statistics, including
+M-estimators and median/MAD methods, provide the baseline theory for our
+fuzzy-consensus operator. We position FPR--OWA as a trust-graded variant
+within this space rather than as a categorically new estimator. The
+second concerns runtime assurance and safe LLM control. Our deterministic
+verifier acts as a runtime shield, analogous to safe-RL
+shielding~\cite{alshiekh2018,konighofer2020}. The literature on LLM verification and validation similarly emphasizes
+that model outputs should be subjected to explicit verification and runtime
+monitoring rather than treated as intrinsically trustworthy~\cite{huang2024verification}. The contribution claimed here is
+the integration and measured evaluation of these elements in a
+data-center CPS, not a new estimator or shielding theory.
+
+Table~\ref{tab:comparison} makes the evidence boundary explicit. AICEBERG is
+the closest recent agentic comparator because it separates LLM-generated
+instrument requests from deterministic bounds, allow/deny, and health
+checks~\cite{popescu2026aiceberg}. Its physical RF testbed is stronger than
+our hardware evidence, while it does not address deceptive-sensor consensus.
+RADICS provides a runtime-assurance switch to a safety controller on a physical
+CPS~\cite{wheatman2022radics}; our process-local verifier is analogous in
+purpose but does not inherit its formal or isolation guarantees. Das et al. and
+Unity provide stronger physical and classic data-center MAS evidence, whereas
+our narrower contribution adds adversarial sensing and explicit typed command
+admission. These systems are therefore qualitative comparators, not
+interchangeable quantitative baselines.
+
+\input{tables/tab_comparison}
+
+\subsection{Soft Consensus in Fuzzy Group Decision Making}
+\label{sec:related_gdm}
+
+The consensus layer in this paper draws on four decades of research on
+consensus reaching in fuzzy GDM. Its foundations include the calculus of
+linguistically quantified propositions~\cite{zadeh1983}, the OWA operator
+as the canonical implementation of relative quantifiers such as
+``most''~\cite{yager1988}, and the notion of a soft degree of consensus
+introduced by Kacprzyk and colleagues. In this formulation, consensus
+means that most of the important individuals agree on most of the
+relevant options~\cite{kacprzyk1986,kacprzyk1988,kacprzyk1992}. Herrera
+et al.\ extended this view to linguistic assessments~\cite{herrera1996},
+while Bordogna et al.\ modeled linguistic consensus through OWA
+aggregation~\cite{bordogna1997}. Fuzzy preference relations subsequently
+became the standard representation of graded pairwise judgments, supported
+by integration results across preference formats~\cite{chiclana1998} and
+consensus models operating across heterogeneous
+structures~\cite{herreraviedma2002}.
+
+Three subsequent developments are particularly relevant. First,
+consensus models incorporated algorithmic guidance: consensus degrees and
+proximity measures, computed at multiple representation levels, drive
+automatic feedback that identifies which participants should revise
+specific assessments~\cite{herreraviedma2002,cabrerizo2009}. Second,
+consistency control was integrated with consensus so that agreement would
+not be reached at the cost of self-contradictory preferences, including
+under incomplete information~\cite{herreraviedma2007,cabrerizo2010kbs}.
+Third, the field produced systematic analyses and reviews of soft
+consensus models in fuzzy environments~\cite{herreraviedma2014,cabrerizo2010soft,
+cabrerizo2015}, consensus measures~\cite{delmoral2018},
+minimum-adjustment feedback mechanisms~\cite{zhang2020feedback}, and
+dynamic consensus and opinion dynamics in networked
+settings~\cite{hassani2022}. Operator-level tools, including type-1 OWA
+for multi-granular linguistic contexts~\cite{mata2014}, and
+methodologies for unbalanced linguistic term
+sets~\cite{herrera2008unbalanced}, complement this line of work.
+Applications include collaborative knowledge engineering under
+linguistic fuzzy consensus~\cite{demaio2017}.
+
+This tradition treats consensus as a monitored process involving
+unequally reliable participants, mirroring the structure of a zone of
+sensor agents under deception. Its transfer to machine-to-machine
+settings, however, remains limited. Consensus-reaching models assume
+human experts who revise their opinions, whereas sensor agents require
+automated analogs of reliability, preference, dominance, and feedback.
+Constructing these analogs forms the methodological core of this paper.
+
+\subsection{LLM-Based Agents and Trustworthy Agentic Orchestration}
+\label{sec:related_llm}
+
+LLM-based agents combine language-model reasoning with tool use and
+environment interaction~\cite{wang2024agents}. ReAct interleaves
+explicit reasoning traces with actions, improving groundedness and
+auditability~\cite{yao2023react}; Reflexion adds verbal reinforcement,
+allowing agents to revise behavior in response to feedback without weight
+updates~\cite{shinn2023reflexion}. Reasoning-quality mechanisms such as
+chain-of-thought prompting~\cite{wei2022cot} and self-consistency over
+sampled reasoning paths~\cite{wang2023selfconsistency} establish a
+sampling-and-agreement intuition generalized by softer fuzzy notions of
+consensus. In safety-critical domains, however, reasoning traces alone do
+not establish trustworthiness; explicit verification stages and
+human-auditable evidence are required. We adopt this position
+architecturally: the LLM planner acts as a proposer, never as an
+executor, and a deterministic verifier governs the actuation decision.
+
+\subsection{Research Gap and Positioning}
+\label{sec:positioning}
+
+The literature provides hierarchical sensing~\cite{jiang2019,
+yan2021}, multi-agent data-center management~\cite{das2008,tesauro2004},
+lightweight approximate agreement~\cite{zhang2021approx}, a mature
+theory of monitored, feedback-driven consensus~\cite{herreraviedma2014},
+and agentic orchestration patterns~\cite{yao2023react,shinn2023reflexion}.
+We are not aware of prior work that integrates these elements within a
+blockchain-independent data-center CPS architecture: the operational state
+is the object of consensus rather than a ledger; reporter trust is
+represented through fuzzy preference relations and quantifier-guided
+dominance; consensus is monitored and repaired over time; and LLM-driven
+control remains subject to deterministic verification. The contrast with
+blockchain-IoT consensus concerns the object of agreement rather than the
+quality of the mechanism. Ledger consensus establishes agreement on the
+order and integrity of transactions under Byzantine quorum bounds,
+whereas the problem addressed here concerns graded-trust estimation of the
+current physical state at telemetry rates. The two approaches are
+therefore complementary. A ledger can notarize the validated state
+produced by our layer, but it is not an estimation baseline for the
+problem studied here.
+
+%% ===================================================================
+\section{Architecture and System Model}
+\label{sec:architecture}
+
+This section specifies the proposed architecture, the agents involved,
+and the system and fault assumptions adopted in the study.
+
+\subsection{Design Principles}
+\label{sec:principles}
+
+The design follows five principles.
+
+\begin{itemize}
+\item \textbf{P1, state consensus.} The agreement mechanism validates the
+operational state at each decision round. It maintains no ledger and does
+not require a global ordering of events.
+\item \textbf{P2, lightweight aggregation.} Agreement is computed locally
+over zone-sized groups of reports using closed-form operators, namely
+medians, fuzzy preference relations, and OWA weights. This keeps the
+consensus step compatible with edge-class hardware.
+\item \textbf{P3, monitored process.} In line with the soft-consensus
+tradition~\cite{herreraviedma2014}, agreement is tracked through
+consensus, proximity, and consistency, then repaired through targeted
+feedback instead of being assumed after one aggregation step.
+\item \textbf{P4, bounded autonomy.} LLM-based planning is used only to
+generate proposals. In the tested process, the decision to actuate remains
+with a deterministic verifier; production non-bypassability would additionally
+require process isolation, authenticated identities, and deployment controls.
+\item \textbf{P5, traceability.} Every consensus snapshot, agent
+proposal, verifier decision, and refinement cycle is recorded in
+structured, replayable execution traces.
+\end{itemize}
+
+\subsection{Layered Architecture and Agent Roles}
+\label{sec:layers}
+
+Figure~\ref{fig:architecture} and Table~\ref{tab:roles} represent the architecture as two
+interacting paths. The \emph{fast path} is deterministic and runs at
+every control tick: sensing agents feed the edge fuzzy-consensus
+operator and CRP monitor; the resulting snapshot and a bound proposal are then checked by an
+actuation verifier, which releases either an admitted control action or a
+conservative deterministic fallback. The \emph{slow path} is an
+event-triggered supervisory loop. A pluggable supervisory agent reasons
+over consensus snapshots and proposes occasional supervisory actions, but
+those proposals still return to the \emph{same} verifier before they can
+affect actuation. A trustworthiness-and-traceability plane spans both
+paths.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/architecture_overview_2.png}
+\caption{Numbered information flow and authority boundaries. The CRP monitor
+diagnoses agreement but cannot admit commands; the actuation verifier is the
+only process-local command-admission component. The optional supervisor is
+outside the deterministic per-tick path.}
+\label{fig:architecture}
+\end{figure}
+
+\input{tables/tab_roles}
+
+The end-to-end sequence is: (1) reporter records are collected; (2) the edge
+agent computes FPR--OWA and a typed snapshot; (3) the CRP monitor updates its
+persistent diagnostics and feedback; (4) the deterministic fast controller
+forms a local proposal, while an event may additionally request a supervisory
+proposal; (5) the actuation verifier validates snapshot schema, freshness,
+confidence, proposal binding, actuator bounds, slew, and the thermal policy;
+(6) a one-shot authorization changes actuator state, or rejection/timeout
+selects the local fallback; and (7) identifiers, payloads, reasons, state
+change, and timings are appended to the trace.
+
+\paragraph{Physical and sensing layer}
+Sensor agents attached to racks, hosts, and power-distribution
+interfaces emit per-round observations of thermal, power, and workload
+variables, following hierarchical data-center monitoring
+practice~\cite{jiang2019,yan2021}. Actuator interfaces (fan speed,
+cooling setpoints) close the physical loop.
+
+\paragraph{Edge consensus layer}
+Edge moderating agents collect the reports for one zone and execute the
+FPR--OWA lightweight consensus operator
+(Section~\ref{sec:fprowa}). The output is a zone state estimate enriched
+with diagnostic metadata: per-sensor reliability scores, anomaly flags,
+and an aggregate confidence value. This result is packaged as a
+\emph{consensus snapshot}, which is the only sensing artifact exposed to
+the upper layers.
+
+\paragraph{Zone consensus monitoring layer}
+CRP monitor agents follow the consensus process over time. They compute
+consensus degree, per-agent proximity, and temporal consistency, and
+trigger the adaptive feedback actions of Section~\ref{sec:crp}
+(re-sampling, down-weighting, delayed inclusion, persistent-anomaly
+flagging) when agreement degrades. For sensor agents, this layer plays
+the role of the moderator used in consensus-reaching
+models~\cite{cabrerizo2009,herreraviedma2007}.
+
+\paragraph{Slow-path agentic control}
+A pluggable supervisory agent reasons over consensus snapshots and
+proposes structured \emph{supervisory} control actions. It may be a
+reactive (rule-based) agent or a LangGraph-orchestrated LLM agent under a
+ReAct-style scheme~\cite{yao2023react}; the comparison is reported in
+Section~\ref{sec:results_rq4}. In the intended event mode this layer is invoked
+sparsely when a configured policy fires on low confidence, anomaly flags,
+temperature margin, or a minimum inter-invocation interval. Historical records
+show that an LLM call may cost seconds, and frequent
+invocation reduces responsiveness without improving estimation. Every
+proposal is checked by the same verifier, which accepts it, rejects it,
+or returns machine-readable feedback for optional Reflexion-style
+self-refinement~\cite{shinn2023reflexion}, limited to at most $K$ cycles
+(Section~\ref{sec:agentic}).
+
+\paragraph{Facility operation layer}
+A facility arbiter resolves cross-zone trade-offs, including thermal risk
+versus energy cost and workload placement, in line with the
+local--global decomposition of autonomic data-center
+management~\cite{das2008,tesauro2004}. It also exposes dashboards for
+human oversight and escalation. In this study, the arbiter is kept as a
+conceptual, single-facility provision: the experiments operate at zone
+level and do not exercise it, while cross-zone arbitration is left to
+future work (Section~\ref{sec:limitations}).
+
+\paragraph{Trustworthiness and traceability plane}
+Across all layers, a traceability service records consensus snapshots,
+reliability vectors, agent prompts and outputs, verifier decisions with
+reasons, refinement cycles, and safety counters. These records provide an
+auditable and replayable account of each control decision (P5).
+
+\subsection{System Model}
+\label{sec:sysmodel}
+
+Let $\mathcal{Z}$ be the set of zones. Zone $z\in\mathcal{Z}$ contains
+$n_z$ sensing agents indexed by $E_z=\{1,\dots,n_z\}$. Time is
+discretized into decision rounds $t=1,2,\dots$ aligned with the
+telemetry period. At round $t$, agent $i\in E_z$ reports a measurement
+\begin{equation}
+s_i(t) \;=\; x_z(t) \;+\; \varepsilon_i(t) \;+\; a_i(t),
+\label{eq:obsmodel}
+\end{equation}
+where $x_z(t)$ is the latent zone state (in the reference use case, a
+zone thermal variable), $\varepsilon_i(t)$ is zero-mean sensing noise,
+and $a_i(t)$ is an attack term, zero for honest reports. The exposition
+uses a scalar state for clarity; the operators extend componentwise to
+state vectors in $\R^d$ that combine thermal, power, and workload
+features.
+
+Communication between sensing and edge agents is local, frequent, and
+loss-prone; messages may be delayed, dropped, or duplicated, in the
+spirit of lightweight agreement in lossy
+networks~\cite{zhang2021approx}. Zone-to-facility communication is less
+frequent and carries only consensus snapshots and verified control
+intents. No global clock or reliable transport is assumed. Each snapshot
+carries a timestamp, and the verifier checks it for staleness
+(Section~\ref{sec:verifier}).
+
+\subsection{Fault and Attack Model}
+\label{sec:faultmodel}
+
+We consider a deception adversary that compromises a fraction
+$0\le \beta_a<1$ of the sensing agents of a zone and manipulates their
+reports through the attack term $a_i(t)$
+in~\eqref{eq:obsmodel}. Table~\ref{tab:attacks} reports the attack
+taxonomy, chosen to cover the canonical false-data-injection patterns
+studied in CPS security~\cite{padhan2022} as they appear in
+slow-dynamics thermal telemetry. Benign faults, including missing and
+delayed reports or transient noise bursts, are handled by the same
+machinery. The consensus layer does not attempt to distinguish malice
+from malfunction: both appear as unreliable reports.
+
+\begin{table}[H]
+\centering
+\caption{Deception-attack taxonomy. A fraction $\beta_a$ of a zone's
+agents is compromised, possibly intermittently.}
+\label{tab:attacks}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{0.13\textwidth}P{0.29\textwidth}Y}
+\toprule
+\textbf{Attack} & \textbf{Form of $a_i(t)$} & \textbf{Operational
+effect} \\
+\midrule
+Bias & constant offset $b$ & Systematic over/under-reporting that
+shifts the zone estimate \\
+Drift & ramp $\delta\,(t-t_0)$ & Slow poisoning that mimics gradual
+thermal change and evades thresholding \\
+Freeze & $s_i(t)\equiv s_i(t_0)$ & Stale value masking real dynamics
+(replay of own last reading) \\
+Replay & $s_i(t)=s_i(t-\Delta)$ & Re-injection of a past window,
+plausible in distribution but desynchronised \\
+Scaling & multiplicative $\,(\gamma-1)\,x_z(t)$ & Proportional
+distortion that preserves trends while corrupting magnitude \\
+Mixed & time-varying combination & Alternating patterns that defeat
+single-statistic defences \\
+Spike & repeated alternating impulses $\pm b$ over the active window &
+Abrupt transient corruption that stresses outlier rejection; this is a
+sequence of impulses, not a single isolated sample \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The defender's goal is not exact agreement under arbitrary Byzantine
+behaviour. Ledger consensus can provide that guarantee, but at a cost
+incompatible with per-round telemetry. The target here is graceful
+degradation: a zone estimate whose error grows slowly with $\beta_a$ and
+attack magnitude, while the implicated reporters are flagged for the
+feedback loop of Section~\ref{sec:crp}.
+
+%% ===================================================================
+\section{Lightweight Consensus Methodology}
+\label{sec:methodology}
+
+This section specifies the consensus layer: the per-round FPR--OWA
+operator executed by edge agents (Section~\ref{sec:fprowa}) and the
+zone-level consensus-reaching loop that monitors and repairs agreement
+over time (Section~\ref{sec:crp}). In doing so, it adapts four
+ingredients of soft-consensus GDM to sensor agents: graded reliability
+replaces expert importance, fuzzy preference relations replace pairwise
+expert judgements, quantifier-guided dominance replaces selection
+degrees, and feedback replaces moderator advice.
+
+\subsection{Reliability Scoring}
+\label{sec:reliability}
+
+Let $\mathbf{s}(t)=(s_1(t),\dots,s_{n_z}(t))$ denote the report vector of
+zone $z$ at round $t$ (zone subscripts are omitted where unambiguous).
+The edge agent first computes a robust center and scale:
+\begin{equation}
+m(t)=\operatorname{median}_i\, s_i(t),
+\qquad
+\hat{\sigma}(t)=1.4826\cdot\operatorname{MAD}_i\, s_i(t)+\epsilon,
+\label{eq:centerscale}
+\end{equation}
+where $\operatorname{MAD}$ is the median absolute deviation, the
+constant $1.4826$ makes $\hat\sigma$ consistent with the standard
+deviation under Gaussian noise, and $\epsilon>0$ prevents degeneracy
+when reports coincide. Each agent then receives a reliability score
+\begin{equation}
+\rel_i(t)\;=\;\exp\!\left(-\,\frac{\lvert s_i(t)-m(t)\rvert}
+{\hat{\sigma}(t)}\right),\qquad 0<\rel_i(t)\le 1.
+\label{eq:reliability}
+\end{equation}
+Reliability decays exponentially with robust-standardised distance from
+the group center. Agents close to the peer center receive scores near
+one, while outliers, whether noisy or attacked, are discounted smoothly
+rather than removed by a hard threshold. This is the sensor-agent
+analogue of the graded importance weights used in soft
+consensus~\cite{kacprzyk1986,kacprzyk1988}.
+
+\subsection{Fuzzy Preference Relation over Reporters}
+\label{sec:fpr}
+
+Pointwise reliability only partly captures the relational structure of
+trust: ordering reporters requires assessing how much more credible one
+report is than another. Following the representation of graded pairwise
+judgements by fuzzy preference relations~\cite{chiclana1998,herreraviedma2002},
+we define the entries $p_{ij}(t)$ of $P(t)$, with
+$0\le p_{ij}(t)\le 1$, by
+\begin{equation}
+p_{ij}(t)\;=\;\frac{1}{1+\exp\!\big(-\kappa\,(\rel_i(t)-\rel_j(t))\big)},
+\qquad p_{ii}(t)=0.5,
+\label{eq:fpr}
+\end{equation}
+where $\kappa>0$ controls the sharpness of the comparison. The relation
+is additively reciprocal, $p_{ij}+p_{ji}=1$, and $p_{ij}>0.5$ means that
+report $i$ is more credible than report $j$. The logistic link is
+insensitive to small reliability differences, which map to values near
+$0.5$, while saturating in clear-cut cases.
+
+From $P(t)$, each agent receives a dominance degree
+\begin{equation}
+\delta_i(t)\;=\;\frac{1}{n_z-1}\sum_{j\neq i} p_{ij}(t)\;\in\;[0,1],
+\label{eq:dominance}
+\end{equation}
+namely the average strength with which $i$ is preferred to its peers.
+This is the operational counterpart of the quantifier-guided dominance
+degrees used to exploit fuzzy preference relations in GDM selection
+processes~\cite{chiclana1998,herreraviedma2002}; it induces the
+credibility ordering used by the aggregation step.
+
+\textbf{Proposition 1 (order preservation).}
+Let $n_z\geq2$, $\kappa>0$, and let $p_{ij}$ and $\delta_i$ be defined by
+Eqs.~\eqref{eq:fpr}--\eqref{eq:dominance}. For any reporters $i$ and
+$\ell$, $\rho_i>\rho_\ell$ if and only if
+$\delta_i>\delta_\ell$, and $\rho_i=\rho_\ell$ if and only if
+$\delta_i=\delta_\ell$.
+
+\emph{Proof.} Write $g(x)=(1+e^{-\kappa x})^{-1}$. Since $\kappa>0$,
+$g$ is strictly increasing and $g(x)+g(-x)=1$. If
+$\rho_i>\rho_\ell$, then, for every $j\notin\{i,\ell\}$,
+$g(\rho_i-\rho_j)>g(\rho_\ell-\rho_j)$; the remaining paired terms also
+satisfy $g(\rho_i-\rho_\ell)>g(\rho_\ell-\rho_i)$. Summing these
+$n_z-1$ strict inequalities and dividing by $n_z-1$ gives
+$\delta_i>\delta_\ell$. Interchanging $i$ and $\ell$ proves the reverse
+direction. If $\rho_i=\rho_\ell$, corresponding summands are equal,
+including the paired term $g(0)=1/2$, hence
+$\delta_i=\delta_\ell$; the strict result excludes equality when the
+reliabilities differ. $\square$
+
+The implementation extends exact computed-score ties by immutable reporter
+ID, yielding a deterministic linear order. This convention does not make the
+operator invariant to reporter renumbering and does not guarantee bitwise
+cross-platform equality for near-equal floating-point scores. The
+paper-facing audit found 50 legacy-estimate differences only where dominance
+gaps were at most $10^{-12}$; affected displayed cells were regenerated.
+
+\subsection{Quantifier-Guided OWA Aggregation}
+\label{sec:fprowa}
+
+Let $\sigma$ be the permutation of $E_z$ that sorts dominance degrees
+in non-increasing order, $\delta_{\sigma(1)}\geq\cdots\geq
+\delta_{\sigma(n_z)}$. Aggregation weights are derived from a regular
+non-decreasing linguistic quantifier in the parametric family of
+Zadeh~\cite{zadeh1983},
+\begin{equation}
+Q_{a,b}(r)=
+\begin{cases}
+0, & r<a,\\[2pt]
+\dfrac{r-a}{b-a}, & a\leq r\leq b,\\[6pt]
+1, & r>b,
+\end{cases}
+\qquad 0\le a<b\le 1,
+\label{eq:quantifier}
+\end{equation}
+instantiated with the weak-majority quantifier ``most'', for which we use
+$(a,b)=(0.3,0.8)$ and $(0.2,0.7)$~\cite{herrera1996,herreraviedma2002}; the
+released configuration labels this pair $(\alpha,\beta)$, but to avoid
+collision with the blend coefficient of Section~\ref{sec:crp} we write it
+$(a,b)$ throughout. The base Yager weights~\cite{yager1988} are
+$\omega_j=Q_{a,b}(j/n_z)-Q_{a,b}((j-1)/n_z)$, $j=1,\dots,n_z$, and are
+assigned to the dominance-ordered reports in \emph{reverse}, so that the
+weight on the $k$-th most credible report is
+\begin{equation}
+\begin{aligned}
+w_k&=Q_{a,b}\!\Big(\tfrac{n_z-k+1}{n_z}\Big)-Q_{a,b}\!\Big(\tfrac{n_z-k}{n_z}\Big),\\[2pt]
+\hat{x}_z(t)&=\sum_{k=1}^{n_z} w_k\, s_{\sigma(k)}(t).
+\end{aligned}
+\label{eq:estimate}
+\end{equation}
+Because $Q_{a,b}$ is constant outside $[a,b]$, the operator assigns
+\emph{no} weight to the single most- and least-credible reports and
+concentrates the mass on the high-credibility majority between them. It
+therefore acts as a robust \emph{soft-majority} over the dominance order,
+or equivalently as a graded, trust-induced analogue of a trimmed mean.
+Its core properties are stated explicitly to avoid ambiguity: (i) the
+preference relation is additively reciprocal, $p_{ij}+p_{ji}=1$; (ii) the
+weights satisfy $w_k\ge 0$ and $\sum_k w_k=1$, so $\hat{x}_z$ is a convex
+combination of the reports and lies in their range; (iii) the orness of
+$w$ for ``most'' is $\approx 0.5$, i.e.\ the fusion is near-median rather
+than optimistic or pessimistic; (iv) since the extreme ranks receive zero
+weight, no single reporter, however credible or however deviant, can set
+the estimate by itself, which bounds the influence of one compromised
+sensor; and (v) the operator costs $O(n_z^2)$ per zone and round
+(Section~\ref{sec:snapshot}). Ordering is induced by dominance rather
+than by the report values, so the operator is an induced OWA whose
+order-inducing variable is relational credibility. This distinguishes it
+from a direct OWA on sorted measurement values, retained as an ablation
+baseline (Section~\ref{sec:results_rq2}).
+
+\subsection{Diagnostics and Consensus Snapshot}
+\label{sec:snapshot}
+
+The edge agent emits diagnostics alongside the estimate. Agents whose
+reliability falls below an adaptive threshold are flagged as anomalous:
+\begin{equation}
+\begin{aligned}
+A_z(t)&=\bigl\{\, i \in E_z :\ \rel_i(t) < \tau_{\rho}(t) \,\bigr\},\\
+\tau_{\rho}(t)&=\max\!\bigl(\underline{\tau},\;
+\operatorname{median}_i \rel_i(t) - 2\,\operatorname{std}_i
+\rel_i(t)\bigr),
+\end{aligned}
+\label{eq:anomaly}
+\end{equation}
+with a floor $\underline{\tau}$ that keeps the threshold meaningful
+when reliabilities are uniformly high. The zone confidence is the mean
+reliability $\gamma_z(t)=\frac{1}{n_z}\sum_i \rel_i(t)$. The
+\emph{consensus snapshot}
+\begin{equation}
+\chi_z(t)=\bigl(\hat{x}_z(t),\,\gamma_z(t),\,A_z(t),\,
+\boldsymbol{\rel}(t),\,P(t),\,t\bigr)
+\label{eq:snapshot}
+\end{equation}
+is the typed artefact passed upward. It carries enough evidence for the
+verifier to police staleness and confidence, and for the traceability
+plane to support post-hoc audit. The operator costs
+$O(n_z^2)$ arithmetic per zone and round, dominated by the preference
+relation. For the tested zone sizes this computation is sub-millisecond in the
+reported CPU environment and involves no inter-zone
+communication, unlike the $O(n^2)$ \emph{message} complexity of
+PBFT-style quorums~\cite{castro1999}.
+
+\subsection{Zone-Level Consensus Reaching and Adaptive Feedback}
+\label{sec:crp}
+
+One aggregation round, even a robust one, cannot distinguish a briefly
+noisy agent from a persistently deceptive one. Nor can it recover useful
+information from agents that are repeatedly down-weighted. The zone
+verifier therefore runs a consensus-reaching process (CRP) over rounds,
+adapting the guidance-and-feedback scheme of soft-consensus
+GDM~\cite{herreraviedma2002,herreraviedma2007,
+cabrerizo2009,cabrerizo2010kbs} to sensor agents.
+
+\paragraph{Consensus degree and proximity}
+Pairwise similarity between reports is measured by soft coincidence,
+\begin{equation}
+s_{ij}(t)=\max\!\left(0,\;1-\frac{\lvert s_i(t)-s_j(t)\rvert}{M_z}\right),
+\label{eq:similarity}
+\end{equation}
+with $M_z>0$ a zone normalisation constant (e.g., the admissible
+operating range of the monitored variable). Agent proximity and the
+zone consensus degree follow the three-level construction of
+consensus models~\cite{cabrerizo2009}:
+\begin{equation}
+p_i(t)=\frac{1}{n_z-1}\sum_{j\neq i}s_{ij}(t),
+\qquad
+C_z(t)=\frac{1}{n_z}\sum_{i\in E_z}p_i(t).
+\label{eq:consensusdegree}
+\end{equation}
+
+\paragraph{Temporal consistency}
+Mirroring the consistency control that prevents agreement from masking
+self-contradiction~\cite{herreraviedma2007,cabrerizo2010kbs}, each agent
+is also scored for coherence with its own recent behaviour. Let
+$\tilde{s}_i(t)$ be a short-horizon prediction of agent $i$'s report, an
+exponentially weighted moving average of its past reports with smoothing
+$\lambda=0.3$. The temporal consistency score is
+\begin{equation}
+k_i(t)=\max\!\left(0,\;1-\frac{\lvert s_i(t)-\tilde{s}_i(t)\rvert}
+{M_z}\right),
+\label{eq:consistency}
+\end{equation}
+and the combined per-agent reliability used by the CRP blends social
+agreement and self-coherence with blend coefficient
+$\alpha\in[0,1]$ (distinct from the quantifier bounds $(a,b)$),
+\begin{equation}
+r_i(t)=\alpha\, p_i(t) + (1-\alpha)\, k_i(t).
+\label{eq:combined}
+\end{equation}
+Replay and freeze attacks motivate this combination. Because self-EWMA cannot
+represent a common zone trend, we also evaluate an aligned innovation score
+\begin{equation}
+\begin{aligned}
+k_i^{\mathrm{dyn}}(t)&=\max\!\left(0,1-
+\frac{|s_i(t)-\widehat{x}^{\mathrm{dyn}}_z(t)|}{M_z}\right),\\
+\widehat{x}^{\mathrm{dyn}}_z(t)&=
+f\!\left(\hat{x}_z(t-1),T_a(t-1),L(t-1),u(t-1)\right),
+\end{aligned}
+\label{eq:dynamicconsistency}
+\end{equation}
+where the frozen first-order predictor uses the previous estimate, ambient
+temperature, load, and the action actually executed at the previous tick.
+True temperature is never an input. This alternative captures prediction
+innovation relative to common zone dynamics; Section~\ref{sec:results_rq2}
+reports it as an offline diagnostic ablation rather than retroactively
+replacing the published CRP.
+
+\paragraph{Acceptance and feedback}
+Given thresholds $\tau_c$ (zone consensus) and $\tau_r$ (agent
+reliability), the verifier proceeds as follows at each round:
+\begin{enumerate}
+\item compute $\chi_z(t)$ via
+Sections~\ref{sec:reliability}--\ref{sec:snapshot}, and
+$C_z(t)$, $r_i(t)$ via~\eqref{eq:consensusdegree}--\eqref{eq:combined};
+\item if $C_z(t)\geq\tau_c$, accept and forward $\chi_z(t)$;
+\item otherwise, build the feedback set
+$F_z(t)=\{\,i : r_i(t)<\tau_r\,\}$ and apply to each $i\in F_z(t)$ one
+or more corrective actions:
+\emph{re-sampling} (request a fresh report),
+\emph{temporary down-weighting} (attenuate $i$'s influence in the next
+aggregation),
+\emph{delayed inclusion} (exclude $i$ for one round), or a
+\emph{persistent-anomaly flag} when $r_i$ remains below $\tau_r$ for
+$L$ consecutive rounds, which escalates the agent to the facility layer
+for inspection;
+\item re-validate and forward the resulting snapshot, recording all
+feedback actions in the trace.
+\end{enumerate}
+This is the sensor-agent analogue of moderator advice generation: the
+process targets the participants most responsible for disagreement
+instead of recomputing blindly over the whole
+zone~\cite{cabrerizo2009,cabrerizo2010kbs}. The CRP has the same
+$O(n_z^2)$ per-round cost as the operator itself and never blocks the
+control loop. When consensus cannot be restored within a round, the
+snapshot is forwarded with degraded confidence, and the confidence gate
+of the verifier (Section~\ref{sec:verifier}) decides whether control may
+proceed. We evaluate the CRP at $\alpha=0.5$, $M_z=4.0$,
+$\tau_c=0.7$, $\tau_r=0.5$, $L=3$ (Section~\ref{sec:results_rq2}); in the
+offline trace replay used there, the \emph{re-sampling} action is realised
+as delayed inclusion/down-weighting of the implicated reporters, the only
+substitution the recorded data permits.
+
+%% ===================================================================
+\section{Verifier-Gated Agentic Control}
+\label{sec:agentic}
+
+The control side of the architecture maps validated state to safe
+actuation. It separates a flexible \emph{proposer}, the supervisory
+agent, from a rigid deterministic \emph{gatekeeper}. The supervisory role
+is \emph{pluggable}: it may be filled by a reactive (rule-based) agent or
+by a deliberative LLM agent, while both remain subordinate to the same
+verifier. We first describe the LLM instantiation, then the reactive
+counterpart, and compare them empirically in Section~\ref{sec:results_rq4}.
+
+\subsection{Event-Triggered Supervisory Agent}
+\label{sec:planner}
+
+The deliberative agent is an LLM orchestrated with LangGraph and backed,
+in our implementation, by a Gemma instruction-tuned model served behind a
+standard inference endpoint. Under a ReAct-style
+scheme~\cite{yao2023react}, it receives the consensus snapshot
+$\chi_z(t)$ and, where relevant, recent history and the current actuator
+state. It then reasons explicitly about the zone's thermal and energy
+condition and emits a \emph{structured} supervisory action
+\begin{equation}
+u_z(t)=\bigl(\Delta f,\ \theta_{\mathrm{set}},\
+\textit{rationale},\ \textit{used\_consensus}\bigr),
+\label{eq:action}
+\end{equation}
+where $\Delta f$ is a fan-speed adjustment, $\theta_{\mathrm{set}}$ a
+cooling setpoint, \textit{rationale} a natural-language justification
+retained for audit, and \textit{used\_consensus} a declaration that the
+proposal was grounded in the validated snapshot rather than in raw or
+remembered values. Output is constrained to a typed JSON schema.
+Malformed or schema-violating generations do not stall the loop; they
+trigger the deterministic fallback described below and are recorded as
+handled events, not crashes.
+
+The agent is designed to remain outside the per-tick critical path. It can be
+invoked by an event-triggered policy parameterised by a confidence
+threshold, an anomaly-count threshold, a temperature margin, and a
+minimum inter-invocation interval. Between triggers, the fast path runs
+alone. The agent is also interchangeable: any instruction-following LLM
+can fill the role, and the architecture's \emph{safety} properties
+depend on the verifier rather than on well-behaved agent outputs.
+
+Low confidence has two intentionally different meanings: it requests
+diagnosis or supervisory escalation, but the admission rule rejects
+observation-dependent actuation at or below the confidence floor. Thus the
+trigger and gate do not conflict. Escalation can explain, alarm, or request new
+sensing, while the local fallback preserves liveness without trusting the
+low-confidence state. In the implementation both thresholds are 0.35. The new
+closed-loop pilot invokes deterministic supervision periodically at every tick
+and is not evidence for an event-trigger latency benefit.
+
+\paragraph{Reactive supervisory agent}
+As a deterministic counterpart, we implement a reactive agent fired by the
+\emph{same} triggers but emitting actions from fixed rules: a
+proportional fan/setpoint response to the thermal margin and anomaly
+state, with no language model. It passes through the identical verifier
+and fallback. This agent is the control baseline for RQ4, since it
+isolates what, if anything, LLM reasoning adds beyond a well-engineered
+rule under the same conditions.
+
+\paragraph{Action-only invocation}
+The architecture does not rely on continuous LLM reasoning for
+safety-critical control. Per-tick control is handled by the deterministic
+fast path, while the LangGraph/Gemma supervisor is invoked only under
+event-triggered conditions and can only \emph{propose} actions, never
+execute them. An action-only (or tool-only) invocation, where the
+supervisor is constrained to emit only the structured machine-readable
+action of Eq.~\eqref{eq:action} or a tool call without a free-text
+rationale, is therefore compatible with this design and would reduce
+token generation and latency. We treat this as an implementation-level optimisation: the tested behavior
+derives from deterministic consensus, verifier gating, and fallback control,
+and every supervisory output, whether verbose or
+action-only, must pass the same deterministic verifier. We do not
+benchmark it separately (Section~\ref{sec:limitations}).
+
+\subsection{Deterministic Verifier Agent}
+\label{sec:verifier}
+
+The verifier $V$ evaluates every proposed action against a declarative
+policy through deterministic rules and contains no learned components.
+Its checks fall into two groups.
+
+\emph{Process checks} establish that the proposal is procedurally
+trustworthy: the agent declared grounding in the consensus snapshot;
+the snapshot is fresh, $t_{\mathrm{now}}-t \leq \tau_{\mathrm{age}}$;
+and the zone confidence clears the floor,
+$\gamma_z(t)\geq\tau_{\gamma}$.
+
+\emph{Safety checks} establish that the action is physically
+admissible: actuator values remain within configured bounds, slew rates
+stay within limits, and the predicted post-action zone temperature,
+obtained from a conservative first-order thermal model, complies with the
+service-level threshold $T_{\mathrm{SLA}}$, with a stricter emergency
+rule activating at $T_{\mathrm{emerg}}$.
+
+The verdict is
+\begin{equation}
+V\bigl(u_z(t),\chi_z(t)\bigr)\in\{\textsc{accept},\textsc{reject}\},
+\ \text{reasons } R(t),
+\label{eq:verdict}
+\end{equation}
+where $R(t)$ is a machine-readable list of violated checks. Only
+\textsc{accept}ed actions receive a monotonic one-shot authorization that the
+process-local actuator interface consumes once. The runtime copies and hashes
+the authoritative snapshot before callbacks, binds proposal and authorization
+to its zone, timestamp, request ID, and payload, and rejects stale, mutated,
+superseded, missing, or consumed authorizations. These checks validate command
+integrity inside the tested process. They are not user or agent authentication,
+RBAC/IAM, PKI, sandboxing, or proof of cross-process non-bypassability.
+
+\paragraph{Architectural gating (not a formal proof)}
+The actuation path is wired exclusively through $V$: agent outputs have
+no side effects, and the actuator interface consumes only
+verifier-cleared actions. Liveness is preserved by a deterministic
+fallback policy, a conservative rule-based controller that takes over
+when no proposal is accepted within the refinement budget. Safety
+therefore does not depend on the agent behaving well, and control does
+not stall when the agent behaves badly. We use the terminology
+carefully: this is an \emph{architectural} enforcement argument supported
+by empirical evidence (Section~\ref{sec:results_rq3}, including
+adversarial and failure-mode tests), not a formal proof of
+non-bypassability or of policy completeness. We therefore claim that the
+verifier \emph{blocked all unsafe and process-invalid actions observed in
+the tested scenarios}, and treat a machine-checked guarantee as future
+work (Section~\ref{sec:limitations}).
+
+\subsection{Self-Refinement Cycles}
+\label{sec:refinement}
+
+On \textsc{reject}, the reasons $R(t)$ are returned to the planner,
+which may revise its proposal through a Reflexion-style verbal-feedback
+loop~\cite{shinn2023reflexion}, for at most $K$ cycles:
+\begin{equation}
+u_z^{(c+1)}(t)=\pi_{\mathrm{LLM}}\bigl(\chi_z(t),\,R^{(c)}(t)\bigr),
+\qquad c=0,\dots,K-1.
+\label{eq:refinement}
+\end{equation}
+Refinement turns the verifier from a pure filter into a teacher: within
+the episode, the planner receives the violated constraint and can adjust
+its proposal without any weight update. The evaluation
+(Section~\ref{sec:setup}) treats the planner variants, deterministic
+policy only, ReAct without verifier, ReAct with verifier, and ReAct with
+verifier and self-refinement, as ablation conditions for RQ3.
+
+\subsection{Trustworthiness and Traceability}
+\label{sec:trace}
+
+Every round appends the following elements to the execution trace: the
+consensus snapshot and its diagnostics, CRP feedback actions, agent
+prompt and raw output, verifier verdict and reasons, refinement cycles,
+the executed action, and measured timings. From these traces,
+the framework derives the safety indicators used in the evaluation:
+rates of unsafe actions \emph{proposed}, \emph{blocked}, and, most
+critically, \emph{executed}, together with acceptance rates and
+refinement-cycle counts. The same traces also support latency and
+overhead profiling. The trace design follows the auditability rationale
+of structured reasoning traces~\cite{wei2022cot} and agreement-based
+stability signals over sampled outputs~\cite{wang2023selfconsistency},
+but anchors trust in recorded \emph{decisions} rather than in the
+persuasiveness of generated explanations.
+
+\begin{table}[H]
+\centering
+\caption{End-to-end pseudocode of the implemented per-tick pipeline.}
+\label{alg:pipeline}
+\footnotesize
+\begin{tabularx}{\textwidth}{rY}
+\toprule
+\textbf{Step} & \textbf{Operation}\\
+\midrule
+1 & Collect typed reporter records $S_t$; reject invalid schema, zone, time, or non-finite fields.\\
+2 & Compute robust centre/scale, $\rho_i$, $P$, and $\delta_i$; sort by $(-\delta_i,\mathrm{stableID}_i)$ and emit FPR--OWA snapshot $\chi_t$.\\
+3 & Update persistent CRP state; compute $C_t$, proximity, temporal score, exclusions, and feedback; forward a converged or explicitly degraded snapshot.\\
+4 & Compute the local deterministic proposal. If the event policy fires, issue one immutable supervisory request; a late response retains its original request ID and may be superseded.\\
+5 & Bind the selected proposal to $\chi_t$; check schema, freshness, confidence, declared grounding, actuator bounds/slew, and conservative thermal policy.\\
+6 & If accepted, emit and consume a one-shot authorization and update the actuator; otherwise execute the bounded local fallback or alarm.\\
+7 & Record identifiers, payloads, reasons, source, before/after state, CRP actions, and timings.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%% ===================================================================
+\section{Experimental Setup}
+\label{sec:setup}
+
+We evaluate the architecture through \emph{simulation over publicly
+available telemetry derived from real systems}: a hierarchical
+IoT/MAS data-center testbed in which sensing agents, edge moderating
+agents, and the verifier-gated orchestrator operate over audited public
+datasets. This wording is used throughout instead of ``real-data
+evaluation''. The study is driven by real datasets, but it is not a
+physical deployment, and the implications of that choice are discussed in
+Section~\ref{sec:limitations}. Table~\ref{tab:params} collects all
+reported parameter values. As a reproduction gate, every headline number
+in the manuscript was recomputed from the released artifacts
+(Table~\ref{tab:repro}).
+
+\subsection{Data and Their Audited Roles}
+\label{sec:setup_data}
+
+Dataset names were treated as hypotheses rather than accepted at face
+value. Before use, each dataset was checked by an automated audit and
+admitted only for the role supported by its schema
+(Table~\ref{tab:datasets}). Thermal calibration, namely the hot-corridor
+temperature signal estimated by the consensus layer, comes from the
+Kaggle \emph{Data center Warm/Hot Corridor Temperature Prediction}
+dataset (fields \texttt{TLHC}, \texttt{T\_MEAS-*}, \texttt{P\_cu-*}).
+The ENACT edge--cloud continuum telemetry (Zenodo record 18920397;
+\texttt{CPU\%}, \texttt{MEM}, \texttt{Energy\,W}) is used as a
+power/workload proxy in the simulation ($240$ rows per scenario, recorded
+in each trace's metadata). The audit marks ENACT as usable for power but
+\emph{not} for temperature, so it is never used as a thermal signal.
+Because the reported error metrics evaluate the thermal estimate, ENACT
+enters the experiments as simulation context rather than as an evaluated
+target. Anomaly and deception \emph{timing} is taken from CuCD-ID, a
+CubeSat cybersecurity intrusion-detection dataset (Mendeley Data,
+CC~BY~4.0). Under the audit's mapping rule, this cyber dataset contributes
+only the temporal placement of anomaly/attack episodes and is never
+interpreted as a thermal measurement. Google Cluster Data, Building Data
+Genome Project~2, and CICIoT2023 were considered as candidates or
+substitutes but were not used in the final run. The Kaggle thermal values
+appear standardised; all error metrics are therefore reported in dataset
+units unless inverse-scaling metadata is available.
+
+\input{tables/tab_datasets}
+
+\subsection{Scenario Design}
+\label{sec:setup_scenarios}
+
+The replay campaign comprises $1{,}890$ indexed scenarios. The historical
+safety archive contains four separately executed control variants for every
+scenario, hence $1{,}890\times4=7{,}560$ primary safety episodes. These are
+not four selected decision points within a trajectory: each row is one
+scenario--variant episode, and no event-trigger subset was used to obtain the
+$7{,}560$ denominator. Triggered ticks belong to the separate historical
+realtime logs. Scenarios vary seven deception/anomaly attack types
+(Table~\ref{tab:attacks}: bias, drift, freeze, mixed, replay, scaling,
+spike), the attacked-sensor fraction $\beta_a\in\{0.0,0.1,0.2,0.3,0.4\}$,
+sensor noise levels $\{0.1,0.25,0.5\}$, zone sizes
+$n_z\in\{5,9,13\}$, quantifier bounds $(a,b)\in\{(0.2,0.7),(0.3,0.8)\}$,
+and three random seeds $\{11,42,101\}$. The thermal response follows a
+first-order model with disturbance, and attacks are active only over a
+bounded fraction of each episode rather than throughout the whole run.
+The seven attack types match Table~\ref{tab:attacks}; spike is implemented as
+repeated alternating impulses over its active window.
+
+\subsection{Consensus Operators and Supervisory Agents}
+\label{sec:setup_methods}
+
+Six aggregators are compared under identical conditions: arithmetic
+\emph{mean}, \emph{trimmed mean}, \emph{Hampel-filter-then-mean},
+\emph{median}, \emph{direct OWA} (value-ordered, same quantifier), and the
+proposed \emph{FPR--OWA} (dominance-ordered, with reliability
+diagnostics). The monitored \emph{CRP} of Section~\ref{sec:crp} is
+evaluated on top of FPR--OWA. For diagnostic validation, we also score
+three simple detectors, median$+$MAD $z$-score, Hampel residual, and
+trimmed residual, as baselines for the anomaly signal
+(Section~\ref{sec:results_rq2}). On the control side, four variants
+instantiate the safety ablation: \emph{deterministic policy only},
+\emph{ReAct without verifier}, \emph{ReAct with verifier}, and
+\emph{ReAct with verifier and self-refinement}. A \emph{reactive
+(rule-based) supervisory agent} is also present in the historical archive.
+Those reactive and LLM records were produced by non-identical execution paths,
+so Section~\ref{sec:results_rq4} treats them as descriptive rather than a
+paired control experiment. Two historical supervision regimes are reported
+(Section~\ref{sec:results_rq5}): an \emph{intensive} regime, which
+invokes the agent aggressively, and an \emph{event-triggered} regime
+(confidence $0.35$, anomaly $3$, temperature margin $0.02$, minimum
+interval $20$ ticks, no real-time refinement). Both are evaluated against
+deadline budgets of $\{100,250,500,1000,5000\}$\,ms.
+
+\subsection{Metrics}
+\label{sec:setup_metrics}
+
+Estimation quality is measured by mean absolute error (MAE), root mean
+square error (RMSE), median absolute error, the 95th-percentile absolute
+error (P95~AE), and maximum absolute error, all in dataset units. We also
+report the mean number of anomaly flags and the mean confidence emitted
+by each method. Safety is measured by the counts of unsafe actions
+\emph{proposed}, \emph{blocked} by the verifier, and \emph{executed}, the
+last being the critical count, together with accepted safe actions and
+LLM/verifier call counts. The anomaly signal is validated against
+ground-truth attacked-sensor labels using AUROC, AUPRC,
+precision/recall/F1, false-positive rate, and detection delay. Confidence
+is assessed through a reliability diagram, expected calibration error,
+and confidence--error correlation. Across-method comparisons use
+bootstrap confidence intervals, a Friedman test with Wilcoxon post-hoc,
+and a variance decomposition ($\eta^2$). Latency is reported per decision
+for the operators and per agent$+$verifier invocation for the control
+variants. The real-time study also reports loop-latency
+percentiles, invocation and failure rates, deadline-miss rates, and
+thermal-SLA violation rates. The additional action-dependent pilot reports
+integral absolute error (IAE) to the declared reference, time and integral
+above the SLA, peak excess, sustained target-band return onset, normalized fan
+effort, fan total variation, verifier rejections, fallback ticks, and CRP
+non-convergence. Normalized fan effort is not electrical energy. Replay and
+control pilots use three seeds $\{11,42,101\}$ and are descriptive; the
+estimation robustness extension uses ten seeds.
+
+\subsection{Implementation}
+\label{sec:setup_impl}
+
+The fast path is implemented in Python with vectorized NumPy operators.
+The orchestrator is built on LangGraph; the deliberative agent is a
+Gemma 12B instruction-tuned model served behind an OpenAI-compatible
+endpoint, while the reactive agent is a dependency-free rule engine. The
+verifier is also a dependency-free rule engine driven by a declarative
+SLA policy ($T_{\mathrm{SLA}}$, $T_{\mathrm{emerg}}$,
+$\tau_{\mathrm{age}}$, $\tau_{\gamma}$, actuator bounds and slew limits,
+refinement budget $K$). All runs are seeded, and every scenario emits a
+full execution trace. These traces support exact replay and the post-hoc
+derivation of all reported metrics from measured files only.
+
+%code,
+%configurations, prompts, and the trace schema are released
+%(Section~\ref{sec:data}).
+
+\input{tables/tab_params}
+
+%% ===================================================================
+\section{Results}
+\label{sec:results}
+
+We report only measured results, recomputed from the released artifacts.
+All $21$ headline quantities pass the reproduction gate
+(Table~\ref{tab:repro}). Throughout the section, ``best'' refers to the
+minimum-error method within the stated slice; no aggregate is projected or
+smoothed.
+
+\input{tables/tab_repro}
+
+\subsection{RQ1: How the Consensus Operators Compare}
+\label{sec:results_rq1}
+
+Across the $1{,}890$ scenarios, the six aggregators are close and
+\emph{no method dominates} (Table~\ref{tab:consensus_perf}). The plain
+\emph{mean} achieves the lowest global MAE ($1.5366$) and RMSE
+($1.6210$), with trimmed mean and Hampel-mean within $0.01$; FPR--OWA is
+the highest-error method in this aggregate view ($1.6171$). A Friedman
+test over the six aggregators rejects strict equality ($\chi^2=1612.8$,
+$p<10^{-3}$), and Wilcoxon post-hoc tests confirm mean$<$FPR--OWA on MAE
+($p<10^{-90}$). The practical effect is small, however: bootstrap
+$95\%$ intervals overlap heavily, and the operator accounts for only
+$\eta^2\approx0.01$ of MAE variance. The ranking changes in the tail. On
+P95~AE, \emph{direct OWA} ($2.3906$) and \emph{median} ($2.3952$) lead
+the mean ($2.4419$), indicating that quantifier-guided aggregation helps
+in the worst case, where it is intended to help, even when it trails on
+average.
+
+\input{tables/tab_consensus_perf}
+
+The advantage of a method also depends on the attack regime
+(Fig.~\ref{fig:heatmap}). FPR--OWA is the best single aggregator under
+\emph{bias} ($1.6468$ vs.\ mean $1.7763$); Hampel-mean leads under
+\emph{spike} and \emph{mixed}; mean leads under drift, freeze, replay,
+and scaling; and at the heaviest compromise ($\beta_a=0.4$), the
+\emph{median} becomes most competitive ($1.6133$). MAE degrades smoothly
+with the attacked fraction; Fig.~\ref{fig:maebeta} shows the regenerated
+stable-ID FPR--OWA series.
+The main driver of accuracy is not the operator, but sensor redundancy
+(Table~\ref{tab:sensors}): a variance decomposition attributes
+$\eta^2\approx0.75$ of MAE variance to $n_z$, compared with $0.05$ for
+attack type and $0.01$ for the operator. Increasing the zone from $5$ to
+$13$ sensors reduces mean MAE from $1.8268$ to $1.1522$ ($37\%$). RQ1
+therefore resolves as follows: estimation quality is governed first by
+redundancy, then by attack regime, and only marginally by the aggregator.
+The fast path should match the operator to the threat rather than rely on
+a single fixed ``winner''. The $(a,b)$ quantifier setting barely changes
+FPR--OWA (global MAE $1.610$ vs.\ $1.624$), whereas it moves the
+value-ordered direct OWA from $1.445$ to $1.689$; dominance ordering thus
+makes the fusion less sensitive to its own parametrization.
+
+\input{tables/tab_sensors}
+
+\emph{Robustness check.} We repeated the estimation study over \emph{ten}
+seeds ($6{,}300$ scenarios) with three additional robust baselines: a
+robust (Huber-gated) Kalman filter and Huber and Tukey M-estimators
+(Table~\ref{tab:robust}). The conclusions do not change, and the
+uncertainty narrows. The per-seed standard deviation is
+$\approx0.007$--$0.009$, an order of magnitude below the between-method
+gaps, so the ranking is stable; mean still minimizes global MAE
+($1.538$), while FPR--OWA still does not ($1.614$). Like the quantifier
+operators, the added robust estimators do not win on average but perform
+well in the tail: robust Kalman obtains the best P95~AE ($2.346$), and
+Huber the second best ($2.365$), compared with mean's $2.444$. All
+operators remain lightweight ($\leq0.086$\,s per scenario). The safety and control archives retain three seeds and are interpreted
+descriptively.
+
+\input{tables/tab_robust}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_heatmap_attack_method.pdf}
+\caption{Stable-ID FPR--OWA MAE by attack family. Values were regenerated
+after the deterministic reporter-ID tie policy was applied.}
+\label{fig:heatmap}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/fig_mae_vs_beta.pdf}
+\caption{Stable-ID FPR--OWA MAE vs.\ attacked-sensor fraction $\beta_a$.}
+\label{fig:maebeta}
+\end{figure}
+
+\subsection{RQ2: Validating the Diagnostic Signal}
+\label{sec:results_rq2}
+
+The next question is whether FPR--OWA's trust signal justifies the
+accuracy penalty. We assess this directly against ground-truth
+attacked-sensor labels. Two results stand out
+(Table~\ref{tab:diagnostics}). First, the \emph{single-round} FPR--OWA
+anomaly flag is \emph{not} a stronger detector than a simple robust
+residual score. Its mean AUROC over attacked scenarios ($0.649$) is
+essentially the same as that of a median$+$MAD $z$-score ($0.649$) and
+slightly below the Hampel residual ($0.658$), while its false-positive
+rate is the highest in the group ($0.104$ vs.\ $\approx 0.04$). What it does provide is an integrated confidence and anomaly signal, whereas plain aggregators emit
+a degenerate confidence of $1.000$ and require an external detector.
+
+The contribution appears when the monitored consensus-reaching process
+(CRP) of Section~\ref{sec:crp} is added. Temporal consistency and
+feedback make the diagnostic signal the most reliable one in the
+comparison: mean AUROC rises to $0.690$, the false-positive rate falls by
+more than an order of magnitude to $0.005$, and F1 is the best reported
+($0.273$). Per-attack AUROC improves on six of seven families
+(Fig.~\ref{fig:crp}), especially on bias ($0.973$ vs.\ $0.925$), mixed
+($0.722$ vs.\ $0.673$), and the temporal attacks drift, replay, and
+scaling. The \emph{freeze} attack remains difficult for every method
+($\text{AUROC}\approx0.4$). The CRP also yields a small estimation gain,
+mostly in the tail (P95~AE $2.423$ vs.\ $2.485$; max $2.775$ vs.\
+$2.835$), and converges quickly: $1.1$ rounds on average, reaching the
+consensus threshold $\tau_c$ on $79.5\%$ of ticks and excluding
+$\approx0.2$ reporters per tick (Table~\ref{tab:crp}). On confidence
+calibration, the FPR--OWA score is correctly oriented but weak
+(Spearman $\rho=-0.23$ between confidence and absolute error; expected
+calibration error up to $0.12$ in high-confidence bins), again comparable
+to residual-based confidences. RQ2 is therefore answered at the process
+level: diagnostic value comes from FPR--OWA$+$CRP, not from the
+single-round operator alone, and is most useful as a low-false-alarm
+trigger for verification and supervision, precisely the inputs consumed
+by the verifier and the event-trigger policy. An ablation of the
+operator's parts confirms the division of labour: \emph{OWA-only}
+achieves the lowest MAE ($1.580$), while the reliability/dominance
+machinery supplies the trust structure rather than the accuracy gain
+(full operator MAE $1.616$).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_crp.pdf}
+\caption{Anomaly detection by attack: AUROC (left) and false-positive rate
+(right), single-round FPR--OWA vs.\ the CRP.}
+\label{fig:crp}
+\end{figure}
+
+\input{tables/tab_diagnostics}
+\input{tables/tab_crp}
+\input{tables/tab_temporal_ablation}
+
+The temporal ablation in Table~\ref{tab:temporal_ablation} directly tests the
+reviewed limitation of self-EWMA consistency. Adding the aligned zone-dynamic
+innovation reduces non-converged ticks from 627 to 22 relative to the
+published blend, but it increases exclusions and total rounds and has slightly
+worse MAE than social proximity alone (0.079996 vs.\ 0.079962). The outcome is
+therefore mixed. Because all four variants replay the same 45 trajectories and
+executed actions, it supports a diagnostic comparison only; it does not show
+that the dynamic variant improves counterfactual closed-loop control.
+
+\subsection{RQ3: Safety Episodes and Runtime Fault Injection}
+\label{sec:results_rq3}
+
+The historical safety archive contains four control variants for each of the
+$1{,}890$ indexed scenarios, yielding $7{,}560$ scenario--variant episodes
+(Table~\ref{tab:safety}). These are complete offline safety episodes, not four
+selected trigger times per scenario. In the archived records, the unverified
+ReAct variant executed 4,409 unsafe proposals; the verifier-gated variants
+recorded zero unsafe executions and the refinement variant recorded more
+accepted proposals at the cost of additional calls. Because the historical
+variants do not all share the corrected runtime, these contrasts remain
+observational and do not identify the verifier as the sole cause.
+
+The corrected runtime contract was tested directly through 24 controlled cases
+and 34 events. Invalid snapshots could not alter actuator state; proposals were
+bound to immutable snapshot/request identities; pending, timeout, supersession,
+mutation, and one-shot authorization cases behaved as specified. A separate
+nine-proposal adversarial set and failure modes for timeout, exception,
+malformed output, and missing authorization all selected rejection or bounded
+fallback. Across the tested records no unsafe or process-invalid action reached
+the simulated actuator. This is a bounded software observation plus an
+architectural enforcement argument. It is not a formal proof of policy
+completeness, physical safety, or non-bypassability in a deployed system.
+
+\input{tables/tab_safety}
+
+\subsection{RQ4: What Can the Historical Supervisor Records Establish?}
+\label{sec:results_rq4}
+
+Table~\ref{tab:supervisor} and Fig.~\ref{fig:supervisor} summarize the
+historical reactive and LLM records. They show equal stored MAE and no stored
+SLA or unsafe-execution event, with much lower recorded latency for the
+reactive path. A provenance audit, however, established that the two agents
+used non-identical execution paths. The records are therefore descriptive and
+cannot isolate supervisor type, verifier effect, or event triggering as a
+cause. The corrected common runtime is instead validated by 24 deterministic
+fault-injection cases and a 240-tick wiring smoke test: stale, future,
+wrong-zone, non-finite, malformed, mutated, superseded, missing, and consumed
+inputs were rejected or handled by the local fallback, while independently
+checked actuator bounds and slew held. This establishes software behavior for
+the tested contract, not a causal LLM comparison or production isolation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_supervisor_comparison.pdf}
+\caption{Descriptive historical reactive and LLM records. Because execution
+paths were non-identical, differences are not interpreted causally.}
+\label{fig:supervisor}
+\end{figure}
+
+\input{tables/tab_supervisor}
+
+\subsection{RQ5: Computational Cost and Closed-Loop Behavior}
+\label{sec:results_rq5}
+
+The true persistent-CRP benchmark separates a convergent fresh-state input
+(one achieved round) from a frozen stress input (three achieved rounds) for
+$n_z=5$--100. Median latency remains 140.1--271.4~$\mu$s for the convergent
+profile and 166.6--215.0~$\mu$s for the stress profile; median traced peak
+memory reaches about 244~KiB at $n_z=100$ (Table~\ref{tab:crp_cost}). Each row
+uses 20 warm-ups, 500 latency repetitions, and 20 separate memory traces with
+tracing disabled during timing. The algorithmic work and preference storage
+are $O(n_z^2)$ per round, but six noisy timing points do not establish an
+empirical scaling law. These measurements contain neither electrical energy
+nor LLM-token consumption.
+
+\input{tables/tab_crp_cost}
+
+Historical LLM decisions required seconds and motivate keeping language
+reasoning outside the critical path, but the intensive and event-triggered
+archives are retained only as non-paired descriptive evidence. In particular,
+the new action-dependent experiment used periodic deterministic supervision
+at every tick and cannot validate asynchronous live LLM behavior or a causal
+94.7\% event-trigger benefit.
+
+The separate closed-loop pilot executes an illustrative first-order plant for
+135 condition-runs (45 per controller), 240 ticks each. Table~\ref{tab:closed_loop}
+adds standard control metrics. Mean IAE is 61.485 for the oracle, 69.326 for
+FPR--OWA+CRP, and 98.708 for mean; fan effort and total variation are reported
+separately. All original runs remained below the 32\,$^\circ$C SLA, so SLA
+exposure is zero and does not discriminate controllers. FPR--OWA+CRP also
+produced 627 non-converged ticks and 39 verifier rejections/fallbacks, and
+identified at least one attack-window alarm in only 14 of 42 attacked runs.
+These adverse outcomes are retained.
+
+\input{tables/tab_closed_loop}
+
+The pre-specified hot-start appendix tests the missing unsafe-temperature
+boundary (Table~\ref{tab:hot_start}). Starting from 33\,$^\circ$C, all clean
+systems recover sustainably below the SLA at minute 3. Under a common
+$-3\,^\circ$C measurement bias, the mean and FPR--OWA+CRP controllers recover
+at minute 68, eight minutes after bias removal, with about 50~$^\circ$C-min of
+integrated excess; the oracle remains paired with its clean trajectory. This
+is evidence of dependence on common measurement quality, not robustness or
+energy saving.
+
+\input{tables/tab_hot_start}
+
+%% ===================================================================
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{What the evidence supports}
+The main replay does not identify a universally best estimator: mean has the
+lowest global MAE, while sensor count explains most accuracy variation. The
+specific value of FPR--OWA+CRP is an integrated estimate and low-false-alarm
+diagnostic. The temporal ablation sharpens this interpretation. Zone-dynamic
+innovation improves convergence relative to the published blend, but social
+proximity alone has marginally lower MAE and the dynamic variant performs more
+exclusions and rounds. The appropriate conclusion is a trade-off, not general
+superiority.
+
+The runtime results support separation of authority. The CRP monitor diagnoses
+agreement; the supervisor proposes; the actuation verifier admits a bound
+command; fallback preserves liveness. This resembles AICEBERG's separation of
+language reasoning from deterministic instrument checks and RADICS's
+runtime-assurance principle, while addressing a different object: deceptive
+thermal reports. The comparison also identifies missing deployment controls.
+An internal one-shot capability and payload hash do not authenticate a person
+or agent and do not implement RBAC, IAM, PKI, operating-system isolation, or a
+network policy-enforcement point.
+
+\paragraph{Control, cost, and scalability}
+The action-dependent pilot improves realism over static acceptance counts by
+closing the actuator/plant loop and reporting IAE, SLA exposure, recovery, and
+fan effort. It also reveals an important negative boundary: common-mode bias
+delays recovery for both measurement-dependent controllers. The true-CRP
+benchmark shows sub-millisecond execution through $n_z=100$ in the tested CPU
+environment. Theoretical arithmetic and storage remain quadratic per round, so
+larger zones should be partitioned or benchmarked on their target edge device.
+Fan-command effort is a control surrogate; without power instrumentation it
+cannot support an energy or consumption claim.
+
+\paragraph{Role of the LLM}
+The architecture permits a language supervisor for semantic escalation and
+auditable proposals, but the available reactive and LLM archives are not a
+paired causal study. We therefore make no claim that either supervisor causes
+better thermal outcomes, that event triggering produces the historical
+latency reduction, or that an LLM adds measurable value in this task. The
+corrected deterministic runtime and periodic closed-loop pilot establish the
+mechanism independently of new LLM inference.
+
+\paragraph{Smart-city relevance}
+The evaluated component operates inside one illustrative facility zone. Its
+relevance to smart cities is infrastructural: urban services depend on cloud
+and edge data centers, and future district-energy or city-level orchestration
+requires trustworthy facility state. The present study does not validate a
+city-scale deployment, cross-zone arbitration, or district-energy coupling.
+
+\section{Limitations}
+\label{sec:limitations}
+
+The evaluation is software based. The historical thermal series appears
+standardized, so its replay errors are dataset units rather than degrees
+Celsius. ENACT supplies workload/power context and CuCD-ID supplies attack
+timing; neither is interpreted as co-measured thermal telemetry. The new
+first-order plant uses declared illustrative parameters. It validates code
+paths and action-dependent behavior, not physical calibration, hardware
+latency, thermal safety, or transfer to another facility. A unified
+instrumented data-center or hardware-in-the-loop study is required for those
+claims.
+
+The replay and closed-loop pilots use bounded designs. The ten-seed robustness
+extension stabilizes the estimation ranking, while control and LLM archives
+use three seeds and are descriptive. All 135 original closed-loop runs stayed
+below the SLA, so mitigation and unsafe-state recovery were uninformative;
+the 18-run hot-start appendix is an exploratory boundary, not a significance
+study. FPR--OWA+CRP missed many drift/freeze/replay runs, had 627
+non-convergent ticks, and generated 39 fallbacks. A common bias delayed both
+measurement-dependent controllers. These adverse findings constrain any
+robustness claim.
+
+The dynamic temporal score was replayed on fixed trajectories and executed
+actions. It diagnoses the estimator but cannot establish counterfactual
+closed-loop benefit. Fifty legacy estimates differ only at dominance gaps no
+larger than $10^{-12}$; stable reporter IDs deterministically extend exact
+ties but do not guarantee bitwise cross-platform identity for near-equal
+floating-point values.
+
+Security validation is process local. The runtime matrix covers malformed,
+stale, mutated, superseded, timeout, and authorization-reuse cases, but not
+host compromise, malicious code with direct actuator access, network attacks,
+identity lifecycle, authorization administration, or production isolation.
+The zero observed unsafe-execution count is not a formal proof. Energy,
+electrical consumption, and token use were not measured. Historical reactive
+and LLM paths are non-identical, no new LLM inference was run, and live
+asynchronous behavior remains untested.
+
+\section{Conclusions and Future Work}
+\label{sec:conclusions}
+
+We presented and audited a two-path architecture that combines trust-graded
+FPR--OWA sensing, persistent CRP diagnostics, optional supervisory proposals,
+and deterministic command admission. The revised evidence supports three
+bounded conclusions. First, estimator accuracy is context dependent, while the
+persistent CRP contributes an integrated diagnostic signal. Second, the tested
+runtime rejects the observed unsafe and process-invalid cases and keeps
+command authority separate from probabilistic planning. Third, the illustrative
+closed loop exposes both useful tracking behavior and vulnerability to
+common-mode measurement bias; the true CRP remains inexpensive for the tested
+zone sizes.
+
+The work therefore provides a reproducible software blueprint and a clearer
+experimental baseline, rather than a production-ready or hardware-validated
+safety system. Next steps are a unified instrumented-facility or
+hardware-in-the-loop campaign, identity and least-privilege enforcement around
+the process-local gate, larger and device-specific scalability tests,
+electrical power measurement, counterfactual evaluation of temporal models,
+and a genuinely paired reactive-versus-LLM study on a task where semantic
+reasoning may affect a measurable outcome.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{6pt}
+
+\authorcontributions{Conceptualization, D.F. and V.L.; methodology, D.F.;
+software, D.F.; validation, D.F.; formal analysis, D.F.; data curation, D.F.;
+writing---original draft preparation, D.F.; writing---review and editing, V.L.;
+supervision, V.L. All authors have read and agreed to the published version of
+the manuscript.}
+
+\funding{This research received no external funding.}
+
+\institutionalreview{Not applicable.}
+
+\informedconsent{Not applicable.}
+
+\dataavailability{The experiments use publicly available datasets (Kaggle Data
+center Warm/Hot Corridor Temperature Prediction; ENACT, Zenodo record 18920397;
+CuCD-ID, Mendeley Data, CC~BY~4.0). A reproducibility bundle---source code,
+configuration, LLM prompt templates and JSON schema, the declarative verifier
+policy, the scenario generator, execution-trace schema, parameter table
+(Table~\ref{tab:params}), and result files---together with the scripts that
+recompute every reported quantity (the reproduction gate of
+Table~\ref{tab:repro}) is publicly available at
+\url{https://github.com/dfurno/agentic-lightweight-consensus-datacenter-cps/tree/smartcities-round1-2026-09-04}.}
+
+\acknowledgments{During the preparation of this manuscript/study, the authors
+used Claude (Anthropic) and OpenAI Codex for the purposes of assisting in
+drafting and refining the manuscript text and supporting the development and
+implementation of the experimental work. The authors have reviewed and edited
+the output and take full responsibility for the content of this publication.}
+
+\conflictsofinterest{The authors declare no conflicts of interest.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{adjustwidth}{-\extralength}{0cm}
+
+\reftitle{References}
+
+% MDPI ACS reference format; numbered in order of appearance.
+\begin{thebibliography}{999}
+
+\bibitem{khan2020smartcities}
+Khan, L.U.; Yaqoob, I.; Tran, N.H.; Kazmi, S.M.A.; Dang, T.N.; Hong, C.S.
+Edge-computing-enabled smart cities: a comprehensive survey. \emph{IEEE
+Internet of Things Journal} \textbf{2020}, \emph{7}~(10), 10200--10232.
+\url{https://doi.org/10.1109/JIOT.2020.2987070}
+
+\bibitem{vitello2022}
+Vitello, P.; Capponi, A.; Fiandrino, C.; Cantelmo, G.; Kliazovich, D.
+Mobility-driven and energy-efficient deployment of edge data centers in urban
+environments. \emph{IEEE Transactions on Sustainable Computing} \textbf{2022},
+\emph{7}~(4), 736--748.
+\url{https://doi.org/10.1109/TSUSC.2021.3056621}
+
+\bibitem{iea2025}
+International Energy Agency (IEA). \emph{Energy and AI}; IEA: Paris, France,
+2025. Available online: \url{https://www.iea.org/reports/energy-and-ai}
+(accessed on 20 July 2026).
+
+\bibitem{cso2025}
+Central Statistics Office (CSO). Data Centres Metered Electricity Consumption
+2024. Available online:
+\url{https://www.cso.ie/en/releasesandpublications/ep/p-dcmec/datacentresmeteredelectricityconsumption2024/}
+(accessed on 20 July 2026).
+
+\bibitem{monstadt2025}
+Monstadt, J.; Saltzman, K. How data centers have come to matter: governing the
+spatial and environmental footprint of the `Digital Gateway to Europe'.
+\emph{International Journal of Urban and Regional Research} \textbf{2025},
+\emph{49}~(4), 757--778.
+\url{https://doi.org/10.1111/1468-2427.13316}
+
+\bibitem{huang2020prosumer}
+Huang, P.; Copertaro, B.; Zhang, X.; Shen, J.; L\"ofgren, I.; R\"onnelid, M.;
+Fahlen, J.; Andersson, D.; Svanfeldt, M. A review of data centers as prosumers
+in district energy systems: renewable energy integration and waste heat reuse
+for district heating. \emph{Applied Energy} \textbf{2020}, \emph{258}, 114109.
+\url{https://doi.org/10.1016/j.apenergy.2019.114109}
+
+\bibitem{ilager2023}
+Ilager, S.; Toosi, A.N.; Jha, M.R.; Brandic, I.; Buyya, R. A data-driven
+analysis of a cloud data center: statistical characterization of workload,
+energy and temperature. In Proceedings of the IEEE/ACM 16th International
+Conference on Utility and Cloud Computing (UCC), 2023.
+\url{https://doi.org/10.1145/3603166.3632137}
+
+\bibitem{jiang2019}
+Jiang, C.; Qiu, Y.; Gao, H.; Fan, T.; Li, K.; Wan, J. An edge computing
+platform for intelligent operational monitoring in internet data centers.
+\emph{IEEE Access} \textbf{2019}, \emph{7}, 133375--133387.
+\url{https://doi.org/10.1109/ACCESS.2019.2939614}
+
+\bibitem{yan2021}
+Yan, L.; Li, Y.; Song, H.; Zou, H.; Wang, L. Edge computing based data center
+monitoring. In Proceedings of the 2021 IEEE International Conference on Edge
+Computing (EDGE), 2021; pp. 17--24.
+\url{https://doi.org/10.1109/EDGE53862.2021.00012}
+
+\bibitem{das2008}
+Das, R.; Kephart, J.O.; Lefurgy, C.; Tesauro, G.; Levine, D.W.; Chan, H.Y.
+Autonomic multi-agent management of power and performance in data centers.
+In \emph{Proceedings of the 7th International Joint Conference on Autonomous
+Agents and Multiagent Systems (AAMAS 2008), Industry Track}, Estoril, Portugal,
+12--16 May 2008; pp. 107--114.
+
+\bibitem{tesauro2004}
+Tesauro, G.; Chess, D.M.; Walsh, W.E.; Das, R.; Segal, A.; Whalley, I.;
+Kephart, J.O.; White, S.R. A multi-agent systems approach to autonomic
+computing. In Proceedings of the Third International Joint Conference on
+Autonomous Agents and Multiagent Systems (AAMAS), 2004; pp. 464--471.
+\url{https://doi.org/10.1109/AAMAS.2004.23}
+
+\bibitem{wang2024tcps}
+Wang, R.; Cao, Z.; Zhou, X.; Wen, Y.; Tan, R. Green data center cooling
+control via physics-guided safe reinforcement learning. \emph{ACM Transactions
+on Cyber-Physical Systems} \textbf{2024}, \emph{8}~(1), 1--26.
+\url{https://doi.org/10.1145/3582577}
+
+\bibitem{ran2023event}
+Ran, Y.; Zhou, X.; Hu, H.; Wen, Y. Optimizing data center energy efficiency
+via event-driven deep reinforcement learning. \emph{IEEE Transactions on
+Services Computing} \textbf{2023}, \emph{16}~(2), 1296--1309.
+\url{https://doi.org/10.1109/TSC.2022.3157145}
+
+\bibitem{padhan2022}
+Padhan, S.; Turuk, A.K. Design of false data injection attacks in
+cyber-physical systems. \emph{Information Sciences} \textbf{2022}, \emph{608},
+825--843.
+\url{https://doi.org/10.1016/j.ins.2022.06.082}
+
+\bibitem{zhang2021approx}
+Zhang, Q.; Bantikyan, T.; Tseng, L. Practical approximate consensus algorithms
+for small devices in lossy networks. In Proceedings of the 27th Annual
+International Conference on Mobile Computing and Networking (MobiCom), 2021.
+\url{https://doi.org/10.1145/3447993.3482865}
+
+\bibitem{ramachandran2026}
+Ramachandran, M. Lightweight consensus for blockchain--IoT in smart cities:
+hierarchical framework. \emph{Academia Engineering} \textbf{2026}, \emph{3}.
+\url{https://doi.org/10.20935/AcadEng8288}
+
+\bibitem{haque2024}
+Haque, E.U.; Shah, A.; Iqbal, J.; Ullah, S.S.; Alroobaea, R.; Hussain, S. A
+scalable blockchain based framework for efficient IoT data management using
+lightweight consensus. \emph{Scientific Reports} \textbf{2024}, \emph{14},
+7841.
+\url{https://doi.org/10.1038/s41598-024-58578-7}
+
+\bibitem{khan2018}
+Khan, M.A.; Salah, K. IoT security: review, blockchain solutions, and open
+challenges. \emph{Future Generation Computer Systems} \textbf{2018}, \emph{82},
+395--411.
+\url{https://doi.org/10.1016/j.future.2017.11.022}
+
+\bibitem{reyna2018}
+Reyna, A.; Mart\'\i n, C.; Chen, J.; Soler, E.; D\'\i az, M. On blockchain and
+its integration with IoT: challenges and opportunities. \emph{Future
+Generation Computer Systems} \textbf{2018}, \emph{88}, 173--190.
+\url{https://doi.org/10.1016/j.future.2018.05.046}
+
+\bibitem{novo2018}
+Novo, O. Blockchain meets IoT: an architecture for scalable access management
+in IoT. \emph{IEEE Internet of Things Journal} \textbf{2018}, \emph{5}~(2),
+1184--1195.
+\url{https://doi.org/10.1109/JIOT.2018.2812239}
+
+\bibitem{pan2019edgechain}
+Pan, J.; Wang, J.; Hester, A.; Alqerm, I.; Liu, Y.; Zhao, Y. EdgeChain: an
+edge-IoT framework and prototype based on blockchain and smart contracts.
+\emph{IEEE Internet of Things Journal} \textbf{2019}, \emph{6}~(3),
+4719--4732.
+\url{https://doi.org/10.1109/JIOT.2018.2878154}
+
+\bibitem{tuli2019fogbus}
+Tuli, S.; Mahmud, R.; Tuli, S.; Buyya, R. FogBus: a blockchain-based
+lightweight framework for edge and fog computing. \emph{Journal of Systems and
+Software} \textbf{2019}, \emph{154}, 22--36.
+\url{https://doi.org/10.1016/j.jss.2019.04.050}
+
+\bibitem{qu2021pofl}
+Qu, X.; Wang, S.; Hu, Q.; Cheng, X. Proof of federated learning: a novel
+energy-recycling consensus algorithm. \emph{IEEE Transactions on Parallel and
+Distributed Systems} \textbf{2021}, \emph{32}~(8), 2074--2085.
+\url{https://doi.org/10.1109/TPDS.2021.3056773}
+
+\bibitem{castro1999}
+Castro, M.; Liskov, B. Practical Byzantine fault tolerance. In Proceedings of
+the 3rd Symposium on Operating Systems Design and Implementation (OSDI), 1999;
+pp. 173--186.
+
+\bibitem{zadeh1983}
+Zadeh, L.A. A computational approach to fuzzy quantifiers in natural
+languages. \emph{Computers \& Mathematics with Applications} \textbf{1983},
+\emph{9}~(1), 149--184.
+\url{https://doi.org/10.1016/0898-1221(83)90013-5}
+
+\bibitem{yager1988}
+Yager, R.R. On ordered weighted averaging aggregation operators in
+multicriteria decisionmaking. \emph{IEEE Transactions on Systems, Man, and
+Cybernetics} \textbf{1988}, \emph{18}~(1), 183--190.
+\url{https://doi.org/10.1109/21.87068}
+
+\bibitem{kacprzyk1986}
+Kacprzyk, J. Group decision making with a fuzzy linguistic majority.
+\emph{Fuzzy Sets and Systems} \textbf{1986}, \emph{18}~(2), 105--118.
+\url{https://doi.org/10.1016/0165-0114(86)90014-X}
+
+\bibitem{kacprzyk1988}
+Kacprzyk, J.; Fedrizzi, M. A `soft' measure of consensus in the setting of
+partial (fuzzy) preferences. \emph{European Journal of Operational Research}
+\textbf{1988}, \emph{34}~(3), 316--325.
+\url{https://doi.org/10.1016/0377-2217(88)90152-X}
+
+\bibitem{kacprzyk1992}
+Kacprzyk, J.; Fedrizzi, M.; Nurmi, H. Group decision making and consensus
+under fuzzy preferences and fuzzy majority. \emph{Fuzzy Sets and Systems}
+\textbf{1992}, \emph{49}~(1), 21--31.
+\url{https://doi.org/10.1016/0165-0114(92)90107-F}
+
+\bibitem{herrera1996}
+Herrera, F.; Herrera-Viedma, E.; Verdegay, J.L. A model of consensus in group
+decision making under linguistic assessments. \emph{Fuzzy Sets and Systems}
+\textbf{1996}, \emph{78}~(1), 73--87.
+\url{https://doi.org/10.1016/0165-0114(95)00107-7}
+
+\bibitem{herreraviedma2002}
+Herrera-Viedma, E.; Herrera, F.; Chiclana, F. A consensus model for
+multiperson decision making with different preference structures. \emph{IEEE
+Transactions on Systems, Man, and Cybernetics---Part A: Systems and Humans}
+\textbf{2002}, \emph{32}~(3), 394--402.
+\url{https://doi.org/10.1109/TSMCA.2002.802821}
+
+\bibitem{herreraviedma2007}
+Herrera-Viedma, E.; Alonso, S.; Chiclana, F.; Herrera, F. A consensus model
+for group decision making with incomplete fuzzy preference relations.
+\emph{IEEE Transactions on Fuzzy Systems} \textbf{2007}, \emph{15}~(5),
+863--877.
+\url{https://doi.org/10.1109/TFUZZ.2006.889952}
+
+\bibitem{cabrerizo2009}
+Cabrerizo, F.J.; Alonso, S.; Herrera-Viedma, E. A consensus model for group
+decision making problems with unbalanced fuzzy linguistic information.
+\emph{International Journal of Information Technology \& Decision Making}
+\textbf{2009}, \emph{8}~(1), 109--131.
+\url{https://doi.org/10.1142/S0219622009003296}
+
+\bibitem{cabrerizo2010soft}
+Cabrerizo, F.J.; Moreno, J.M.; P\'erez, I.J.; Herrera-Viedma, E. Analyzing
+consensus approaches in fuzzy group decision making: advantages and drawbacks.
+\emph{Soft Computing} \textbf{2010}, \emph{14}~(5), 451--463.
+\url{https://doi.org/10.1007/s00500-009-0453-x}
+
+\bibitem{cabrerizo2010kbs}
+Cabrerizo, F.J.; P\'erez, I.J.; Herrera-Viedma, E. Managing the consensus in
+group decision making in an unbalanced fuzzy linguistic context with
+incomplete information. \emph{Knowledge-Based Systems} \textbf{2010},
+\emph{23}~(2), 169--181.
+\url{https://doi.org/10.1016/j.knosys.2009.11.019}
+
+\bibitem{herreraviedma2014}
+Herrera-Viedma, E.; Cabrerizo, F.J.; Kacprzyk, J.; Pedrycz, W. A review of
+soft consensus models in a fuzzy environment. \emph{Information Fusion}
+\textbf{2014}, \emph{17}, 4--13.
+\url{https://doi.org/10.1016/j.inffus.2013.04.002}
+
+\bibitem{yao2023react}
+Yao, S.; Zhao, J.; Yu, D.; Du, N.; Shafran, I.; Narasimhan, K.; Cao, Y. ReAct:
+synergizing reasoning and acting in language models. In Proceedings of the
+International Conference on Learning Representations (ICLR), 2023.
+
+\bibitem{shinn2023reflexion}
+Shinn, N.; Cassano, F.; Gopinath, A.; Narasimhan, K.; Yao, S. Reflexion:
+language agents with verbal reinforcement learning. In \emph{Advances in
+Neural Information Processing Systems}, Vol.~36, 2023.
+
+\bibitem{wang2024agents}
+Wang, L.; Ma, C.; Feng, X.; Zhang, Z.; Yang, H.; Zhang, J.; Chen, Z.; Tang,
+J.; Chen, X.; Lin, Y.; Zhao, W.X.; Wei, Z.; Wen, J. A survey on large language
+model based autonomous agents. \emph{Frontiers of Computer Science}
+\textbf{2024}, \emph{18}~(6), 186345.
+\url{https://doi.org/10.1007/s11704-024-40231-1}
+
+%% ---- Resilient estimation, robust aggregation, runtime assurance ---
+
+\bibitem{ogino2018}
+Ogino, T.; Kitagami, S.; Suganuma, T.; Shiratori, N. A multi-agent based
+flexible IoT edge computing architecture harmonizing its control with cloud
+computing. \emph{International Journal of Networking and Computing}
+\textbf{2018}, \emph{8}~(2), 218--239.
+\url{https://doi.org/10.15803/ijnc.8.2_218}
+
+\bibitem{nezami2021}
+Nezami, Z.; Zamanifar, K.; Djemame, K.; Pournaras, E. Decentralized
+edge-to-cloud load balancing: service placement for the Internet of Things.
+\emph{IEEE Access} \textbf{2021}, \emph{9}, 64983--65000.
+\url{https://doi.org/10.1109/ACCESS.2021.3074962}
+
+\bibitem{pasqualetti2013}
+Pasqualetti, F.; D\"orfler, F.; Bullo, F. Attack detection and identification
+in cyber-physical systems. \emph{IEEE Transactions on Automatic Control}
+\textbf{2013}, \emph{58}~(11), 2715--2729.
+\url{https://doi.org/10.1109/TAC.2013.2266831}
+
+\bibitem{fawzi2014}
+Fawzi, H.; Tabuada, P.; Diggavi, S. Secure estimation and control for
+cyber-physical systems under adversarial attacks. \emph{IEEE Transactions on
+Automatic Control} \textbf{2014}, \emph{59}~(6), 1454--1467.
+\url{https://doi.org/10.1109/TAC.2014.2303233}
+
+\bibitem{leblanc2013}
+LeBlanc, H.J.; Zhang, H.; Koutsoukos, X.; Sundaram, S. Resilient asymptotic
+consensus in robust networks. \emph{IEEE Journal on Selected Areas in
+Communications} \textbf{2013}, \emph{31}~(4), 766--781.
+\url{https://doi.org/10.1109/JSAC.2013.130413}
+
+\bibitem{popescu2026aiceberg}
+Popescu, F.; Stanescu, D. AICEBERG: A novel agentic AI framework for
+autonomous radio monitoring, compliance and governance based on LLM, MCP, and
+SCPI in smart cities. \emph{Smart Cities} \textbf{2026}, \emph{9}~(5), 73.
+\url{https://doi.org/10.3390/smartcities9050073}
+
+\bibitem{wheatman2022radics}
+Dementyeva, V.; Hickert, C.; Sarfaraz, N.; Zanlongo, S.; Sookoor, T. Runtime
+assurance for intelligent cyber-physical systems. In Proceedings of the 2022
+ACM/IEEE 13th International Conference on Cyber-Physical Systems (ICCPS),
+Milan, Italy, 4--6 May 2022; pp. 288--289.
+\url{https://doi.org/10.1109/ICCPS54341.2022.00035}
+
+\bibitem{alshiekh2018}
+Alshiekh, M.; Bloem, R.; Ehlers, R.; K\"onighofer, B.; Niekum, S.; Topcu, U.
+Safe reinforcement learning via shielding. In Proceedings of the AAAI
+Conference on Artificial Intelligence, Vol.~32, 2018; pp. 2669--2678.
+\url{https://doi.org/10.1609/aaai.v32i1.11797}
+
+\bibitem{konighofer2020}
+K\"onighofer, B.; Lorber, F.; Jansen, N.; Bloem, R. Shield synthesis for
+reinforcement learning. In \emph{Leveraging Applications of Formal Methods,
+Verification and Validation (ISoLA)}, 2020; pp. 290--306.
+\url{https://doi.org/10.1007/978-3-030-61362-4_16}
+
+\bibitem{huang2024verification}
+Huang, X.; Ruan, W.; Huang, W.; Jin, G.; Dong, Y.; Wu, C.; Bensalem, S.;
+Mu, R.; Qi, Y.; Zhao, X.; Cai, K.; Zhang, Y.; Wu, S.; Xu, P.; Wu, D.;
+Freitas, A.; Mustafa, M.A.
+A survey of safety and trustworthiness of large language models through the
+lens of verification and validation.
+\emph{Artif. Intell. Rev.} \textbf{2024}, \emph{57}, 175.
+\url{https://doi.org/10.1007/s10462-024-10824-0}
+
+\bibitem{bordogna1997}
+Bordogna, G.; Fedrizzi, M.; Pasi, G. A linguistic modeling of consensus in
+group decision making based on OWA operators. \emph{IEEE Transactions on
+Systems, Man, and Cybernetics---Part A: Systems and Humans} \textbf{1997},
+\emph{27}~(1), 126--133.
+\url{https://doi.org/10.1109/3468.553232}
+
+\bibitem{chiclana1998}
+Chiclana, F.; Herrera, F.; Herrera-Viedma, E. Integrating three representation
+models in fuzzy multipurpose decision making based on fuzzy preference
+relations. \emph{Fuzzy Sets and Systems} \textbf{1998}, \emph{97}~(1), 33--48.
+\url{https://doi.org/10.1016/S0165-0114(96)00339-9}
+
+\bibitem{cabrerizo2015}
+Cabrerizo, F.J.; Chiclana, F.; Al-Hmouz, R.; Morfeq, A.; Balamash, A.S.;
+Herrera-Viedma, E. Fuzzy decision making and consensus: challenges.
+\emph{Journal of Intelligent \& Fuzzy Systems} \textbf{2015}, \emph{29}~(3),
+1109--1118.
+\url{https://doi.org/10.3233/IFS-151719}
+
+\bibitem{delmoral2018}
+del~Moral, M.J.; Chiclana, F.; Tapia, J.M.; Herrera-Viedma, E. A comparative
+study on consensus measures in group decision making. \emph{International
+Journal of Intelligent Systems} \textbf{2018}, \emph{33}~(8), 1624--1638.
+\url{https://doi.org/10.1002/int.21954}
+
+\bibitem{zhang2020feedback}
+Zhang, H.; Zhao, S.; Kou, G.; Li, C.-C.; Dong, Y.; Herrera, F. An overview on
+feedback mechanisms with minimum adjustment or cost in consensus reaching in
+group decision making: research paradigms and challenges. \emph{Information
+Fusion} \textbf{2020}, \emph{60}, 65--79.
+\url{https://doi.org/10.1016/j.inffus.2020.03.001}
+
+\bibitem{hassani2022}
+Hassani, H.; Razavi-Far, R.; Saif, M.; Chiclana, F.; Krejcar, O.;
+Herrera-Viedma, E. Classical dynamic consensus and opinion dynamics models: a
+survey of recent trends and methodologies. \emph{Information Fusion}
+\textbf{2022}, \emph{88}, 22--40.
+\url{https://doi.org/10.1016/j.inffus.2022.07.003}
+
+\bibitem{mata2014}
+Mata, F.; P\'erez, L.G.; Zhou, S.-M.; Chiclana, F. Type-1 OWA methodology to
+consensus reaching processes in multi-granular linguistic contexts.
+\emph{Knowledge-Based Systems} \textbf{2014}, \emph{58}, 11--22.
+\url{https://doi.org/10.1016/j.knosys.2013.09.017}
+
+\bibitem{herrera2008unbalanced}
+Herrera, F.; Herrera-Viedma, E.; Mart\'\i nez, L. A fuzzy linguistic
+methodology to deal with unbalanced linguistic term sets. \emph{IEEE
+Transactions on Fuzzy Systems} \textbf{2008}, \emph{16}~(2), 354--370.
+\url{https://doi.org/10.1109/TFUZZ.2007.896353}
+
+\bibitem{demaio2017}
+De~Maio, C.; Fenza, G.; Loia, V.; Orciuoli, F. Linguistic fuzzy consensus
+model for collaborative development of fuzzy cognitive maps: a case study in
+software development risks. \emph{Fuzzy Optimization and Decision Making}
+\textbf{2017}, \emph{16}~(4), 463--479.
+
+\bibitem{wei2022cot}
+Wei, J.; Wang, X.; Schuurmans, D.; Bosma, M.; Ichter, B.; Xia, F.; Chi, E.;
+Le, Q.V.; Zhou, D. Chain-of-thought prompting elicits reasoning in large
+language models. In \emph{Advances in Neural Information Processing Systems},
+Vol.~35, 2022; pp. 24824--24837.
+
+\bibitem{wang2023selfconsistency}
+Wang, X.; Wei, J.; Schuurmans, D.; Le, Q.V.; Chi, E.; Narang, S.; Chowdhery,
+A.; Zhou, D. Self-consistency improves chain of thought reasoning in language
+models. In Proceedings of the International Conference on Learning
+Representations (ICLR), 2023.
+
+\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+\end{adjustwidth}
+\end{document}

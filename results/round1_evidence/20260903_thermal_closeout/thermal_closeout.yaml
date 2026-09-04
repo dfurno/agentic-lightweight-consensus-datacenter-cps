@@ -1,0 +1,14 @@
+run_id: 20260903_thermal_hot_start_closeout
+base_config: configs/thermal_pilot.yaml
+seeds: [11, 42, 101]
+conditions: [oracle, mean, fpr_crp]
+cases:
+  hot_start_clean: {initial_temperature_c: 33.0, common_bias_c: null, common_bias_end_tick: 0}
+  hot_start_common_bias: {initial_temperature_c: 33.0, common_bias_c: -3.0, common_bias_end_tick: 60}
+recovery:
+  sla_temperature_c: 32.0
+  sustain_ticks: 10
+  target_temperature_c: 30.0
+  target_band_c: 0.5
+  convention: first qualifying sample; confirmation samples do not add to onset delay
+maximum_condition_runs: 18

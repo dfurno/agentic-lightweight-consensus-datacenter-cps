@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 import math
 import time
+from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -19,6 +21,7 @@ from src.consensus.fpr_owa import fpr_owa_consensus
 from src.evaluation.metrics import error_summary
 from src.revision.artifacts import scenario_parts, trace_files, write_text
 from src.simulation.policies import deterministic_policy
+from src.runtime.control import ControlRuntime, PlannedAction
 from src.utils.io import ensure_dir, read_yaml
 
 
@@ -119,6 +122,7 @@ def run_rule_supervisor(
     results_dir: Path = Path("results"),
     outputs_dir: Path = Path("outputs"),
     max_traces: int | None = None,
+    compare_llm: bool = True,
 ) -> pd.DataFrame:
     outputs = ensure_dir(outputs_dir)
     config = read_yaml("configs/experiments.yaml")
@@ -149,6 +153,7 @@ def run_rule_supervisor(
         unsafe_proposed = 0
         unsafe_blocked = 0
         unsafe_executed = 0
+        actuator_contract_violations = 0
         safe_accepted = 0
         deterministic_safe = 0
         fallback_count = 0
@@ -156,34 +161,41 @@ def run_rule_supervisor(
         predictions: list[float] = []
         accepted_action_types: list[str] = []
         blocked_action_types: list[str] = []
+        runtime = ControlRuntime(verifier, policy=policy)
         for tick_index, (_, row) in enumerate(frame.iterrows()):
             values = row[sensor_cols].to_numpy(dtype=float)
             loop_start = time.perf_counter()
             consensus_timestamp = pd.Timestamp.now("UTC").isoformat()
             result = fpr_owa_consensus(values, alpha=alpha, beta=beta, timestamp=consensus_timestamp)
             consensus = consensus_to_snapshot(result)
-            deterministic_action = deterministic_policy(consensus.temperature, verifier.config["temperature_sla_c"])
-            deterministic_action.consensus_timestamp = consensus.timestamp
-            deterministic_decision = verifier.verify(deterministic_action, consensus, now=datetime.now(timezone.utc))
-            verifier_calls += 1
-            deterministic_safe += int(deterministic_decision.accepted)
-            eligible = tick_index - last_supervisor_tick >= cooldown_ticks
-            if eligible and _event_triggered_supervisor_required(consensus, policy, verifier):
-                supervisor_start = time.perf_counter()
+            event = runtime.step(
+                consensus,
+                monotonic_now=time.perf_counter(),
+                wall_now=datetime.now(timezone.utc),
+                planner=lambda snap: PlannedAction(rule_based_supervisory_action(snap, verifier)),
+            )
+            verifier_calls += int(event.verifier_accepted is not None)
+            deterministic_safe += int(event.action_source == "fast_path" and event.verifier_accepted is True)
+            fan_delta = event.state_after["fan_speed"] - event.state_before["fan_speed"]
+            setpoint_delta = event.state_after["setpoint_c"] - event.state_before["setpoint_c"]
+            actuator_contract_violations += int(
+                not 0 <= event.state_after["fan_speed"] <= 1
+                or not 18 <= event.state_after["setpoint_c"] <= 28
+                or fan_delta > verifier.config["actuators"]["fan_speed"]["max_slew_rate"] + 1e-12
+                or -setpoint_delta > verifier.config["actuators"]["setpoint_c"]["max_slew_rate"] + 1e-12
+            )
+            if event.planner_status == "ready":
                 supervisor_calls += 1
                 last_supervisor_tick = tick_index
-                action = rule_based_supervisory_action(consensus, verifier)
-                supervisor_latencies.append(time.perf_counter() - supervisor_start)
-                decision = verifier.verify(action, consensus, now=datetime.now(timezone.utc))
-                verifier_calls += 1
-                if decision.accepted:
+                supervisor_latencies.append(event.planner_latency_seconds or 0.0)
+                if event.decision == "supervisor" and event.verifier_accepted is True and event.action_source == "supervisor":
                     safe_accepted += 1
-                    accepted_action_types.append(action.action_type)
-                else:
+                    accepted_action_types.append(event.executed_action)
+                elif event.decision == "supervisor" and event.verifier_accepted is False:
                     unsafe_proposed += 1
                     unsafe_blocked += 1
-                    fallback_count += 1
-                    blocked_action_types.append(action.action_type)
+                    blocked_action_types.append(str(event.proposal_payload["action_type"]))
+            fallback_count += int(event.fallback is not None)
             loop_latencies.append(time.perf_counter() - loop_start)
             predictions.append(result.aggregated_value)
             thermal_sla_violations += int(consensus.temperature > float(verifier.config["temperature_sla_c"]))
@@ -213,7 +225,9 @@ def run_rule_supervisor(
             "p95_supervisor_latency_seconds": float(np.quantile(sup_lat, 0.95)),
             "unsafe_actions_proposed": int(unsafe_proposed),
             "unsafe_actions_blocked_by_verifier": int(unsafe_blocked),
-            "unsafe_actions_executed": int(unsafe_executed),
+            "unsafe_actions_executed": math.nan,
+            "unsafe_actions_executed_measurement": "not_measured_thermal_safety",
+            "actuator_contract_violations_observed": int(actuator_contract_violations),
             "safe_actions_accepted": int(safe_accepted),
             "deterministic_safe_actions": int(deterministic_safe),
             "fallback_count": int(fallback_count),
@@ -228,10 +242,16 @@ def run_rule_supervisor(
             row_out["deadline_miss_rate"] = float(np.mean(loop_lat * 1000.0 > int(deadline)))
             rows.append(row_out)
         safety_rows.append(base)
+        with (outputs / f"{scenario}.runtime_events.jsonl").open("w") as handle:
+            for event in runtime.events:
+                handle.write(json.dumps(asdict(event), allow_nan=True) + "\n")
     rule_metrics = pd.DataFrame(rows)
     rule_safety = pd.DataFrame(safety_rows)
     rule_metrics.to_csv(outputs / "rule_supervisor_realtime_metrics.csv", index=False)
     rule_safety.to_csv(outputs / "rule_supervisor_safety_metrics.csv", index=False)
+    if not compare_llm:
+        write_text(outputs / "LLM_COMPARISON_DISABLED.md", "# LLM comparison disabled\n\nThis smoke test is not paired with the historical LLM runtime and makes no comparative claim.\n")
+        return rule_metrics
     comparison = compare_with_llm(rule_metrics, results_dir, outputs)
     write_findings(comparison, outputs)
     plot_supervisor_comparison(comparison, outputs / "fig_supervisor_comparison.pdf")

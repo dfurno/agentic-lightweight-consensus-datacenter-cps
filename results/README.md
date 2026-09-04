@@ -1,7 +1,6 @@
 # Result Files
 
-This directory contains reproducibility result files used by the manuscript and
-the revision analyses.
+This directory contains reproducibility result files used by the manuscript and revision analyses. `round1_evidence/` is authoritative for the Smart Cities Round 1 revision; the other aggregate files are retained as historical inputs for existing reproduction scripts.
 
 Core files:
 
@@ -10,7 +9,7 @@ Core files:
 - `metrics_by_scenario.csv`: grouped scenario summaries.
 - `safety_metrics.csv`: verifier and agentic-safety outcomes.
 - `latency_metrics.csv`: consensus and planner/verifier timing metrics.
-- `token_usage.csv`: LLM and verifier call counts.
+- `legacy_call_counts.csv`: historical LLM and verifier call counts. Despite its former filename, it is not a measurement of model tokens.
 - `realtime_metrics.csv`: event-triggered realtime metrics.
 - `realtime_safety_metrics.csv`: realtime verifier/safety outcomes.
 - `dataset_discovery.*`, `data_audit.*`, `dataset_downloads.json`: dataset

@@ -92,14 +92,17 @@ class VerifierAgent:
         prediction = self.config.get("prediction", {})
         if action.action_type == "increase_fan_speed":
             return temperature - action.magnitude * float(prediction.get("cooling_gain_per_fan_unit", 3.0))
+        if action.action_type == "decrease_fan_speed":
+            return temperature + action.magnitude * float(prediction.get("cooling_gain_per_fan_unit", 3.0))
         if action.action_type == "decrease_setpoint":
             return temperature - action.magnitude * float(prediction.get("setpoint_gain", 0.5))
         return temperature
 
     def _within_bounds(self, action: ControlAction, state: ActuatorState) -> bool:
         actuators = self.config["actuators"]
-        if action.action_type == "increase_fan_speed":
-            new_value = state.fan_speed + action.magnitude
+        if action.action_type in {"increase_fan_speed", "decrease_fan_speed"}:
+            direction = 1.0 if action.action_type == "increase_fan_speed" else -1.0
+            new_value = state.fan_speed + direction * action.magnitude
             cfg = actuators["fan_speed"]
             return cfg["min"] <= new_value <= cfg["max"] and action.magnitude <= cfg["max_slew_rate"]
         if action.action_type == "decrease_setpoint":

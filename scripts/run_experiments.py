@@ -22,6 +22,7 @@ from src.evaluation.metrics import error_summary
 from src.evaluation.plots import save_basic_figures
 from src.simulation.digital_twin import build_digital_twin_from_available_data
 from src.simulation.policies import deterministic_policy
+from src.runtime.control import ControlRuntime, PlannedAction
 from src.utils.io import ensure_dir, read_yaml, write_yaml
 
 
@@ -257,38 +258,29 @@ def run_realtime_suite(data_mode: str, resume: bool = False) -> None:
         truth = frame["temperature_ground_truth"].to_numpy()
         cooldown_ticks = int(suite.get("llm_policy", {}).get("min_llm_interval_ticks", 0))
         last_llm_tick = -cooldown_ticks - 1
+        runtime = ControlRuntime(verifier, policy=suite.get("llm_policy", {}))
         for tick_index, (_, row) in enumerate(frame.iterrows()):
             values = row[sensor_cols].to_numpy(dtype=float)
             loop_start = time.perf_counter()
             consensus_timestamp = pd.Timestamp.now("UTC").isoformat()
             consensus_result = fpr_owa_consensus(values, alpha=alpha, beta=beta, timestamp=consensus_timestamp)
             consensus = consensus_to_snapshot(consensus_result)
-            deterministic_action = deterministic_policy(consensus.temperature, verifier.config["temperature_sla_c"])
-            deterministic_decision = verifier.verify(deterministic_action, consensus)
-            verifier_calls += 1
-            deterministic_safe += int(deterministic_decision.accepted)
-            llm_eligible = tick_index - last_llm_tick >= cooldown_ticks
-            if llm_eligible and _event_triggered_llm_required(consensus, suite, verifier):
-                llm_start = time.perf_counter()
+            event = runtime.step(
+                consensus,
+                monotonic_now=loop_start,
+                wall_now=datetime.now(timezone.utc),
+                planner=lambda snap: PlannedAction(planner.propose(snap, variant="event_triggered_supervisor")),
+            )
+            verifier_calls += int(event.verifier_accepted is not None)
+            deterministic_safe += int(event.action_source == "fast_path" and event.verifier_accepted is True)
+            if event.planner_status in {"ready", "exception"}:
                 llm_calls += 1
                 last_llm_tick = tick_index
-                try:
-                    action = planner.propose(consensus, variant="event_triggered_supervisor")
-                    llm_latencies.append(time.perf_counter() - llm_start)
-                    decision = verifier.verify(action, consensus)
-                    verifier_calls += 1
-                    safe_accepted += int(decision.accepted)
-                    if decision.accepted:
-                        unsafe_executed += 0
-                    else:
-                        unsafe_proposed += 1
-                        unsafe_blocked += 1
-                except Exception as exc:
-                    llm_latencies.append(time.perf_counter() - llm_start)
-                    llm_failures += 1
-                    unsafe_proposed += 1
-                    unsafe_blocked += 1
-                    print(f"[realtime fallback] LLM supervisor failed; deterministic loop continued: {exc}", flush=True)
+                llm_latencies.append(event.planner_latency_seconds or 0.0)
+                llm_failures += int(event.planner_status == "exception")
+            safe_accepted += int(event.decision == "supervisor" and event.verifier_accepted is True and event.action_source == "supervisor")
+            unsafe_proposed += int(event.decision == "supervisor" and event.verifier_accepted is False)
+            unsafe_blocked += int(event.decision == "supervisor" and event.verifier_accepted is False)
             loop_latencies.append(time.perf_counter() - loop_start)
             predictions.append(consensus_result.aggregated_value)
             sla_violations += int(consensus.temperature > float(verifier.config["temperature_sla_c"]))
@@ -317,7 +309,8 @@ def run_realtime_suite(data_mode: str, resume: bool = False) -> None:
             "p95_llm_latency_seconds": float(np.quantile(llm_lat, 0.95)),
             "unsafe_actions_proposed": int(unsafe_proposed),
             "unsafe_actions_blocked_by_verifier": int(unsafe_blocked),
-            "unsafe_actions_executed": int(unsafe_executed),
+            "unsafe_actions_executed": float("nan"),
+            "unsafe_actions_executed_measurement": "not_measured_thermal_safety",
             "safe_actions_accepted": int(safe_accepted),
             "deterministic_safe_actions": int(deterministic_safe),
             "thermal_sla_violation_rate": float(sla_violations / max(len(frame), 1)),

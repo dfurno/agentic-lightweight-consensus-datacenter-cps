@@ -32,6 +32,7 @@ def fpr_owa_consensus(
     beta: float = 0.8,
     kappa: float = 10.0,
     timestamp: str | None = None,
+    sensor_ids: np.ndarray | None = None,
 ) -> ConsensusResult:
     clean = np.asarray(values, dtype=float)
     if clean.ndim != 1 or clean.size == 0:
@@ -39,7 +40,15 @@ def fpr_owa_consensus(
     reliability = reliability_scores(clean)
     matrix = fuzzy_preference_relation(reliability, kappa)
     dominance = dominance_scores(matrix)
-    ordered_indices = np.argsort(-dominance)
+    # Production ordering is a reproducible linear extension of the dominance
+    # preorder: descending dominance, then ascending stable sensor identifier.
+    # Callers that omit sensor_ids contractually identify reporters by their
+    # input-array position. This does not make a rank-weighted OWA invariant to
+    # reporter renumbering when tied reporters carry different measurements.
+    ids = np.arange(clean.size) if sensor_ids is None else np.asarray(sensor_ids)
+    if ids.ndim != 1 or ids.size != clean.size or np.unique(ids).size != ids.size:
+        raise ValueError("sensor_ids must be one-dimensional, unique, and match values")
+    ordered_indices = np.lexsort((ids, -dominance))
     ordered_values = clean[ordered_indices]
     weights = reliability_ordered_owa_weights(clean.size, alpha, beta)
     aggregated = float(np.dot(weights, ordered_values))

@@ -1,5 +1,17 @@
 # Reproducibility Instructions
 
+The current paper-facing release is the Smart Cities Round 1 bundle. The authoritative focused evidence is under `results/round1_evidence/`:
+
+- `20260903_bias_selective_replay`;
+- `20260903_runtime_cpu_fix`;
+- `20260903_thermal_closeout`;
+- `20260904_crp_temporal_ablation_aligned`;
+- `20260904_fpr_paper_artifact_audit_fix`;
+- `20260904_hot_start_provenance`;
+- `20260904_true_crp_cost_stress`.
+
+Each package contains its report and, where applicable, manifests, provenance, hashes, and curated outputs. Absolute paths in provenance record the execution host; replace them with the equivalent local repository paths when replaying.
+
 This repository is organized so that reported manuscript quantities are derived
 from CSV/JSON artifacts and can be recomputed by scripts.
 
@@ -77,3 +89,12 @@ robust estimation baselines: Huber location, Tukey biweight, and robust Kalman.
 The committed CSV result files are sufficient for the reproduction gate and
 reported aggregate quantities. Per-tick trace CSV archives may be distributed
 through GitHub Releases or Zenodo to avoid bloating the Git history.
+
+## Smart Cities Revised Manuscript
+
+```bash
+cd paper/smartcities-round1
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+```
+
+Reviewer reports and response letters are intentionally excluded from this public repository.

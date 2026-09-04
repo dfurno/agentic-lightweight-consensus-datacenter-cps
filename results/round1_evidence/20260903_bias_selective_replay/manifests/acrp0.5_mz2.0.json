@@ -1,0 +1,928 @@
+{
+  "run_id": "20260903_bias_selective_replay",
+  "configuration_id": "acrp0.5_mz2.0",
+  "source_code_commit": "4dcae5c93d05ab4e241530cdb896fa92c25ef23b",
+  "replay_configuration": {
+    "alpha_crp": 0.5,
+    "m_z": 2.0,
+    "llm_calls": 0
+  },
+  "selection": {
+    "main_seeds": [
+      11,
+      42,
+      101
+    ],
+    "affected": "full/bias/beta=0.7",
+    "controls": "seed11, ratio0.4, s9: three noise levels each for bias/beta=0.8 and drift/beta=0.7"
+  },
+  "expected_counts": {
+    "manifest_entries": 141,
+    "affected_scenarios": 135,
+    "control_scenarios": 6,
+    "ticks_per_trace": 240,
+    "total_ticks": 33840
+  },
+  "historical_inputs": [
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/metrics.csv",
+      "sha256": "3e34d3efeb7bd288a132eebbc6de584dceec7d59eaf3bf3e81140df2f8b595f8"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.3_mz2.0.csv",
+      "sha256": "b88292b02aa0a4d820269364da6634bae8287ebc8f9c7c37d1e72037964afe14"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.3_mz2.0.csv",
+      "sha256": "94260c4fae017d542ce1e99216dececb7a3cbde3ab12cdbd45529a45135cf5d7"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.3_mz4.0.csv",
+      "sha256": "2040b91e050e40b34f8f48516bedcba4d7536825af0a5baf8cdcefe8d191703a"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.3_mz4.0.csv",
+      "sha256": "4357880881d8f72c52edf3c4565c65bca0fc31477d52d8283d8495515ad193af"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.5_mz2.0.csv",
+      "sha256": "e9a9f2b5ff99b65efaced765619410a7f4e8d4540fbef82bd22252c736764fdb"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.5_mz2.0.csv",
+      "sha256": "05696d44389d080f81ab70302aa1e632267787f51e572d4e743a51be216533bb"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.5_mz4.0.csv",
+      "sha256": "08373a94ba1e77f513a04bf6240156ccfb7d0d1f69c78958963bfe51a196083f"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.5_mz4.0.csv",
+      "sha256": "e867ac3d55c54321df4777138fe7fbe3a6e8fef9ec29f653a9c76fbf37f3b7de"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.7_mz2.0.csv",
+      "sha256": "96be26bdf0f5de90f27904ca307ef70449a0613da4134cadb733c5802e17efe5"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.7_mz2.0.csv",
+      "sha256": "0903bc53af678964e2483f532b8ecf7da023b67de11f27ed49642e0a57f271ad"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_estimation_per_scenario_acrp0.7_mz4.0.csv",
+      "sha256": "4b6656338964502824a0ed9e852cd643ffa0da4e79a55511fce8ea67ae922b25"
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/outputs/crp_convergence_acrp0.7_mz4.0.csv",
+      "sha256": "9b1ce5758d239f3caf73b39ca5c1a829f9d872d159d3bdee3d115e3d36c4b608"
+    }
+  ],
+  "traces": [
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "84b1117e826399290bf4a46d1501e711a8be867b88f10447313a29236f0969ff",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "6fcb3ef2bbaa67e7a805318483ab0665cf64c2125568797912927240f00b0b66",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "bbae57b7a76cd4bdf181d8b29eb416ac2ac6d04766994dbdbf8c7bb4f9bf0073",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "b3028b08ef4fa0b938bf6f594bcd0df1d38601e51332886e85843f28150641a7",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "aa29fc492e19942a456871391b5d031ceab106898ca7bf8b9f0df15da6a83981",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "705b36e12f822da075208ddf1557dce8f96dcff908a22074a18c3cdc1775c342",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "091e30c061aa83d994849061c472c579179219f8035852f7df2a653259c832a6",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "44f37c7d0423d3cf3299da48fcc091c118c631ad6988f6d6228cee9e78dae6ef",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p0_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "8d499eb3bbd9c1103c66c494ccc29c890067550a26eeed557cb6781a7a700c2a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "fd05ea5f385aade85f750a7a2fef8a12963518a4ad3a46eeb62eba611c38838c",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "6fcb3ef2bbaa67e7a805318483ab0665cf64c2125568797912927240f00b0b66",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "38e06d636308ad15dae663acac58920686539f366f8f153ef233a8baefaceddf",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "3ea0602e1fe4586e8b96735794da3c909c48eb7656e561a523d6a5c877da8c8c",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "aa29fc492e19942a456871391b5d031ceab106898ca7bf8b9f0df15da6a83981",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "d4a270587f2f85bcdc72c0097cb9899f397cff3805b61b3f5d280d15fa36055f",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "328391c9833c19ac5614641b77eda54900f5917ccc41833c4327a18721bbe0fa",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "44f37c7d0423d3cf3299da48fcc091c118c631ad6988f6d6228cee9e78dae6ef",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p1_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "ac3015d5a6a519825603401ddb9c0b3820169cdb76feb77223f2173f8458a29d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "aa54cde204adc3a1b3d152a44e3e19593ec6e00ba738dee33d5b227f32ee7505",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "c8729385362f1df4bb5ca7305f09cb5c253e093e1424e37ce997a16f32acd6cf",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "7a252c7b927c4db039686eeeb8541d149c1a1c1fee975d063c5de9fabbb31f5e",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "0e1c45e4ebb75885b065d87d84c062c66a84f841b7a24afeba3b04adbda04a07",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "c9f4ce316466ab15dfd6bf771868df9b096d2bed142cc0753396b3f2f77150fb",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "b0073e8eefe382e796ab44042332d54025e09126d7bf474cad12a89dfe68d5c2",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "d3960c9aedb4a6e63435feccd5bc82943c31694692ecfd1450684d3b2eb6c62a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "1445accf9f8767367cc1aad2871d5dd455f7a4fedbd5af6caa08b90c84f47ece",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p2_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "9ab0362209e52a2e37c39316435ac93c387ab6f8d79b28ee3d4fd3483090ddfe",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "37ae72ff3aa8dfd9e7a58e1e5beadb44bfda8edc95520491f9e3bd9325f9e27a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "b7599a3e326b76a5cd284320ef73958dbf2978d318b959b7ba65fcb8967d7eaa",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "a2a20b1901fc6d734e070cf3afdb7cc82969b24d5cc21a4becb65d64c864a2a7",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "e10a3e6598f608f13b29231074da5a91dc5b3c13a7e168c9c4468e1091563048",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "a8406dc90823ed3e1770425f3ea3067b6f5df99c265b9bc26c8c0e03ce473419",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "7d3658337186512af9d9d185d55fe6bd3b5a01d47c2c3f3e068b81d42b7b62f5",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "d6f12be269b692e96041dbd0efc1e7645c6b6dae84764a70e0debdc2f1fabf5b",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "640900374057d2fb101e3ea6988d9b63f8af5bc45987d1aa4a5c821ccbbf490a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p3_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "5f8371d34e82e2b3eb7f672197ab706d291aeee4ca316de79f74f4cd1f22ab61",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "386e209c65a5fa3fa7f2301dce5f7bb7d15f7f4be88439d8b6029d481b3bfd10",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "b7599a3e326b76a5cd284320ef73958dbf2978d318b959b7ba65fcb8967d7eaa",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "2d0acf209a9f9889f8ba9d22c4ec14d202e82d4145d9785f0a487951f3865163",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "174d0189d26dad4f3d414109b9e3cd023585c2715e9758fdd61cbdf2d357155f",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "a8406dc90823ed3e1770425f3ea3067b6f5df99c265b9bc26c8c0e03ce473419",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "615617fca924c95dd528f68cd36fe6ec632efbe938d6db3c7d09cfb90eef41d6",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "2844e88bf02db48c11ee5c45ef53a4ee409fb6247c85dd9455d9a8e0855e2cab",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "640900374057d2fb101e3ea6988d9b63f8af5bc45987d1aa4a5c821ccbbf490a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed101_bias_0p4_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "1c4623bb4fa72a4644842e87e28d41f03d367219e865eaa27d324d9cbc60a91d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "7d2087c2140b8281bee9099c286b3b1bc56275c802f5c7fc02572b07ed37a799",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "ba3d54e1044a5f19947380c0b7b357fe2b7aec59a07b8d77a1556ea24f02bde0",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "f564550dec5860f21666d31b416c4839364395f2875d5c878241ac59b6f9b1ac",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "93a34822621b93107885b38716cd5c66c8ebedee36cebf257296ac9de1a1072e",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "eb0598053ba0013e8f983f3a1c7d802ee6c2a6c6f9d49c768bdcbabf3cf44d8d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "e0dc0e4f6c78b3eba8eab66710946e4da933a49d9fa2ae8ff27e18e1b9c9917c",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "1d5f6773dd8fd3beef0a20c2bda55794737a1e89197e13dc8204efb3fa0f0aa4",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "bbe1f3d8684d1c46d3fe62b094387cd0268a577d18de2342277f973117c6078f",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p0_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "b347c9345e6012e88897d7d8d9f2df0d5bcdfc07615c31f63fa90b1cd7f94d88",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "edcb64b10134f4a814a99a51be1d29931ed0def55d9e60506ebf82cd55ab193c",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "ba3d54e1044a5f19947380c0b7b357fe2b7aec59a07b8d77a1556ea24f02bde0",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "6c709087a7f4558462a028836549ec8f1333c5604bdaf37f9381d94adf8ba31c",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "430f22927979e6478ac5b485c4eec864ba4f926f546b83c1093c32e4889d4ad5",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "eb0598053ba0013e8f983f3a1c7d802ee6c2a6c6f9d49c768bdcbabf3cf44d8d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "41718aad5bedc715c2b334f4047206fca63ebc70c890f668270074a246651e27",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "3e0c54d19accfc3dafeb5d073e7fd13238dce38ab4a5f4a88fb95db28c33164a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "bbe1f3d8684d1c46d3fe62b094387cd0268a577d18de2342277f973117c6078f",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p1_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "4571fe8f5039695bb9be49fefc753f923cbadea3bca5c219fa7f26bb4cddc33d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "50058c4f156dad645123b34cefb69a54e14bde9c2f0b3f25e535c35447bdb2cd",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "81baa8707608e9ca4ec2fe17973e309ae5dbbd66bc0de3cfa6ad9f229f9aeb38",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "63869d04deca155ed7cbe439b56a255ba6451bc73fd036dda394eaab103b7213",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "b35b1069636141cf718a6b4f45f2d69b279e733b78ec623924d93d7553ab2d3f",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "eb16adc2506cb6856bbabc318e9f5a3e984b11cbab4cae6de9c74f55c47659c6",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "529a41280bddf7cdc807422581e51a617e5b4abcf6699cbb099254cd63e4efc4",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "d8e3277a6902f0523419c398ea101ade1fdf8cdf66e5b4a9fb90c826b26d9d2f",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "291dc19952efb73588496de0fd51e2592d237557cf3b09922dcdd9d15d5400f6",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p2_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "ed0b3f5fe9f59f2822e4e74dffeb61af1d29021ed8de977ca8d8de87a0395a2b",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "d75b99d123cc14f2c7c6aa0af564d8302d23ae0957def868eef0d7ecab205ae2",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "a9564ef0feccafb34a2234dee1dcded52472b50719ece169982ca6163229356d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "692eca5252345c2c3a78804622b13d6b1e5314919689505aac341a1975060f83",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "8d1ab1c005359de3032ccdca281932d550c0ef4d72515dc049c249308fc086c5",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "ea4496a177f3636fc43c044147d215e610059c99ad0d8fa7794a221111862335",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "73342566cfab65b66ab85741c1e2a301ee66c2033c430c5c1d65844ea5dbb05b",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "8f66ea3c4d46760983a8df1824b80691d398eadda8f9e2d2e81c2c9c7055f325",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "3e1584f0e1824b54d04dbb089e71980523ad63c88718e81d8799e19b75d837b7",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p3_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "d94fbcf39b46ab931e62ebfed57af55524a27a0efa955b73197d23d4909c161f",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "2f36509e85097ed45b8f3506416d950f32383b1070d2e007703b89466a8cd59d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "a9564ef0feccafb34a2234dee1dcded52472b50719ece169982ca6163229356d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "1d1c883464f4866832b186929f2b80e2be375e656a95bf64e75d782b5998b94e",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p1_s9_a0p3_b0p8.csv",
+      "sha256": "1d1c883464f4866832b186929f2b80e2be375e656a95bf64e75d782b5998b94e",
+      "ticks": 240,
+      "affected": false
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "7fac7eef5e172184eed8e2f3750cb4cab9179f6201a5a521c22cd986c22da265",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "ea4496a177f3636fc43c044147d215e610059c99ad0d8fa7794a221111862335",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "5e9301e717af8741f832cdae306319fbf2f66b44f34eb2d4f1826cd6af0ab2c3",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p25_s9_a0p3_b0p8.csv",
+      "sha256": "5e9301e717af8741f832cdae306319fbf2f66b44f34eb2d4f1826cd6af0ab2c3",
+      "ticks": 240,
+      "affected": false
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "652dade49af1e19b6b5eba35412ea86491a85c446cf89d50d5e9bea18ce20617",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "3e1584f0e1824b54d04dbb089e71980523ad63c88718e81d8799e19b75d837b7",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "4e66e97288393a3ac0ac4cbdc6a1137b1fcf6b5c42b2c940ae78d0f17a6a511b",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_bias_0p4_noise0p5_s9_a0p3_b0p8.csv",
+      "sha256": "4e66e97288393a3ac0ac4cbdc6a1137b1fcf6b5c42b2c940ae78d0f17a6a511b",
+      "ticks": 240,
+      "affected": false
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_drift_0p4_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "b5185aa3a0228d56d251e91d30a28c7bc1ba8e663353b3900e67168ed533803b",
+      "ticks": 240,
+      "affected": false
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_drift_0p4_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "7cde1f16f58d4be87e2e17c73db4c88e3d54632952224bf2691c5f802b3aeceb",
+      "ticks": 240,
+      "affected": false
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed11_drift_0p4_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "5a7e1b7a0e128502953b32193eae9011d991c0060d3db7400044b854310d9dcd",
+      "ticks": 240,
+      "affected": false
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "f93e5f9c4c131cddd4673cd17f331556ebc2bddb404081e4f2f9b17b47ac5f21",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "7785edf4bf64d5ef71f4593c2cc0d9fd88300ed836024f39426005dce2e3739e",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "d3a7e6a868cd4522b73e4303cddb16da0e966048a34f13729f1a3c19dfeaee68",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "8def20740657b9a3579ff55af59d18d5aae0a941907d16eb32c585565ce8d801",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "7d22443877fa97c55ef3bed01e0405b1cdb74717b5424e47743ec1f2c1d83f2b",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "baeb3725e5312725920e62885103934c429ae44aae64281ee4d588b08e3cda4d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "6706fa49e0d4699b5a9b8b7f0bc1aebe8cf6c37e684e1a1eb814c17a36cc9f64",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "11d86038291fa4de9e14ca215ad85682c7efed98dd7c7f85fcb7419c9f441a89",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p0_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "bd8a553176df74b003db2005dafac70cbcae176f7a68bc2e460a2136068dd711",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "c1cdf134d93bbfd60dd00c5d81ae8aaddd18dcd49b9eb704970fb9c5119f6014",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "7785edf4bf64d5ef71f4593c2cc0d9fd88300ed836024f39426005dce2e3739e",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "72561dc8e88e81df0ac8f17284561cd954a3b5a7ef03646df494ccfd72a29da2",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "35cf3f94c1c9b9fe29f9c0e3b4afed190af03a3b519016af95439c4651d3aee7",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "7d22443877fa97c55ef3bed01e0405b1cdb74717b5424e47743ec1f2c1d83f2b",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "e18b0886ad046121509efef6e595e122ee9f6173b9eb7bf25076149b6458c0c8",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "557f6df1c66ccbfe1a2e5f3b50c3b657fce5209c08655e4669457a57f684bb9d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "11d86038291fa4de9e14ca215ad85682c7efed98dd7c7f85fcb7419c9f441a89",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p1_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "b0d69ee7e2adef58f49806cdd1d4e793c8c3f3ca112991ef3ced24b58a7ed04a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "ad657d20f2d0f4e1fec8e027e853e15dffcb274436266b7f042de8333159b7e1",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "4673ae7497734e6fe0fdcc9b69272132cacc3f0e6b9a529cc0833187b80e57e9",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "c0b14f51002f729cf2418e3f4ba787f0d6e38db82d6419e0d74f01f11f6e385a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "6d6e3740d6a579f0f53f6553894c2e2bcb1cae28d74882e87802e43ade4e6cbd",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "5a36043c7f0edc5f03ea634359ae7fb664766444508eeda2bd16cab4e298c8f1",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "6ad1aea184330034c154cf5946739868276aff20470f4197b8ce04cc03dd7664",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "1c56a96bcb9f8b9cb5ea56bf9710f71165a2821ae989beea467ff0f16f898d87",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "073283edd8e31e3c99b2474213571d58567d820c458c66bc8a3277cc132526b8",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p2_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "1b2e930c9daaf43226b520f8c5e11731be38797077a62d6f446963e6ac115f30",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "63eb9c3d258ea7a2ac8e7a7869d53b8db35cd28823382745e75b075960d8c422",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "6466b2f9e733827d4af5ae27f6e16a4eaf410ab2e7ae3ebe0dc0d21fcafa50e7",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "8540aa620760518c220a6fe6f9c3a0d66dfcea0edfb9315f7edfe0ca8b0ac77b",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "1c8a880c8afedfcc9897ec252ba86423ad81269ed51129f6da32b01c1715af65",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "444da97e422b933bef127f7c640471decba7eb854439d41bd74b84e7cfb6c79a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "4e8c509df5cfde295250e369297cfbe1204a2c650348893dc83f58baeb1ce5a9",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "d7ae31fc7951adc6847d3c85fb9933c8d2f92a1be4fbd594f858f323e51e783d",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "f3067858fd85021b58a2e868d62939381fa6cca377ccc88d16efbfc11f986b43",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p3_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "af196efb89bd827c9ccb7f071f72f205bcda8236560ef6ab79a399ac9aa89ff7",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p1_s13_a0p2_b0p7.csv",
+      "sha256": "d3564351799f10c808e02c3265a80b53460b8f93ede95d66fd37e440a72ab1a8",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p1_s5_a0p2_b0p7.csv",
+      "sha256": "6466b2f9e733827d4af5ae27f6e16a4eaf410ab2e7ae3ebe0dc0d21fcafa50e7",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p1_s9_a0p2_b0p7.csv",
+      "sha256": "fb12748ed29e06b8cbf6c54eadc440949da8c611d50753d0310ad484e8ef336e",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p25_s13_a0p2_b0p7.csv",
+      "sha256": "2b51ea293bf7bcbfe61ad2292dec6a4470d0eecc2b727d3817e9ec934f02bf5c",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p25_s5_a0p2_b0p7.csv",
+      "sha256": "444da97e422b933bef127f7c640471decba7eb854439d41bd74b84e7cfb6c79a",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p25_s9_a0p2_b0p7.csv",
+      "sha256": "12ac2b6d86bc459380aa1c7dce4e6ac4be21d153109cada043d0eda159dbb5ee",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p5_s13_a0p2_b0p7.csv",
+      "sha256": "cf94c8a77f13f4f3e5678055d9e37d329ed10ff17247c4c7f64c9ab9c4d20c74",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p5_s5_a0p2_b0p7.csv",
+      "sha256": "f3067858fd85021b58a2e868d62939381fa6cca377ccc88d16efbfc11f986b43",
+      "ticks": 240,
+      "affected": true
+    },
+    {
+      "path": "/root/research/iot-agentic-lightweight-consensus/results/traces/full_seed42_bias_0p4_noise0p5_s9_a0p2_b0p7.csv",
+      "sha256": "1d46c6b13084c7bbcd740c46ef60d06f8591d79324d7891a5614f656a26a2c03",
+      "ticks": 240,
+      "affected": true
+    }
+  ]
+}

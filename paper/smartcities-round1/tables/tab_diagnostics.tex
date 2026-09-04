@@ -1,0 +1,20 @@
+\begin{table}[H]
+\centering
+\caption{Anomaly-detection quality vs.\ ground-truth labels, averaged over
+attacks at $\beta_a>0$ (sensor--tick level; best per column in bold).}
+\label{tab:diagnostics}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\fitTable{%
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Diagnostic source} & \textbf{AUROC} & \textbf{AUPRC} & \textbf{F1} & \textbf{FPR} \\
+\midrule
+Median $+$ MAD $z$-score & 0.649 & \textbf{0.283} & 0.234 & 0.044 \\
+Hampel residual & 0.658 & 0.282 & 0.234 & 0.041 \\
+Trimmed residual & 0.647 & 0.255 & 0.208 & 0.043 \\
+FPR--OWA (single round) & 0.649 & 0.276 & 0.247 & 0.104 \\
+FPR--OWA $+$ CRP & \textbf{0.690} & 0.239 & \textbf{0.273} & \textbf{0.005} \\
+\bottomrule
+\end{tabular}}
+\end{table}

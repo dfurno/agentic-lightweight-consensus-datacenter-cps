@@ -1,0 +1,16 @@
+\begin{table}[H]
+\centering
+\caption{Exploratory hot-start boundary (three seeds, initial temperature 33\,$^\circ$C). Common bias is $-3\,^\circ$C at ticks 0--59.}
+\label{tab:hot_start}
+\footnotesize
+\fitTable{\begin{tabular}{llrrrr}
+\toprule
+\textbf{Case} & \textbf{Controller} & \textbf{IAE} & \textbf{SLA exposure (min)} & \textbf{Integrated excess} & \textbf{Sustained recovery (min)}\\
+\midrule
+Clean & Oracle/Mean/FPR--CRP & --- & 3.000 & 1.919 & 3\\
+Common bias & Oracle & 111.664 & 3.000 & 1.919 & 3\\
+Common bias & Mean & 242.286 & 61.333 & 50.275 & 68\\
+Common bias & FPR--OWA+CRP & 242.678 & 61.333 & 50.073 & 68\\
+\bottomrule
+\end{tabular}}
+\end{table}

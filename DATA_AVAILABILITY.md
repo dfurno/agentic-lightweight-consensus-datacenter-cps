@@ -27,6 +27,10 @@ This repository includes:
 - parameter/configuration tables;
 - aggregate result files used by the reproduction gate;
 - scripts that recompute reported quantities from CSV/JSON outputs.
+- the authoritative curated Round 1 evidence under `results/round1_evidence/`;
+- the revised Smart Cities manuscript source under `paper/smartcities-round1/`.
+
+The closed-loop additions use a declared first-order illustrative thermal model driven by recorded context. They do not constitute hardware or instrumented-facility validation.
 
 ## Not Included
 

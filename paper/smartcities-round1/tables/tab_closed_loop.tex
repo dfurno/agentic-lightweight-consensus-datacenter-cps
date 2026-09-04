@@ -1,0 +1,15 @@
+\begin{table}[H]
+\centering
+\caption{Action-dependent illustrative thermal pilot: means over 45 condition-runs per controller (three seeds). Effort is normalized command-minutes, not electrical energy.}
+\label{tab:closed_loop}
+\footnotesize
+\fitTable{\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Controller} & \textbf{IAE} & \textbf{Estimator MAE} & \textbf{Fan effort} & \textbf{Fan variation} & \textbf{SLA exposure} & \textbf{Return onset (min)}\\
+\midrule
+Oracle & 61.485 & 0.0000 & 135.247 & 2.420 & 0.000 & 1.156\\
+Mean & 98.708 & 0.2148 & 138.620 & 3.047 & 0.000 & 7.267\\
+FPR--OWA+CRP & 69.326 & 0.0844 & 135.984 & 3.164 & 0.000 & 6.178\\
+\bottomrule
+\end{tabular}}
+\end{table}

@@ -1,0 +1,18 @@
+{
+  "run_id": "20260903_thermal_hot_start_closeout",
+  "source_code_commit": "d7b1eee49ce1205ace618b43a600ec4e64e0f391",
+  "commit_verified": true,
+  "closeout_config_sha256": "34b71971fd5088776b92f369d237ae5acaa7ce3f4dea4d042c05e2dce8a7622e",
+  "base_config_sha256": "d58932aa2c309fb58f0ebfb13677f4559260184fd8c67b245ad6a947bfa56d7e",
+  "runner_sha256": "8335a5dedc9518ee9a783fbc7ac101b260a0b857c4b13d6ffbcb6ad46d1e0d3d",
+  "input_hashes": {
+    "11": "69cef42e4bdabcbe7621cae0f7046d3881919224fafa27430ffc99a7fa31a56e",
+    "42": "7494bdf54a07c46742bf62156f4ac787f405a5d32d9a8acd0b3289df2f22bfb6",
+    "101": "8d5e06e57e1052101acc62008fecbfe653aee25d6940774cf03e392bedf124c6"
+  },
+  "python": "3.12.3",
+  "interpreter": "/root/research/iot-agentic-lightweight-consensus/.venv/bin/python",
+  "completed_runs": 18,
+  "llm_calls": 0,
+  "gpu_calls": 0
+}

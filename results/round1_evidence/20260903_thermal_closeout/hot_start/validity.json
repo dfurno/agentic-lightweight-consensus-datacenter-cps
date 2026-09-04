@@ -1,0 +1,7 @@
+{
+  "runs": 18,
+  "ticks": 4320,
+  "paired_between_cases": true,
+  "actuator_contract_violations": 0,
+  "runtime_failures": 0
+}

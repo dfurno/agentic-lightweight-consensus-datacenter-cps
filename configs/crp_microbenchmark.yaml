@@ -1,0 +1,9 @@
+run_id: 20260904_true_crp_microbenchmark_stress
+seed: 20260904
+stress_seed: 91337
+sizes: [5, 9, 13, 25, 50, 100]
+warmup: 20
+latency_repetitions: 500
+memory_repetitions: 20
+threads: 1
+crp: {alpha: 0.3, beta: 0.8, alpha_crp: 0.5, m_z: 4.0, tau_c: 0.7, tau_r: 0.5, persistence_l: 3, max_rounds: 3, min_sensors: 3}

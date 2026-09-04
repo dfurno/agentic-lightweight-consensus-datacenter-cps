@@ -1,0 +1,13 @@
+{
+  "files": 135,
+  "ticks": 32400,
+  "all_temperature_continuity": true,
+  "all_plant_equation": true,
+  "all_fan_continuity": true,
+  "all_finite": true,
+  "all_metrics_match": true,
+  "all_bounds_slew": true,
+  "raw_manifest_entries": 135,
+  "extract_count": 5,
+  "note": "Sensor arrays were not stored in original raw logs; plant innovations were deterministically reconstructed from frozen seeds/configuration."
+}

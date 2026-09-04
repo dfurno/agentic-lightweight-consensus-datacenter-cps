@@ -1,0 +1,31 @@
+{
+  "run_id": "20260903_runtime_cpu_fix",
+  "planner_deadline_seconds": 0.05,
+  "verifier_deadline_seconds": 0.02,
+  "cases": [
+    {"id":"nominal","kind":"nominal","expect_change":false},
+    {"id":"confidence_trigger","kind":"trigger_confidence","expect_trigger":"low_confidence"},
+    {"id":"anomaly_trigger","kind":"trigger_anomaly","expect_trigger":"anomaly_count"},
+    {"id":"thermal_trigger","kind":"trigger_thermal","expect_trigger":"thermal_margin"},
+    {"id":"combined_triggers","kind":"trigger_combined","expect_trigger_count":3},
+    {"id":"cooldown","kind":"cooldown","expect_planner_calls":1},
+    {"id":"valid_action","kind":"valid_action","expect_change":true,"expect_source":"supervisor"},
+    {"id":"stale_actuating_snapshot","kind":"stale_actuating","expect_reason":"stale_snapshot","expect_change":false,"expect_action":"raise_alarm","expect_source":"local_hold_alarm"},
+    {"id":"future_actuating_snapshot","kind":"future_actuating","expect_reason":"future_snapshot","expect_change":false,"expect_action":"raise_alarm","expect_source":"local_hold_alarm"},
+    {"id":"wrong_zone_actuating_snapshot","kind":"zone_actuating","expect_reason":"snapshot_zone_mismatch","expect_change":false,"expect_action":"raise_alarm","expect_source":"local_hold_alarm"},
+    {"id":"nonfinite_confidence_actuating_snapshot","kind":"nonfinite_confidence","expect_reason":"invalid_snapshot_schema","expect_change":false,"expect_action":"raise_alarm","expect_source":"local_hold_alarm"},
+    {"id":"planner_malformed_callback","kind":"planner_malformed","expect_reason_prefix":"planner_exception:ValidationError","expect_action":"maintain","expect_source":"fast_path"},
+    {"id":"action_zone_mismatch","kind":"action_zone","expect_reason":"actuation_contract_rejected","expect_change":false,"expect_action":"raise_alarm"},
+    {"id":"action_over_limit","kind":"action_limit","expect_change":false,"expect_action":"raise_alarm"},
+    {"id":"proposal_timestamp_mismatch","kind":"timestamp_mismatch","expect_reason":"Action does not reference latest consensus timestamp.","expect_change":false,"expect_action":"raise_alarm"},
+    {"id":"planner_exception","kind":"planner_exception","expect_reason_prefix":"planner_exception","expect_source":"fast_path"},
+    {"id":"planner_timeout","kind":"planner_timeout","expect_reason":"planner_timeout","expect_planner_calls":1},
+    {"id":"pending_delayed_success","kind":"pending_success","expect_planner_calls":1,"expect_final_fan":0.6,"expect_source":"supervisor"},
+    {"id":"pending_superseded","kind":"late_superseded","expect_reason":"superseded_snapshot","expect_planner_calls":1},
+    {"id":"verifier_exception","kind":"verifier_exception","expect_reason_prefix":"verifier_exception","expect_change":false},
+    {"id":"verifier_timeout","kind":"verifier_timeout","expect_reason":"verifier_timeout","expect_change":false},
+    {"id":"authorization_reissue","kind":"auth_reissue","expect_reason":"consumed_token_rejected","expect_final_fan":0.7},
+    {"id":"planner_snapshot_mutation","kind":"planner_mutation","expect_change":false,"expect_action":"raise_alarm"},
+    {"id":"persistent_limit","kind":"persistent_limit","expect_final_fan":0.9}
+  ]
+}

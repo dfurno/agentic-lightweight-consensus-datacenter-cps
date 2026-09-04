@@ -1,0 +1,25 @@
+\begin{table}[H]
+\centering
+\caption{Reproduction gate: headline quantities recomputed from the archived
+artifacts (representative subset; $21/21$ pass).}
+\label{tab:repro}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\fitTable{%
+\begin{tabular}{lccc}
+\toprule
+\textbf{Quantity} & \textbf{Reported} & \textbf{Recomputed} & \textbf{Status} \\
+\midrule
+Global MAE, mean & 1.5366 & 1.53661 & \checkmark \\
+Global MAE, FPR--OWA & 1.6171 & 1.61713 & \checkmark \\
+P95 AE, direct OWA & 2.3906 & 2.39060 & \checkmark \\
+Bias MAE, FPR--OWA & 1.6468 & 1.64676 & \checkmark \\
+Redundancy MAE, $n_z{=}13$ & 1.1522 & 1.15218 & \checkmark \\
+Unsafe executed, no verifier & 4409 & 4409 & \checkmark \\
+Unsafe executed, verifier & 0 & 0 & \checkmark \\
+Event-triggered invocation rate & 0.0396 & 0.03958 & \checkmark \\
+Event-triggered deadline miss & 0.0396 & 0.03958 & \checkmark \\
+Event-triggered SLA violations & 0.0 & 0.0 & \checkmark \\
+\bottomrule
+\end{tabular}}
+\end{table}

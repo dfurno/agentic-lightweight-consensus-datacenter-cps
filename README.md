@@ -1,8 +1,8 @@
-# Agentic Lightweight Consensus
+# Agentic Lightweight Consensus for Smart-City Data-Center CPS
 
-Reproducible research framework for **Agentic Lightweight Consensus for Resilient Data-Center Cyber-Physical Control under Deception Attacks**.
+Reproducible research framework for **Agentic Lightweight Consensus for Resilient Monitoring and Control of Modern Data Centers in Smart Cities** (manuscript `smartcities-4475705`, Round 1 revision).
 
-This repository is the public reproducibility bundle for the ASOC 2026 manuscript. It includes source code, configurations, prompt/schema documentation, verifier policy, scenario-generation scripts, aggregate result files, and scripts for recomputing reported quantities.
+This repository is the public reproducibility bundle for the Smart Cities manuscript. It includes source code, configurations, prompt/schema documentation, verifier policy, scenario-generation scripts, aggregate result files, and scripts for recomputing reported quantities. The Round 1 release supersedes the paper-facing artifacts in the initial commit `a935bb0`, whose ASOC label reflected an earlier packaging target; Git history is retained for provenance.
 
 Start here:
 
@@ -10,8 +10,11 @@ Start here:
 - `REPRODUCIBILITY.md`: commands for reproducing reported tables and checks.
 - `RELEASE_MANIFEST.md`: what is included and intentionally excluded.
 - `docs/llm_prompt_schema.md`: LLM supervisor prompt/schema and action-only compatibility.
-- `docs/verifier_policy.md`: deterministic non-bypassable verifier policy.
+- `docs/verifier_policy.md`: tested process-local actuation-verifier policy and limits.
 - `docs/execution_trace_schema.md`: trace schema and metadata structure.
+- `paper/smartcities-round1/`: revised MDPI manuscript source and compiled clean PDF.
+- `results/round1_evidence/`: authoritative curated Round 1 evidence packages.
+- `docs/round1/`: runtime contract, formal ordering note, and frozen thermal protocol.
 
 Raw third-party datasets are not redistributed. Place locally obtained datasets under `data/raw/` after accepting the providers' terms.
 
@@ -20,7 +23,19 @@ The repository implements a hierarchical IoT/MAS simulation for data-center CPS 
 - sensing agents emit noisy and attacked thermal readings;
 - edge moderating agents run baselines and FPR-informed OWA consensus;
 - an orchestrating ReAct-style planner proposes structured actions;
-- a deterministic Verifier Agent is the non-bypassable safety gate.
+- a deterministic actuation verifier is the tested process-local command gate.
+
+## Smart Cities Round 1 update
+
+- Corrected bias-scenario parsing and selectively recomposed beta-dependent results. The displayed 10-seed/6,300-scenario robustness values, rankings, and conclusions are unchanged at reported precision.
+- Added stable reporter-ID ordering, a formal ordering proposition, an exact-tie audit, and corrected dependent paper artifacts.
+- Added a persistent CRP implementation and an aligned temporal ablation on 45 frozen trajectories and 10,800 ticks.
+- Added a shared software control runtime and a 24-case controlled-time fault-injection matrix; all 24 cases passed.
+- Added 135 action-dependent closed-loop condition-runs and an 18-run pre-specified hot-start boundary test, retaining adverse and non-discriminating outcomes.
+- Added true persistent-CRP cost profiles for `n=5..100`, separating one-round convergence from a forced three-round stress profile.
+- Renamed historical `token_usage.csv` to `legacy_call_counts.csv`: it records planner/verifier call counts, not model-token consumption.
+
+The 7,560 safety denominator is `1,890 indexed scenarios × 4 separately executed variants`: these are scenario-variant safety episodes, not 7,560 decisions per variant and not four selected ticks within a scenario.
 
 No quantitative paper result is fabricated. The Results section is generated only from measured files under `results/`.
 
@@ -206,7 +221,7 @@ The experiment runner writes:
 - `results/metrics_by_scenario.csv`
 - `results/safety_metrics.csv`
 - `results/latency_metrics.csv`
-- `results/token_usage.csv`
+- `results/legacy_call_counts.csv` (historical planner/verifier call counts; no token measurement)
 - `results/traces/`
 - `results/figures/`
 - `results/config_snapshot.yaml`
@@ -251,4 +266,4 @@ The report generator writes:
 
 ## Limitations
 
-This is a reproducible CPS/MAS simulation study, not a production deployment. FPR-informed OWA is a lightweight robust aggregation method, not a formal Byzantine consensus guarantee. Cyber datasets are not mapped to thermal measurements unless their schema directly supports that role.
+This is a reproducible CPS/MAS simulation study, not a production deployment. FPR-informed OWA is a lightweight robust aggregation method, not a formal Byzantine consensus guarantee. Cyber datasets are not mapped to thermal measurements unless their schema directly supports that role. The Round 1 evidence does not establish physical hardware performance, production PKI/RBAC or operating-system isolation, electrical-energy savings, model-token consumption, live asynchronous LLM behavior, or a causal advantage of LLM supervision. The verifier result is limited to the tested process-local runtime.

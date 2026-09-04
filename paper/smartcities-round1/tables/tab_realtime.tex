@@ -1,0 +1,17 @@
+\begin{table}[H]
+\centering
+\caption{Intensive vs.\ event-triggered LLM supervision (loop latencies in ms). Accuracy is unchanged; event triggering collapses loop latency and deadline misses.}
+\label{tab:realtime}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\fitTable{%
+\begin{tabular}{lcccccccc}
+\toprule
+\textbf{Policy} & \textbf{LLM inv.} & \textbf{Mean loop} & \textbf{P95 loop} & \textbf{P99 loop} & \textbf{Deadline} & \textbf{Therm.\ SLA} & \textbf{MAE} & \textbf{RMSE} \\
+ & \textbf{rate} & \textbf{(ms)} & \textbf{(ms)} & \textbf{(ms)} & \textbf{miss} & \textbf{viol.} & & \\
+\midrule
+Intensive & 0.7461 & 5194.7 & 7462.032 & 7645.3 & 0.7461 & 0.000 & 1.5090 & 1.6128 \\
+Event-triggered & 0.0396 & 285.4 & 0.459 & 7313.1 & 0.0396 & 0.000 & 1.5090 & 1.6128 \\
+\bottomrule
+\end{tabular}}
+\end{table}

@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\caption{CRP vs.\ single-round FPR--OWA on the same $1{,}890$ scenarios
+($\alpha_{\mathrm{crp}}{=}0.5$, $M_z{=}4.0$); convergence statistics at right.}
+\label{tab:crp}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\fitTable{%
+\begin{tabular}{lccc@{\hskip 14pt}lc}
+\toprule
+\textbf{Operator} & \textbf{MAE} & \textbf{P95 AE} & \textbf{Max AE} & \textbf{CRP statistic} & \textbf{Value} \\
+\midrule
+FPR--OWA (single round) & 1.6173 & 2.4849 & 2.8347 & Mean rounds to converge & 1.10 \\
+FPR--OWA $+$ CRP        & \textbf{1.6116} & \textbf{2.4229} & \textbf{2.7753} & Converged within $\tau_c$ & 79.5\% \\
+                        &        &        &        & Mean consensus degree $C_z$ & 0.772 \\
+                        &        &        &        & Mean reporters excluded/tick & 0.20 \\
+\bottomrule
+\end{tabular}}
+\end{table}

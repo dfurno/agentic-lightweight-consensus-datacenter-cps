@@ -1,0 +1,17 @@
+run_id: 20260904_crp_temporal_ablation_aligned
+input_run: runs/round1/20260903_thermal_pilot
+base_config: configs/thermal_pilot.yaml
+conditions: [fpr_crp]
+maximum_trajectories: 45
+variants: [temporal_only, social_only, published_blend, social_dynamic_innovation]
+fixed_trajectory_and_actions: true
+production_replacement: false
+dynamic_zone_predictor:
+  equation_t_gt_0: estimate[t-1] + exchange*(ambient[t-1]-estimate[t-1]) + load[t-1] - fan_gain*fan_after[t-1]
+  tick_0: initialize_from_previous_sensor_estimate_without_transition
+  truth_input_prohibited: true
+gate:
+  published_fields: [estimate_c, confidence, crp_persistent_flags, crp_rounds, crp_excluded_flags]
+  observations_reconstructed_from_seed: true
+  exact_boolean_and_integer_match: true
+  floating_tolerance: 1.0e-12

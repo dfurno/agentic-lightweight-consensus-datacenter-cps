@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\caption{Datasets and their audited roles; each is used only for the role its schema supports.}
+\label{tab:datasets}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{P{0.18\textwidth}P{0.10\textwidth}YQ{0.055\textwidth}Q{0.065\textwidth}Q{0.08\textwidth}P{0.095\textwidth}}
+\toprule
+\textbf{Dataset} & \textbf{Source} & \textbf{Role} & \textbf{Temp.} & \textbf{Work./ Pow.} & \textbf{Attack timing} & \textbf{License} \\
+\midrule
+Data Centre Warm/Hot Corridor Temperature Prediction & Kaggle & Thermal calibration (\texttt{TLHC}, \texttt{T\_MEAS-*}, \texttt{P\_cu-*}) & \checkmark & --- & --- & Kaggle dataset terms \\
+\addlinespace[2pt]
+ENACT Edge--Cloud Continuum Telemetry & Zenodo rec.\ 18920397 & Workload / power context (\texttt{CPU\%}, \texttt{MEM}, \texttt{Energy\,W}) & --- & \checkmark & --- & Record-specific \\
+\addlinespace[2pt]
+CuCD-ID (CubeSat Cybersecurity, Intrusion Detection) & Mendeley Data & Anomaly / deception \emph{timing} only & --- & --- & \checkmark & CC BY 4.0 \\
+\bottomrule
+\end{tabularx}
+\end{table}

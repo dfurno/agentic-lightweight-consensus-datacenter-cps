@@ -1,0 +1,23 @@
+\begin{table}[H]
+\centering
+\caption{Robustness check: estimation over ten seeds ($6{,}300$ scenarios)
+with added robust-Kalman and Huber/Tukey baselines (best per column in bold).}
+\label{tab:robust}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{MAE\,$\pm$\,std} & \textbf{RMSE} & \textbf{P95 AE} \\
+\midrule
+Mean              & \textbf{1.538}\,$\pm$\,0.008 & \textbf{1.623} & 2.444 \\
+Trimmed mean      & 1.539\,$\pm$\,0.008 & 1.623 & 2.439 \\
+Hampel$+$mean     & 1.549\,$\pm$\,0.007 & 1.628 & 2.407 \\
+Huber M-estimator & 1.549\,$\pm$\,0.007 & 1.623 & 2.365 \\
+Tukey M-estimator & 1.554\,$\pm$\,0.007 & 1.630 & 2.384 \\
+Direct OWA        & 1.567\,$\pm$\,0.007 & 1.644 & 2.389 \\
+Median            & 1.591\,$\pm$\,0.009 & 1.670 & 2.393 \\
+Robust Kalman     & 1.598\,$\pm$\,0.009 & 1.668 & \textbf{2.346} \\
+FPR--OWA          & 1.614\,$\pm$\,0.007 & 1.705 & 2.475 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,5 +1,7 @@
 # Agentic Lightweight Consensus — LaTeX project
 
+> Historical pre-Round-1 draft retained for provenance. The current Smart Cities manuscript is in `paper/smartcities-round1/`.
+
 Self-contained LaTeX project for the journal paper draft
 *Agentic Lightweight Consensus for Resilient Monitoring and Control of
 Data-Centre Cyber–Physical Systems*.

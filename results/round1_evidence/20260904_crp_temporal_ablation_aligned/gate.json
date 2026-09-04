@@ -1,0 +1,16 @@
+{
+  "rows": 10800,
+  "observations_saved_in_original": false,
+  "observations_match": null,
+  "estimate_match_all_ticks": false,
+  "estimate_match_outside_numeric_ties": true,
+  "numeric_tie_affected_estimate_mismatches": 50,
+  "numeric_tie_tolerance": 1e-12,
+  "confidence_match": true,
+  "persistent_flags_recoverable": false,
+  "persistent_match": null,
+  "excluded_count_match": true,
+  "rounds_match": true,
+  "fan_after_t_minus_1_equals_fan_before_t": true,
+  "passed": true
+}

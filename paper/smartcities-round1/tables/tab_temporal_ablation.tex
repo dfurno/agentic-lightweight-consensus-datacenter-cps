@@ -1,0 +1,16 @@
+\begin{table}[H]
+\centering
+\caption{Temporal-consistency ablation on 45 frozen trajectories (10,800 ticks). Actions and plant trajectories are fixed; results are estimator diagnostics.}
+\label{tab:temporal_ablation}
+\footnotesize
+\fitTable{\begin{tabular}{lrrrr}
+\toprule
+\textbf{CRP reliability variant} & \textbf{MAE} & \textbf{Non-converged ticks} & \textbf{Exclusions} & \textbf{Rounds}\\
+\midrule
+Temporal only (sensor EWMA) & 0.084507 & 637 & 1,142 & 11,181\\
+Social proximity only & \textbf{0.079962} & 57 & 2,826 & 11,763\\
+Published blend & 0.084417 & 627 & 1,171 & \textbf{11,197}\\
+Social + aligned zone innovation & 0.079996 & \textbf{22} & 2,973 & 11,796\\
+\bottomrule
+\end{tabular}}
+\end{table}

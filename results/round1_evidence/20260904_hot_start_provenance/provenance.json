@@ -1,0 +1,17 @@
+{
+  "run_id": "20260904_hot_start_provenance_audit",
+  "source_code_commit": "485cbe5f3e11ba444e529a2334c16800237458d4",
+  "command": "scripts/audit_thermal_hot_start.py --run runs/round1/20260903_thermal_hot_start_closeout --config configs/thermal_closeout.yaml --output runs/round1/20260904_hot_start_provenance_audit",
+  "runner_sha256": "2c7282c7bf912ea8144b3dee87364d3d670856bac089249d4b63036d03685ff5",
+  "closeout_config_sha256": "34b71971fd5088776b92f369d237ae5acaa7ce3f4dea4d042c05e2dce8a7622e",
+  "base_config_sha256": "d58932aa2c309fb58f0ebfb13677f4559260184fd8c67b245ad6a947bfa56d7e",
+  "raw_manifest_sha256": "1c9e965ce8622299e282c7acd071716a7d1e566af12e89e441441cddb54485cb",
+  "python": "3.12.3",
+  "interpreter": "/tmp/round1-residual-venv/bin/python",
+  "numpy": "2.5.2",
+  "pandas": "3.0.5",
+  "pyyaml": "6.0.3",
+  "rerun_condition_runs": 0,
+  "llm_calls": 0,
+  "gpu_calls": 0
+}

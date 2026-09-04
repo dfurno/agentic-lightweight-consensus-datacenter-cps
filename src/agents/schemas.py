@@ -5,7 +5,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
-ActionType = Literal["increase_fan_speed", "decrease_setpoint", "maintain", "raise_alarm"]
+ActionType = Literal["increase_fan_speed", "decrease_fan_speed", "decrease_setpoint", "maintain", "raise_alarm"]
 
 
 class ControlAction(BaseModel):
@@ -23,6 +23,7 @@ class ConsensusSnapshot(BaseModel):
     timestamp: str
     confidence: float
     anomaly_count: int = 0
+    zone: str = "zone-0"
 
 
 class VerifierDecision(BaseModel):

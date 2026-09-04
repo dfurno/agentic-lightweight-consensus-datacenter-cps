@@ -1,0 +1,7 @@
+family,cases,ticks,exact_tie_ticks,ties_with_distinct_measurements,changed_order_ticks,changed_aggregate_ticks,maximum_absolute_delta,derived_metrics_changed,displayed_3dp_values_changed
+corrected_crp,1890,453600,17826,17826,3980,1213,0.4514572159886634,669,295
+corrected_fpr_single,1890,453600,258,258,208,200,6.79591794210274,213,165
+historical_fpr_ablation,1909,458160,258,258,208,200,6.79591794210274,213,165
+main_campaign,1890,453600,258,258,208,200,6.79591794210274,213,165
+robust_extension,6300,1512000,1022,1022,766,732,6.984108031678076,817,707
+thermal_pilot,45,10800,530,182,202,29,0.06677688875895171,18,5

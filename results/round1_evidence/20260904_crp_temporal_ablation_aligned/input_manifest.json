@@ -1,0 +1,182 @@
+[
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_00_nominal_none_fpr_crp.ticks.csv",
+    "sha256": "0829cd56ad8cf1ea548334713a12cbe79c75cb53f745027fcf525c5c05cbdd03"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_01_bias_low_fpr_crp.ticks.csv",
+    "sha256": "0c302d3b2a47bd43ffea9f47266c55a03ddcaa5893c2b77178b1c3e39403715c"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_02_bias_high_fpr_crp.ticks.csv",
+    "sha256": "97008137ce176b551c2acab66fc2de7a9ed152b25ac9b330ddae024eef7a91ae"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_03_drift_low_fpr_crp.ticks.csv",
+    "sha256": "9727f1c0838bf47a58e87f8ca8ccf1e86f222c57c9edc9dc08c7890a21cf3ecb"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_04_drift_high_fpr_crp.ticks.csv",
+    "sha256": "b9bf4a93f668d6f09cdcc8163d3da22b71b950456fb97475ec8f8cf5129394b0"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_05_replay_low_fpr_crp.ticks.csv",
+    "sha256": "59654e702abb87f3bfa586f210824876d748d2553bba9c9e4392102502b3d567"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_06_replay_high_fpr_crp.ticks.csv",
+    "sha256": "6a5ea6d8e86affddb0217eb1b831d6f334534269dfa852d228405ced9886eb14"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_07_freeze_low_fpr_crp.ticks.csv",
+    "sha256": "6fe9d3db5caf9fc792aff556b31046caa9f85ad9b9b5721a803db3c539b8bdb3"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_08_freeze_high_fpr_crp.ticks.csv",
+    "sha256": "42ba86572e6ddc62a0225763818ea86f17e135c595263e8dbe03b3acb4f5d4f4"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_09_spike_low_fpr_crp.ticks.csv",
+    "sha256": "e8716fd7bd49cad268abd814668c85bfbab9740b990fe3a7e979c0e2a51916c1"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_10_spike_high_fpr_crp.ticks.csv",
+    "sha256": "d734d4444cbac2688e53c00fa868ab44e4ea71224219c34d78c9a094a1c1f559"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_11_scaling_low_fpr_crp.ticks.csv",
+    "sha256": "7775d09cd9d96f4901a73ec370ed94f357d49b2e5b560fbb6bb39d1a562ef65b"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_12_scaling_high_fpr_crp.ticks.csv",
+    "sha256": "c20c4e9d9e48dacdb3c578ba30386a811e16ec6675588f0e9437d58475001d0d"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_13_stuck_low_fpr_crp.ticks.csv",
+    "sha256": "1dca4d3220196f2fdbacc4e67fe48cae0c264bf484c5933bcc2889b91fa92c33"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed101_14_stuck_high_fpr_crp.ticks.csv",
+    "sha256": "890dc1528a811b37c134e3c578ee292005ef7b4c13c54208a306263586ef24bc"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_00_nominal_none_fpr_crp.ticks.csv",
+    "sha256": "66e20d68bfa326c1ff1da19e80d330bcf66a658728cbebe2cb6859031cca5c00"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_01_bias_low_fpr_crp.ticks.csv",
+    "sha256": "c3da67b560c154ee60f0f2c601921faf2571b892a62a6e0b901f14e48b4fc745"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_02_bias_high_fpr_crp.ticks.csv",
+    "sha256": "8c79ccf4f4d12c4e32af8e474cb69a82c80c525637ef58c3464bce4b752dbe7d"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_03_drift_low_fpr_crp.ticks.csv",
+    "sha256": "84ea56413a010e8772d58a9ea2ce8e46a3206146c5ceec5e539c818c163ad7f1"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_04_drift_high_fpr_crp.ticks.csv",
+    "sha256": "73cabd6a0bac4f34fed017c761c6472e767fa1b009124c6caeab6a252126ed48"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_05_replay_low_fpr_crp.ticks.csv",
+    "sha256": "8a39b2eb4f15f3133a1fe6955e5b38bef28c15fb5b4c0a101d0677eaa6dcde30"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_06_replay_high_fpr_crp.ticks.csv",
+    "sha256": "74cb62230ce58ba12c93e4a3416e3c7a085bd53b1142b3ffd736778ea53e5310"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_07_freeze_low_fpr_crp.ticks.csv",
+    "sha256": "46b35fae23858dfb1fafa4e27fbeba403b1797b6f14a2ef6132e281c43452104"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_08_freeze_high_fpr_crp.ticks.csv",
+    "sha256": "9510c4adadc6eeff89cafa0750c61fd468666e502b5517c91892e50db6070f98"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_09_spike_low_fpr_crp.ticks.csv",
+    "sha256": "fe9628e45c783c73e52005f3dd290b0eafba615ce1dc8cb8a75369317db04965"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_10_spike_high_fpr_crp.ticks.csv",
+    "sha256": "4ebe987ef0a2f525862377f20c0776da6a25174f9173333c09f322f720cd7349"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_11_scaling_low_fpr_crp.ticks.csv",
+    "sha256": "a207fb3ad9b724255a35339a3a96f05848e234a001d514339827889282890e2d"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_12_scaling_high_fpr_crp.ticks.csv",
+    "sha256": "926c500b28454e59c9df4c6da14a11edb41d76ca8022426fd54b639d0277dc5a"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_13_stuck_low_fpr_crp.ticks.csv",
+    "sha256": "7d503cab2881b2428b25d4087e6f83cbc36ff40c251e7ed1221126261d92c0fe"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed11_14_stuck_high_fpr_crp.ticks.csv",
+    "sha256": "11562410fa441bd86fef5fe0cf7f5aebed6d2fe0c669d8fb75c3e741bd28758c"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_00_nominal_none_fpr_crp.ticks.csv",
+    "sha256": "59ae76dff699e9fff40686101afba63dcb168e0c740e97750cbc72d3ef866ef9"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_01_bias_low_fpr_crp.ticks.csv",
+    "sha256": "cc408c132ab6579dab703337af75a98deb80462e56a5fe51f0ef591c3780a77f"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_02_bias_high_fpr_crp.ticks.csv",
+    "sha256": "7c3da2c8f86c2c38c6ea594ac54d937ec13d308deed3c7118e56524bcb2c36a5"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_03_drift_low_fpr_crp.ticks.csv",
+    "sha256": "4c6fa4f6bbda2b861db449c4ea34fce31fcecf5192ea965b93e48e9da8f2e751"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_04_drift_high_fpr_crp.ticks.csv",
+    "sha256": "d26b42f91fe9fdfac00ce3d919a5d353cf9028e3798550b76d917914b2f13f02"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_05_replay_low_fpr_crp.ticks.csv",
+    "sha256": "94f634cc57a1dbc7349cb2d7e1c2e2409dea1ffc9e27a6b80faa98f07911bfd7"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_06_replay_high_fpr_crp.ticks.csv",
+    "sha256": "6be78abc5dfbed11ef97902e8a875d7447f521149a7034c670ce59ad822c796f"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_07_freeze_low_fpr_crp.ticks.csv",
+    "sha256": "523a2b3b0c86a456073b6c9f47f9c9094cd2d0180ef18fc0da5328424e16297a"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_08_freeze_high_fpr_crp.ticks.csv",
+    "sha256": "6116a8f8670fcc137e78759822856eb23b04dd44f2315c3c47349e3fc54bd351"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_09_spike_low_fpr_crp.ticks.csv",
+    "sha256": "2ef5245bedb5f072856cf6463114d4c53811077f2ff68fe480b3a7663d3522d2"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_10_spike_high_fpr_crp.ticks.csv",
+    "sha256": "5d7fedbb794797535f40df5973be0cd5db828c8cab6d363c9532088dcce92128"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_11_scaling_low_fpr_crp.ticks.csv",
+    "sha256": "eef033c0e0b225fcd949b1b7d2cd4e96861e022cf0009827c304275bb367d17e"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_12_scaling_high_fpr_crp.ticks.csv",
+    "sha256": "7d8fa89600cf33c64bc15b7cf1a339610e8ec73bae02202c4338b8efc7a1e254"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_13_stuck_low_fpr_crp.ticks.csv",
+    "sha256": "cb3708aa6bc1d72ebcb16615c28cd754c87717c9a1009d8f035eddea3fba2b7f"
+  },
+  {
+    "path": "runs/round1/20260903_thermal_pilot/checkpoints/seed42_14_stuck_high_fpr_crp.ticks.csv",
+    "sha256": "db9b19342a3700fb251b717da1105f8fa7a2c467293a6abc7b23f2928c7f25ee"
+  }
+]

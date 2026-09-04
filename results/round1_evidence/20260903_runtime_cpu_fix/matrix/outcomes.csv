@@ -1,0 +1,25 @@
+case_id,passed,event_count,planner_calls,reasons,observed_state_change,final_fan_speed,final_setpoint_c,oracle_within_bounds
+nominal,True,1,0,,False,0.5,24.0,True
+confidence_trigger,True,1,1,Consensus confidence is below threshold.,False,0.5,24.0,True
+anomaly_trigger,True,1,1,,False,0.5,24.0,True
+thermal_trigger,True,1,1,,False,0.5,24.0,True
+combined_triggers,True,1,1,Consensus confidence is below threshold.,False,0.5,24.0,True
+cooldown,True,2,1,,False,0.5,24.0,True
+valid_action,True,1,1,,True,0.7,24.0,True
+stale_actuating_snapshot,True,1,0,stale_snapshot,False,0.5,24.0,True
+future_actuating_snapshot,True,1,0,future_snapshot,False,0.5,24.0,True
+wrong_zone_actuating_snapshot,True,1,0,snapshot_zone_mismatch,False,0.5,24.0,True
+nonfinite_confidence_actuating_snapshot,True,1,0,invalid_snapshot_schema,False,0.5,24.0,True
+planner_malformed_callback,True,1,1,planner_exception:ValidationError,False,0.5,24.0,True
+action_zone_mismatch,True,1,1,actuation_contract_rejected,False,0.5,24.0,True
+action_over_limit,True,1,1,Action violates actuator bounds or slew-rate constraints.,False,0.5,24.0,True
+proposal_timestamp_mismatch,True,1,1,Action does not reference latest consensus timestamp.,False,0.5,24.0,True
+planner_exception,True,1,1,planner_exception:RuntimeError,False,0.5,24.0,True
+planner_timeout,True,2,1,planner_timeout,False,0.5,24.0,True
+pending_delayed_success,True,5,1,,True,0.6,24.0,True
+pending_superseded,True,2,1,superseded_snapshot,False,0.5,24.0,True
+verifier_exception,True,1,0,verifier_exception:RuntimeError,False,0.5,24.0,True
+verifier_timeout,True,1,0,verifier_timeout,False,0.5,24.0,True
+authorization_reissue,True,0,0,consumed_token_rejected,True,0.7,24.0,True
+planner_snapshot_mutation,True,1,1,Emergency threshold requires raise_alarm.;Predicted temperature remains above SLA threshold.,False,0.5,24.0,True
+persistent_limit,True,5,5,Action violates actuator bounds or slew-rate constraints.;Action violates actuator bounds or slew-rate constraints.;Action violates actuator bounds or slew-rate constraints.,True,0.8999999999999999,24.0,True

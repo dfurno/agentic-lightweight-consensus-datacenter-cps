@@ -112,7 +112,12 @@ def crp_consensus(
     r = alpha_crp * last_p + (1.0 - alpha_crp) * k
     idx = np.where(active)[0]
     # estimate via FPR-OWA over retained reporters (degraded confidence if not converged)
-    est = fpr_owa_consensus(values[idx], alpha=alpha, beta=beta, timestamp=timestamp).aggregated_value
+    # ``idx`` contains the stable reporter identifiers from the original input;
+    # preserve them when feedback excludes reporters rather than renumbering the
+    # retained subset by its compact array position.
+    est = fpr_owa_consensus(
+        values[idx], alpha=alpha, beta=beta, timestamp=timestamp, sensor_ids=idx
+    ).aggregated_value
 
     flags = r < tau_r
     # update persistence streak

@@ -1,0 +1,27 @@
+\begin{table}[H]
+\centering
+\caption{Descriptive historical reactive and deliberative (LLM) supervisor
+records. Execution paths were non-identical; differences are not a paired
+causal comparison (means per archived scenario).
+%The comparison establishes equivalence on safety, SLA, and accuracy
+%---which are set by the fast path---not a difference in useful output.
+}
+\label{tab:supervisor}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\fitTable{%
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Reactive agent} & \textbf{LLM agent} \\
+\midrule
+Mean loop latency (ms) & \textbf{0.18} & 285.4 \\
+P99 loop latency (ms) & \textbf{0.22} & 7313.1 \\
+Deadline-miss rate & \textbf{0.0} & 0.0396 \\
+Thermal-SLA violations & 0.0 & 0.0 \\
+Unsafe actions executed & 0 & 0 \\
+Accepted supervisory actions (mean/scenario) & 9.5 & 0.0 \\
+Supervisor failure rate & 0.0 & 0.011 \\
+MAE & 1.5090 & 1.5090 \\
+\bottomrule
+\end{tabular}}
+\end{table}

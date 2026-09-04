@@ -1,0 +1,18 @@
+{
+  "crp_convergence.csv": "e4535b6ad7f496f7cd42b6651b2126021451739126c76574d6123dd89b1bf21d",
+  "crp_convergence_acrp0.3_mz2.0.csv": "1c51d05b2bf6b969d2484f2a0f4854993becb5f67d14518ad5ab06b74bfaea11",
+  "crp_convergence_acrp0.3_mz4.0.csv": "edd4ab3875356d42a6e83f7500a73079b602e3130ff7f912a25649b4f9d53ece",
+  "crp_convergence_acrp0.5_mz2.0.csv": "3931ce982492122101507ef7bbd6dd0f3507b525bb72ee1ccf8cedd38a14834a",
+  "crp_convergence_acrp0.5_mz4.0.csv": "e4535b6ad7f496f7cd42b6651b2126021451739126c76574d6123dd89b1bf21d",
+  "crp_convergence_acrp0.7_mz2.0.csv": "9f4392e782ad9eab9a2d60d5abaf4e59498cd83ee3eef46471e36e30646bd4e5",
+  "crp_convergence_acrp0.7_mz4.0.csv": "63ca5800e8a83ff434d901a761a7155b6a2babbe03096dfde24b4b306e17cb04",
+  "crp_estimation_per_scenario.csv": "ab9d07ea8e50cc3f3df12bcfa2b5ce76c6e27ffcf71075080d9303af7a7255c7",
+  "crp_estimation_per_scenario_acrp0.3_mz2.0.csv": "0f8aae7efc55a5f4c765f8ee22f839b948607192e318a9ad64bdecc614a6c147",
+  "crp_estimation_per_scenario_acrp0.3_mz4.0.csv": "e2f0ff0d3325b4c3604302faa00db42e919b9127fafc0812774cb70c9d1d9c95",
+  "crp_estimation_per_scenario_acrp0.5_mz2.0.csv": "f2268bbaa01b6cb5a58ca1140dc97a792b67eb865342b752ca79ab04de8bd73b",
+  "crp_estimation_per_scenario_acrp0.5_mz4.0.csv": "ab9d07ea8e50cc3f3df12bcfa2b5ce76c6e27ffcf71075080d9303af7a7255c7",
+  "crp_estimation_per_scenario_acrp0.7_mz2.0.csv": "0f2718d15ff0fc2712a497c36b0a6eee7895b9f4cd7b9b2e1026f6771427fda1",
+  "crp_estimation_per_scenario_acrp0.7_mz4.0.csv": "fa9c66db264072b8966c557bc5c3121316190f920a5a82cde99e0f06f898a7bd",
+  "global_metrics_before_after.csv": "caa668ebd230b3c3b6932e950654c421ebb8dacb83e9c647f1e97c6b160a0588",
+  "validation_invariants.csv": "86167eb731c1a21c84f2c8f6eba760e643e95f72950ba1db4b6f2f743d23788a"
+}

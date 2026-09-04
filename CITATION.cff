@@ -1,17 +1,18 @@
 cff-version: 1.2.0
-title: "Agentic Lightweight Consensus for Resilient Data-Centre Cyber-Physical Control"
-message: "If you use this software or the accompanying reproducibility artifacts, please cite the associated manuscript."
+title: "Agentic Lightweight Consensus for Resilient Monitoring and Control of Modern Data Centers in Smart Cities"
+message: "If you use this software or its reproducibility artifacts, please cite the associated Smart Cities manuscript and this repository release."
 type: software
 authors:
   - family-names: Furno
     given-names: Domenico
   - family-names: Loia
     given-names: Vincenzo
-repository-code: "https://github.com/<OWNER>/<REPOSITORY>"
+repository-code: "https://github.com/dfurno/agentic-lightweight-consensus-datacenter-cps"
 license: MIT
-version: "asoc-2026-reproducibility"
-date-released: 2026-06-29
+version: "smartcities-round1-2026-09-04"
+date-released: 2026-09-04
 keywords:
+  - smart cities
   - multi-agent systems
   - fuzzy consensus
   - data-centre control

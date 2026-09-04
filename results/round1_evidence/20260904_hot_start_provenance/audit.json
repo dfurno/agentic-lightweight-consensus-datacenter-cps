@@ -1,0 +1,16 @@
+{
+  "files": 18,
+  "expected_files": 18,
+  "raw_artifacts": 36,
+  "ticks": 4320,
+  "pairing": true,
+  "all_continuity": true,
+  "all_plant_equation": true,
+  "all_finite": true,
+  "all_terminal_state_match": true,
+  "all_metrics_match": true,
+  "all_recovery_match": true,
+  "actuator_contract_violations": 0,
+  "runtime_failures": 0,
+  "passed": true
+}

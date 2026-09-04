@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\caption{Non-overlapping runtime roles and typed interfaces.}
+\label{tab:roles}
+\footnotesize
+\begin{tabularx}{\textwidth}{P{0.18\textwidth}P{0.23\textwidth}YY}
+\toprule
+\textbf{Component} & \textbf{Consumes} & \textbf{Produces} & \textbf{Authority boundary}\\
+\midrule
+Sensing agent & local measurement, timestamp, reporter ID & signed-in-process report record & Cannot aggregate or actuate\\
+Edge consensus agent & report vector & FPR--OWA estimate, confidence, flags, reliability vector & Cannot admit commands\\
+CRP monitor & current snapshot, persistent history & consensus degree, exclusions, feedback, updated snapshot & Diagnoses and requests re-sampling; does not decide actuation\\
+Supervisory proposer & immutable snapshot and optional history & typed action proposal and rationale & Optional; has no actuator interface\\
+Actuation verifier & bound snapshot--proposal pair, policy, actuator state & accept/reject reasons and one-shot authorization & Sole process-local command-admission point\\
+Actuator/fallback & accepted authorization or rejection/timeout & bounded state change or conservative local action & Rejects missing/consumed authorization\\
+Trace recorder & all identifiers, payloads, verdicts, timings & append-only experiment record & Observes; cannot change decisions\\
+\bottomrule
+\end{tabularx}
+\end{table}

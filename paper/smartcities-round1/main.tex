@@ -74,7 +74,7 @@ $^{1}$ \quad Department of Business Sciences -- Management \& Innovation Systems
 \corres{Correspondence: dfurno@unisa.it}
 
 % Abstract (Do not insert blank lines, i.e. \)
-\abstract{Data-center monitoring for smart-city services must fuse conflicting sensor reports and keep AI-proposed commands outside the safety-critical path. We present a two-path architecture in which a deterministic fast path combines reliability-based fuzzy-preference OWA (FPR--OWA), a persistent consensus-reaching process (CRP), and an actuation verifier; an optional reactive or language-model supervisor can only propose typed actions. Across $1{,}890$ replay scenarios and seven attack families, no estimator dominates: averaging has the lowest global error and sensor redundancy explains most accuracy variation, while FPR--OWA+CRP provides the strongest diagnostic signal. A separate action-dependent simulation adds standard control metrics and exposes an adverse common-mode-bias boundary: the measurement-dependent controllers recover much later than the oracle. The verifier blocks every unsafe or process-invalid command observed in the historical safety set and deterministic fault-injection matrix, an empirical result rather than a formal system guarantee. A true-CRP benchmark remains below $0.30$ ms median latency at $n_z=100$ in the tested environment. Historical reactive and LLM results are retained only as descriptive, non-paired evidence; no causal LLM advantage, physical-hardware validation, production authentication, or energy saving is claimed.}
+\abstract{Modern data centers underpin smart-city services, yet their control loops must reconcile noisy, missing, or deliberately deceptive telemetry before acting autonomously. We present a two-path agentic architecture in which a deterministic fast path fuses sensor reports through a reliability-based fuzzy-preference OWA operator (FPR--OWA) and a persistent consensus-reaching process (CRP), while an optional reactive or LLM supervisor can only propose typed actions that a deterministic verifier must admit. Across $1{,}890$ indexed simulation scenarios and seven attack families, no estimator dominates: averaging attains the lowest global error and sensor redundancy explains most of the accuracy variation, whereas FPR--OWA+CRP provides the strongest anomaly-diagnostic signal. We prove that logistic dominance preserves the reliability ordering and add a zone-dynamic temporal-consistency ablation. In the original safety campaign no unsafe execution was observed in the verifier-gated episodes, and the unified process-local runtime later passed all 24 deterministic fault-injection cases; both are empirical, not formal, guarantees. An illustrative closed-loop pilot adds standard control metrics and reveals delayed recovery under common-mode sensor bias; a CPU benchmark keeps persistent-CRP median latency below $0.30$\,ms at 100 sensors. The result is a reproducible, bounded blueprint for verified autonomy in data-center infrastructure; hardware validation, production authentication, and energy measurement remain future work.}
 
 % Keywords
 \keyword{smart cities; urban critical infrastructure; agentic AI; multi-agent systems; data-center cyber--physical systems; soft consensus; fuzzy preference relations; runtime verification}
@@ -84,13 +84,13 @@ $^{1}$ \quad Department of Business Sciences -- Management \& Innovation Systems
 \renewcommand{\addhighlights}{%
 \rule{0pt}{14pt}\noindent\textbf{What are the main findings?}
 \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
-\item Across $1{,}890$ replay scenarios, no estimator dominates globally; persistent FPR--OWA+CRP provides the strongest anomaly diagnostic, while an aligned zone-dynamic variant reduces non-convergence but slightly worsens MAE relative to social-only reliability.
-\item The tested command gate blocks every observed unsafe or process-invalid proposal. An illustrative periodic closed-loop pilot reports tracking, SLA-exposure, recovery, and actuator-effort metrics and reveals delayed recovery under common-mode sensor bias.
+\item Across $1{,}890$ indexed simulation scenarios and seven attack families, sensor redundancy rather than the aggregator drives estimation accuracy, while the persistent FPR--OWA+CRP process provides the strongest low-false-alarm diagnostic signal; a zone-dynamic consistency variant reduces CRP non-convergence at a small MAE cost.
+\item No unsafe execution was observed in the verifier-gated episodes of the original safety campaign, and the unified process-local runtime passed 24/24 deterministic fault-injection cases; an illustrative closed-loop pilot quantifies tracking, SLA exposure, recovery, and actuator effort and exposes delayed recovery under common-mode sensor bias.
 \end{itemize}\vspace{3pt}
 \textbf{What are the implications of the main findings?}
 \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
-\item Sensing consensus, persistent diagnostics, supervisory proposal, and actuation admission should remain separate, traceable roles.
-\item The evidence supports software-level runtime validation and bounded simulation claims; physical safety, production authentication, energy consumption, and a causal LLM advantage remain unvalidated.
+\item Sensing consensus, persistent diagnostics, supervisory proposal, and command admission should remain separate, traceable roles; in the validated process-local runtime, AI-proposed actions cannot bypass deterministic admission.
+\item The architecture is a reproducible software blueprint whose claims are bounded to simulation over real-derived telemetry; hardware-in-the-loop validation, production authentication, and energy measurement are the next steps.
 \end{itemize}
 }
 
@@ -112,7 +112,7 @@ The paper addresses five questions:
 \item \textbf{RQ1, estimation:} how do candidate aggregators behave under seven deception families, and which factors drive error?
 \item \textbf{RQ2, diagnostics:} what diagnostic value is added by persistent CRP monitoring, including self-history and zone-dynamic alternatives?
 \item \textbf{RQ3, command admission:} which unsafe or process-invalid commands are blocked in the tested safety episodes and fault-injection matrix?
-\item \textbf{RQ4, supervisory role:} what can be concluded from the available reactive and LLM records, given that their historical execution paths are not a paired experiment?
+\item \textbf{RQ4, supervisory role:} what can be concluded descriptively from the recorded reactive and LLM supervision runs, given that they were produced on non-identical execution paths?
 \item \textbf{RQ5, operational cost and control:} what latency, memory, tracking, SLA-exposure, recovery, and actuator-effort behavior is observed in the bounded software evaluation?
 \end{itemize}
 
@@ -124,7 +124,7 @@ The contributions are:
 \item a reproducible evidence package comprising $1{,}890$ replay scenarios, deterministic fault injection, an illustrative action-dependent thermal pilot and hot-start boundary, and a true-CRP latency/memory benchmark.
 \end{enumerate}
 
-The evaluation deliberately separates historical replay, historical non-paired supervisor records, deterministic runtime tests, and the new periodic closed-loop pilot. This separation prevents causal claims from crossing incompatible execution paths. Section~\ref{sec:related} critically positions the work; Sections~\ref{sec:architecture}--\ref{sec:agentic} specify the architecture and algorithms; Sections~\ref{sec:setup}--\ref{sec:results} report the evidence; and Sections~\ref{sec:discussion}--\ref{sec:conclusions} state its implications and limits.
+The evaluation deliberately separates the original replay campaign, the recorded supervisor runs (produced on non-identical execution paths, see the provenance note in Section~\ref{sec:setup_impl}), deterministic runtime tests, and the new periodic closed-loop pilot. This separation prevents causal claims from crossing incompatible execution paths. Section~\ref{sec:related} critically positions the work; Sections~\ref{sec:architecture}--\ref{sec:agentic} specify the architecture and algorithms; Sections~\ref{sec:setup}--\ref{sec:results} report the evidence; and Sections~\ref{sec:discussion}--\ref{sec:conclusions} state its implications and limits.
 
 %% ===================================================================
 \section{Related Work}
@@ -425,7 +425,7 @@ reactive (rule-based) agent or a LangGraph-orchestrated LLM agent under a
 ReAct-style scheme~\cite{yao2023react}; the comparison is reported in
 Section~\ref{sec:results_rq4}. In the intended event mode this layer is invoked
 sparsely when a configured policy fires on low confidence, anomaly flags,
-temperature margin, or a minimum inter-invocation interval. Historical records
+temperature margin, or a minimum inter-invocation interval. The recorded runs
 show that an LLM call may cost seconds, and frequent
 invocation reduces responsiveness without improving estimation. Every
 proposal is checked by the same verifier, which accepts it, rejects it,
@@ -621,9 +621,10 @@ reliabilities differ. $\square$
 The implementation extends exact computed-score ties by immutable reporter
 ID, yielding a deterministic linear order. This convention does not make the
 operator invariant to reporter renumbering and does not guarantee bitwise
-cross-platform equality for near-equal floating-point scores. The
-paper-facing audit found 50 legacy-estimate differences only where dominance
-gaps were at most $10^{-12}$; affected displayed cells were regenerated.
+cross-platform equality for near-equal floating-point scores. An
+audit of all reported values found that 50 originally reported estimates differ
+from the deterministic-tie-break values only where dominance gaps were at most
+$10^{-12}$; the affected displayed cells were regenerated.
 
 \subsection{Quantifier-Guided OWA Aggregation}
 \label{sec:fprowa}
@@ -715,8 +716,8 @@ PBFT-style quorums~\cite{castro1999}.
 
 One aggregation round, even a robust one, cannot distinguish a briefly
 noisy agent from a persistently deceptive one. Nor can it recover useful
-information from agents that are repeatedly down-weighted. The zone
-verifier therefore runs a consensus-reaching process (CRP) over rounds,
+information from agents that are repeatedly down-weighted. The CRP
+monitor therefore runs a consensus-reaching process (CRP) over rounds,
 adapting the guidance-and-feedback scheme of soft-consensus
 GDM~\cite{herreraviedma2002,herreraviedma2007,
 cabrerizo2009,cabrerizo2010kbs} to sensor agents.
@@ -777,7 +778,7 @@ replacing the published CRP.
 
 \paragraph{Acceptance and feedback}
 Given thresholds $\tau_c$ (zone consensus) and $\tau_r$ (agent
-reliability), the verifier proceeds as follows at each round:
+reliability), the CRP monitor proceeds as follows at each round:
 \begin{enumerate}
 \item compute $\chi_z(t)$ via
 Sections~\ref{sec:reliability}--\ref{sec:snapshot}, and
@@ -1041,13 +1042,17 @@ units unless inverse-scaling metadata is available.
 \subsection{Scenario Design}
 \label{sec:setup_scenarios}
 
-The replay campaign comprises $1{,}890$ indexed scenarios. The historical
-safety archive contains four separately executed control variants for every
-scenario, hence $1{,}890\times4=7{,}560$ primary safety episodes. These are
-not four selected decision points within a trajectory: each row is one
-scenario--variant episode, and no event-trigger subset was used to obtain the
-$7{,}560$ denominator. Triggered ticks belong to the separate historical
-realtime logs. Scenarios vary seven deception/anomaly attack types
+The replay campaign comprises $1{,}890$ indexed scenarios. In the offline
+safety campaign, every scenario is executed once under each of the four
+refinement-budget settings $K\in\{0,1,2,3\}$, and each execution contains
+exactly one supervisory decision episode: a single proposal-and-admission
+step (for the ReAct variants, one LLM proposal and one verifier verdict, plus
+any refinement cycles permitted by $K$). Hence each control variant is
+evaluated on $1{,}890\times4=7{,}560$ safety episodes, and the four control
+variants together yield $30{,}240$ episodes. These are not four selected
+decision points within a trajectory, and no event-trigger subset was used to
+obtain the $7{,}560$ denominator: every episode is counted. Triggered ticks of
+the 240-tick real-time runs belong to the separate real-time logs. Scenarios vary seven deception/anomaly attack types
 (Table~\ref{tab:attacks}: bias, drift, freeze, mixed, replay, scaling,
 spike), the attacked-sensor fraction $\beta_a\in\{0.0,0.1,0.2,0.3,0.4\}$,
 sensor noise levels $\{0.1,0.25,0.5\}$, zone sizes
@@ -1073,10 +1078,12 @@ trimmed residual, as baselines for the anomaly signal
 instantiate the safety ablation: \emph{deterministic policy only},
 \emph{ReAct without verifier}, \emph{ReAct with verifier}, and
 \emph{ReAct with verifier and self-refinement}. A \emph{reactive
-(rule-based) supervisory agent} is also present in the historical archive.
-Those reactive and LLM records were produced by non-identical execution paths,
-so Section~\ref{sec:results_rq4} treats them as descriptive rather than a
-paired control experiment. Two historical supervision regimes are reported
+(rule-based) supervisory agent} was also run in the original campaign under
+the same trigger and verification policy. Those reactive and LLM runs were
+produced on non-identical execution paths (provenance note,
+Section~\ref{sec:setup_impl}), so Section~\ref{sec:results_rq4} treats them
+as descriptive rather than a paired control experiment. Two supervision
+regimes are reported
 (Section~\ref{sec:results_rq5}): an \emph{intensive} regime, which
 invokes the agent aggressively, and an \emph{event-triggered} regime
 (confidence $0.35$, anomaly $3$, temperature margin $0.02$, minimum
@@ -1125,6 +1132,30 @@ refinement budget $K$). All runs are seeded, and every scenario emits a
 full execution trace. These traces support exact replay and the post-hoc
 derivation of all reported metrics from measured files only.
 
+\paragraph{Provenance note on the supervisory runs and on corrected values}
+While preparing this revision we audited the implementation of the
+supervisory control step and found that the reactive and LLM supervision runs
+of the original campaign had been produced by two implementations that were
+not identical, differing, among other aspects, in snapshot validation and
+immutability, snapshot/proposal binding, pending-request handling and
+supersession, timeout and exception handling, one-shot action authorization,
+fallback engagement, and instrumentation. We therefore (i) unified both
+supervisors behind a single runtime contract; (ii) validated that contract
+separately through 24 deterministic fault-injection cases (34 events) and a
+240-tick end-to-end test (Sections~\ref{sec:results_rq3}
+and~\ref{sec:results_rq4}); and (iii) retain the original
+reactive-versus-LLM comparison (Table~\ref{tab:supervisor},
+Fig.~\ref{fig:supervisor}) as descriptive evidence only, without causal
+interpretation. The original campaign and the validation of the unified
+runtime are kept distinct throughout: no result of the original campaign was
+regenerated with the unified runtime, and no new LLM inference was run. The
+estimation and diagnostic results (RQ1--RQ2) are produced by the fast path
+and were not affected by the runtime corrections. They were, however, subject
+to two independent audits and corrections, one of the scenario-name parser
+used in the CRP replay and one of the reporter tie-breaking policy
+(Section~\ref{sec:fpr}); the affected values were regenerated from the
+released artifacts and are the ones reported here (Table~\ref{tab:repro}).
+
 %code,
 %configurations, prompts, and the trace schema are released
 %(Section~\ref{sec:data}).
@@ -1169,8 +1200,8 @@ The advantage of a method also depends on the attack regime
 \emph{spike} and \emph{mixed}; mean leads under drift, freeze, replay,
 and scaling; and at the heaviest compromise ($\beta_a=0.4$), the
 \emph{median} becomes most competitive ($1.6133$). MAE degrades smoothly
-with the attacked fraction; Fig.~\ref{fig:maebeta} shows the regenerated
-stable-ID FPR--OWA series.
+with the attacked fraction; Fig.~\ref{fig:maebeta} shows the FPR--OWA series regenerated
+with the deterministic reporter-ID tie-breaking of Section~\ref{sec:fpr}.
 The main driver of accuracy is not the operator, but sensor redundancy
 (Table~\ref{tab:sensors}): a variance decomposition attributes
 $\eta^2\approx0.75$ of MAE variance to $n_z$, compared with $0.05$ for
@@ -1197,7 +1228,7 @@ gaps, so the ranking is stable; mean still minimizes global MAE
 operators, the added robust estimators do not win on average but perform
 well in the tail: robust Kalman obtains the best P95~AE ($2.346$), and
 Huber the second best ($2.365$), compared with mean's $2.444$. All
-operators remain lightweight ($\leq0.086$\,s per scenario). The safety and control archives retain three seeds and are interpreted
+operators remain lightweight ($\leq0.086$\,s per scenario). The safety and control campaigns retain three seeds and are interpreted
 descriptively.
 
 \input{tables/tab_robust}
@@ -1205,15 +1236,16 @@ descriptively.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/fig_heatmap_attack_method.pdf}
-\caption{Stable-ID FPR--OWA MAE by attack family. Values were regenerated
-after the deterministic reporter-ID tie policy was applied.}
+\caption{FPR--OWA MAE by attack family. Values were regenerated after the
+deterministic reporter-ID tie-breaking (Section~\ref{sec:fpr}) was applied.}
 \label{fig:heatmap}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{figures/fig_mae_vs_beta.pdf}
-\caption{Stable-ID FPR--OWA MAE vs.\ attacked-sensor fraction $\beta_a$.}
+\caption{FPR--OWA MAE vs.\ attacked-sensor fraction $\beta_a$ (deterministic
+reporter-ID tie-breaking).}
 \label{fig:maebeta}
 \end{figure}
 
@@ -1282,17 +1314,20 @@ that the dynamic variant improves counterfactual closed-loop control.
 \subsection{RQ3: Safety Episodes and Runtime Fault Injection}
 \label{sec:results_rq3}
 
-The historical safety archive contains four control variants for each of the
-$1{,}890$ indexed scenarios, yielding $7{,}560$ scenario--variant episodes
-(Table~\ref{tab:safety}). These are complete offline safety episodes, not four
-selected trigger times per scenario. In the archived records, the unverified
+The offline safety campaign evaluates each control variant on $7{,}560$
+episodes, namely the $1{,}890$ indexed scenarios executed under the four
+refinement-budget settings $K\in\{0,1,2,3\}$ (Table~\ref{tab:safety};
+Section~\ref{sec:setup_scenarios}). These are complete offline safety
+episodes, one per scenario and budget, not four selected trigger times per
+scenario. In the original campaign, the unverified
 ReAct variant executed 4,409 unsafe proposals; the verifier-gated variants
 recorded zero unsafe executions and the refinement variant recorded more
-accepted proposals at the cost of additional calls. Because the historical
-variants do not all share the corrected runtime, these contrasts remain
-observational and do not identify the verifier as the sole cause.
+accepted proposals at the cost of additional calls. Because these variants
+were run before the runtime contract was unified (provenance note,
+Section~\ref{sec:setup_impl}), the contrasts remain observational and do not
+identify the verifier as the sole cause.
 
-The corrected runtime contract was tested directly through 24 controlled cases
+The unified runtime contract was tested directly through 24 controlled cases
 and 34 events. Invalid snapshots could not alter actuator state; proposals were
 bound to immutable snapshot/request identities; pending, timeout, supersession,
 mutation, and one-shot authorization cases behaved as specified. A separate
@@ -1305,16 +1340,17 @@ completeness, physical safety, or non-bypassability in a deployed system.
 
 \input{tables/tab_safety}
 
-\subsection{RQ4: What Can the Historical Supervisor Records Establish?}
+\subsection{RQ4: Descriptive Comparison of Reactive and LLM Supervision}
 \label{sec:results_rq4}
 
 Table~\ref{tab:supervisor} and Fig.~\ref{fig:supervisor} summarize the
-historical reactive and LLM records. They show equal stored MAE and no stored
-SLA or unsafe-execution event, with much lower recorded latency for the
-reactive path. A provenance audit, however, established that the two agents
-used non-identical execution paths. The records are therefore descriptive and
-cannot isolate supervisor type, verifier effect, or event triggering as a
-cause. The corrected common runtime is instead validated by 24 deterministic
+recorded reactive and LLM supervision runs, obtained under the same trigger
+and verification policy. They show equal recorded MAE and no recorded SLA or
+unsafe-execution event, with much lower recorded latency for the reactive
+path. The two runs were, however, produced on non-identical execution paths
+(provenance note, Section~\ref{sec:setup_impl}). The comparison is therefore
+descriptive and cannot isolate supervisor type, verifier effect, or event
+triggering as a cause. The unified runtime is instead validated by 24 deterministic
 fault-injection cases and a 240-tick wiring smoke test: stale, future,
 wrong-zone, non-finite, malformed, mutated, superseded, missing, and consumed
 inputs were rejected or handled by the local fallback, while independently
@@ -1324,8 +1360,10 @@ the tested contract, not a causal LLM comparison or production isolation.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/fig_supervisor_comparison.pdf}
-\caption{Descriptive historical reactive and LLM records. Because execution
-paths were non-identical, differences are not interpreted causally.}
+\caption{Reactive vs.\ LLM supervisory agent under the same trigger and
+verification policy. The two runs were produced on non-identical runtime
+paths, so the comparison is descriptive and differences are not interpreted
+causally.}
 \label{fig:supervisor}
 \end{figure}
 
@@ -1347,9 +1385,10 @@ nor LLM-token consumption.
 
 \input{tables/tab_crp_cost}
 
-Historical LLM decisions required seconds and motivate keeping language
+The recorded LLM decisions required seconds and motivate keeping language
 reasoning outside the critical path, but the intensive and event-triggered
-archives are retained only as non-paired descriptive evidence. In particular,
+runs are retained only as descriptive evidence, because they were not
+produced on a common execution path. In particular,
 the new action-dependent experiment used periodic deterministic supervision
 at every tick and cannot validate asynchronous live LLM behavior or a causal
 94.7\% event-trigger benefit.
@@ -1414,11 +1453,11 @@ cannot support an energy or consumption claim.
 
 \paragraph{Role of the LLM}
 The architecture permits a language supervisor for semantic escalation and
-auditable proposals, but the available reactive and LLM archives are not a
+auditable proposals, but the recorded reactive and LLM runs are not a
 paired causal study. We therefore make no claim that either supervisor causes
-better thermal outcomes, that event triggering produces the historical
+better thermal outcomes, that event triggering produces the recorded
 latency reduction, or that an LLM adds measurable value in this task. The
-corrected deterministic runtime and periodic closed-loop pilot establish the
+unified deterministic runtime and periodic closed-loop pilot establish the
 mechanism independently of new LLM inference.
 
 \paragraph{Smart-city relevance}
@@ -1431,7 +1470,7 @@ city-scale deployment, cross-zone arbitration, or district-energy coupling.
 \section{Limitations}
 \label{sec:limitations}
 
-The evaluation is software based. The historical thermal series appears
+The evaluation is software based. The Kaggle thermal series appears
 standardized, so its replay errors are dataset units rather than degrees
 Celsius. ENACT supplies workload/power context and CuCD-ID supplies attack
 timing; neither is interpreted as co-measured thermal telemetry. The new
@@ -1442,7 +1481,7 @@ instrumented data-center or hardware-in-the-loop study is required for those
 claims.
 
 The replay and closed-loop pilots use bounded designs. The ten-seed robustness
-extension stabilizes the estimation ranking, while control and LLM archives
+extension stabilizes the estimation ranking, while the control and LLM campaigns
 use three seeds and are descriptive. All 135 original closed-loop runs stayed
 below the SLA, so mitigation and unsafe-state recovery were uninformative;
 the 18-run hot-start appendix is an exploratory boundary, not a significance
@@ -1453,7 +1492,7 @@ robustness claim.
 
 The dynamic temporal score was replayed on fixed trajectories and executed
 actions. It diagnoses the estimator but cannot establish counterfactual
-closed-loop benefit. Fifty legacy estimates differ only at dominance gaps no
+closed-loop benefit. Fifty originally reported estimates differ only at dominance gaps no
 larger than $10^{-12}$; stable reporter IDs deterministically extend exact
 ties but do not guarantee bitwise cross-platform identity for near-equal
 floating-point values.
@@ -1463,8 +1502,9 @@ stale, mutated, superseded, timeout, and authorization-reuse cases, but not
 host compromise, malicious code with direct actuator access, network attacks,
 identity lifecycle, authorization administration, or production isolation.
 The zero observed unsafe-execution count is not a formal proof. Energy,
-electrical consumption, and token use were not measured. Historical reactive
-and LLM paths are non-identical, no new LLM inference was run, and live
+electrical consumption, and token use were not measured. The recorded reactive
+and LLM runs were produced on non-identical execution paths
+(Section~\ref{sec:setup_impl}), no new LLM inference was run, and live
 asynchronous behavior remains untested.
 
 \section{Conclusions and Future Work}
@@ -1514,7 +1554,7 @@ policy, the scenario generator, execution-trace schema, parameter table
 (Table~\ref{tab:params}), and result files---together with the scripts that
 recompute every reported quantity (the reproduction gate of
 Table~\ref{tab:repro}) is publicly available at
-\url{https://github.com/dfurno/agentic-lightweight-consensus-datacenter-cps/tree/smartcities-round1-2026-09-04}.}
+\url{https://github.com/dfurno/agentic-lightweight-consensus-datacenter-cps/tree/smartcities-round1-2026-09-04-r2}.}
 
 \acknowledgments{During the preparation of this manuscript/study, the authors
 used Claude (Anthropic) and OpenAI Codex for the purposes of assisting in

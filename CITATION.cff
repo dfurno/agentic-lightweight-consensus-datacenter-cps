@@ -9,7 +9,7 @@ authors:
     given-names: Vincenzo
 repository-code: "https://github.com/dfurno/agentic-lightweight-consensus-datacenter-cps"
 license: MIT
-version: "smartcities-round1-2026-09-04"
+version: "smartcities-round1-2026-09-04-r2"
 date-released: 2026-09-04
 keywords:
   - smart cities

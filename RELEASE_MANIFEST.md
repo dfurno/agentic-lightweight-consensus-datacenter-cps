@@ -1,6 +1,6 @@
 # Smart Cities Round 1 Release Manifest
 
-Release identifier: `smartcities-round1-2026-09-04`. The initial commit `a935bb0` remains unchanged as historical provenance; its ASOC-oriented label and draft are superseded by this release.
+Release identifier: `smartcities-round1-2026-09-04-r2` (final Round 1 manuscript sources; it supersedes `smartcities-round1-2026-09-04`, which is kept unchanged as provenance of the pre-correction sources). The initial commit `a935bb0` remains unchanged as historical provenance; its ASOC-oriented label and draft are superseded by this release.
 
 This directory is a cleaned, GitHub-ready reproducibility repository.
 
